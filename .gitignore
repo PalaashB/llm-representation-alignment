@@ -2,3 +2,32 @@ venv/
 __pycache__/
 *.pyc
 .DS_Store
+
+cat >> .gitignore <<'EOF'
+
+# Python environments
+.venv/
+env/
+
+# Generated model representations and outputs
+*.pt
+*.pth
+*.npy
+*.npz
+*.pkl
+
+# Generated figures
+*.png
+*.pdf
+*.html
+
+# Local caches
+.cache/
+huggingface/
+__pycache__/
+.pytest_cache/
+
+# IDE and operating system files
+.vscode/
+.DS_Store
+EOF

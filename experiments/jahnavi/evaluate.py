@@ -1,7 +1,10 @@
 import json
+from pathlib import Path
 from ollama import chat
 
-with open("factual_qa.json") as f:
+dataset_path = Path(__file__).resolve().parents[2] / "data" / "factual_qa" / "factual_qa.json"
+
+with open(dataset_path) as f:
     dataset = json.load(f)
 
 models = [
