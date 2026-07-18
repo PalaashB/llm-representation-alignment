@@ -1,0 +1,36 @@
+================================================================
+QUESTION 1 — can alignment identify the root cause of hallucination?
+                                   pair: llama2qwen (Llama-1B vs Qwen-3B)
+  small: meta-llama/Llama-3.2-1B-Instruct
+  large: Qwen/Qwen2.5-3B-Instruct
+  alignment: prompt  (one final-token row per prompt — underdetermined fit, read R² as indicative)
+================================================================
+
+Divergent set: 12 prompts (4 held-out answer positions)
+Control set  : 120 prompts
+
+ Llama-1B layer | best-R^2 (divergent) | best-R^2 (control) | gap
+ ---------+----------------------+--------------------+-------
+    0    |       +0.000        |      +0.000       | -0.000  <- onset
+    1    |       +0.134        |      +0.724       | -0.590  <== hallucination-specific (root-cause candidate)
+    2    |       +0.270        |      +0.791       | -0.521
+    3    |       +0.262        |      +0.804       | -0.543
+    4    |       +0.273        |      +0.801       | -0.528
+    5    |       +0.235        |      +0.800       | -0.566
+    6    |       +0.255        |      +0.794       | -0.539
+    7    |       +0.249        |      +0.792       | -0.543
+    8    |       +0.238        |      +0.794       | -0.556
+    9    |       +0.247        |      +0.798       | -0.550
+   10    |       +0.202        |      +0.775       | -0.572
+   11    |       +0.202        |      +0.767       | -0.565
+   12    |       +0.166        |      +0.753       | -0.587
+   13    |       +0.176        |      +0.740       | -0.564
+   14    |       +0.165        |      +0.728       | -0.563
+   15    |       +0.161        |      +0.717       | -0.556
+   16    |       +0.138        |      +0.692       | -0.554
+
+VERDICT: translatability of the Llama-1B into the Qwen-3B space falls off already from layer 0 (onset), and on
+hallucination prompts it drops further than on controls, with the largest
+hallucination-specific gap at layer 1 (gap -0.590).
+Alignment thus localises the divergence to the layers around 1,
+the candidate root-cause region for the hallucination.

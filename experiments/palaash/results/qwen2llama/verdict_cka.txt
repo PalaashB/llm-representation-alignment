@@ -1,0 +1,42 @@
+================================================================
+CKA readout — geometry similarity, no fitted map, no split
+                                   pair: qwen2llama (Qwen-0.5B vs Llama-3B)
+  small: Qwen/Qwen2.5-0.5B-Instruct
+  large: meta-llama/Llama-3.2-3B-Instruct
+  alignment: prompt; metric: debiased linear CKA on final
+  answer-token rows (one per prompt) — well-defined even when the
+  DM ridge fit is underdetermined (rows < input dims).
+================================================================
+
+Divergent set: 45 prompts
+Control set  : 86 prompts
+
+ Qwen-0.5B layer | best-CKA (divergent) | best-CKA (control) | gap
+ ---------+----------------------+--------------------+-------
+    0    |       +nan        |      +nan       | +nan
+    1    |       +0.664        |      +0.590       | +0.074
+    2    |       +0.848        |      +0.878       | -0.029
+    3    |       +0.830        |      +0.869       | -0.039
+    4    |       +0.850        |      +0.880       | -0.030
+    5    |       +0.895        |      +0.878       | +0.016
+    6    |       +0.859        |      +0.863       | -0.004
+    7    |       +0.856        |      +0.851       | +0.005
+    8    |       +0.862        |      +0.851       | +0.012
+    9    |       +0.889        |      +0.891       | -0.002
+   10    |       +0.878        |      +0.894       | -0.016
+   11    |       +0.888        |      +0.914       | -0.026
+   12    |       +0.833        |      +0.890       | -0.057
+   13    |       +0.845        |      +0.911       | -0.066
+   14    |       +0.842        |      +0.914       | -0.072
+   15    |       +0.897        |      +0.915       | -0.018
+   16    |       +0.892        |      +0.942       | -0.051
+   17    |       +0.875        |      +0.945       | -0.070
+   18    |       +0.872        |      +0.938       | -0.066
+   19    |       +0.862        |      +0.913       | -0.051
+   20    |       +0.871        |      +0.935       | -0.063
+   21    |       +0.868        |      +0.943       | -0.076
+   22    |       +0.786        |      +0.882       | -0.096
+   23    |       +0.785        |      +0.880       | -0.095
+   24    |       +0.773        |      +0.879       | -0.106  <== max hallucination-specific gap
+
+Largest divergent-minus-control CKA gap at layer 24 (gap -0.106).

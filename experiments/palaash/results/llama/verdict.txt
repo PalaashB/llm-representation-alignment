@@ -1,0 +1,39 @@
+================================================================
+QUESTION 1 — can alignment identify the root cause of hallucination?
+                                   pair: llama (1B vs 3B)
+  small: meta-llama/Llama-3.2-1B-Instruct
+  large: meta-llama/Llama-3.2-3B-Instruct
+  alignment: token
+================================================================
+
+Divergent set: 12 prompts (4 held-out answer positions)
+Control set  : 120 prompts
+
+ 1B layer | best-R^2 (divergent) | best-R^2 (control) | gap
+ ---------+----------------------+--------------------+-------
+    0    |       +1.000        |      +1.000       | +0.000
+    1    |       +1.000        |      +1.000       | +0.000
+    2    |       +1.000        |      +0.999       | +0.000
+    3    |       +0.999        |      +0.998       | +0.001
+    4    |       +0.996        |      +0.996       | -0.000
+    5    |       +0.994        |      +0.995       | -0.000
+    6    |       +0.994        |      +0.994       | -0.001
+    7    |       +0.992        |      +0.994       | -0.002
+    8    |       +0.993        |      +0.994       | -0.000
+    9    |       +0.989        |      +0.988       | +0.001
+   10    |       +0.904        |      +0.925       | -0.020  <- onset
+   11    |       +0.863        |      +0.894       | -0.032
+   12    |       +0.759        |      +0.807       | -0.048  <== hallucination-specific (root-cause candidate)
+   13    |       +0.760        |      +0.765       | -0.005
+   14    |       +0.729        |      +0.749       | -0.020
+   15    |       +0.748        |      +0.766       | -0.018
+   16    |       +0.768        |      +0.813       | -0.045
+
+VERDICT: through layers 0-9 the 1B representation is near-perfectly
+linearly translatable into the 3B space on BOTH hallucination
+and control prompts — the small model's early representations are not the
+problem. Translatability then falls off from layer 10 (onset), and on
+hallucination prompts it drops further than on controls, with the largest
+hallucination-specific gap at layer 12 (gap -0.048).
+Alignment thus localises the divergence to the layers around 12,
+the candidate root-cause region for the hallucination.

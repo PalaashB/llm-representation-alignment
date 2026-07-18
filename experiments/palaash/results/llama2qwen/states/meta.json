@@ -1,0 +1,538 @@
+{
+  "pair": "llama2qwen",
+  "align": "prompt",
+  "selected": [
+    {
+      "prompt_id": "cap_ng",
+      "set_label": 0
+    },
+    {
+      "prompt_id": "cap_nz",
+      "set_label": 0
+    },
+    {
+      "prompt_id": "sci_speed",
+      "set_label": 0
+    },
+    {
+      "prompt_id": "sci_hardest",
+      "set_label": 0
+    },
+    {
+      "prompt_id": "his_president16",
+      "set_label": 0
+    },
+    {
+      "prompt_id": "mis_continents",
+      "set_label": 0
+    },
+    {
+      "prompt_id": "mis_planets",
+      "set_label": 0
+    },
+    {
+      "prompt_id": "mis_keys",
+      "set_label": 0
+    },
+    {
+      "prompt_id": "cur_za",
+      "set_label": 0
+    },
+    {
+      "prompt_id": "geo_medisland",
+      "set_label": 0
+    },
+    {
+      "prompt_id": "geo_waterfall",
+      "set_label": 0
+    },
+    {
+      "prompt_id": "geo_uscounty",
+      "set_label": 0
+    },
+    {
+      "prompt_id": "cap_au",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "cap_ca",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "cap_tr",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "cap_kz",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "cap_bz",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "cap_ch",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "cap_za",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "cap_bt",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "cap_mn",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "cap_lk",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "cap_ma",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "cap_ec",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "us_ny",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "us_ca",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "us_il",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "us_wa",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "us_pa",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "us_mo",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "us_or",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "sci_au",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "sci_w",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "sci_pb",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "sci_k",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "sci_na",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "sci_bone",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "sci_atomic",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "sci_blood",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "sci_dna",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "his_ww2",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "his_berlin",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "his_moon",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "his_magna",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "his_french",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "his_columbus",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "his_titanic",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "his_president1",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "his_pharaoh",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "his_indep",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "geo_river",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "geo_mountain",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "geo_desert",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "geo_ocean",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "geo_lake",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "geo_country",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "geo_smallest",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "geo_strait",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "lit_romeo",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "lit_1984",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "lit_pride",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "lit_warpeace",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "lit_odyssey",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "lit_mona",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "lit_starry",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "lit_guernica",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "spo_wc2018",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "spo_wc2014",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "spo_olymp2016",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "spo_olymp2012",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "mis_currency_jp",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "mis_currency_in",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "mis_currency_pl",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "mis_currency_se",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "mis_language_br",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "mis_language_at",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "mis_chess",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "mis_bones",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "mis_amendments",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "cap_vn",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "cap_id",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "cap_sa",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "cap_no",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "cap_fi",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "cap_hr",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "cap_rs",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "cap_ro",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "cap_bg",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "cap_pe",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "cap_cl",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "cap_co",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "cap_et",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "cap_gh",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "cap_si",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "cap_sk",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "us_ky",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "us_me",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "us_sd",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "us_vt",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "us_ak",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "us_nd",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "cur_th",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "cur_vn",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "cur_kr",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "cur_cz",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "cur_dk",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "geo_island",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "geo_africamt",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "geo_namt",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "geo_samt",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "geo_deeplake",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "geo_africabig",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "geo_asiarriver",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "el_hg",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "el_ag",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "el_sn",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "el_sb",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "el_fe_num",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "el_u_num",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "bio_mito",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "bio_gas",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "phy_mendeleev",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "phy_relativity",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "his_civilwar",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "his_ussr",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "his_ww1",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "his_chernobyl",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "his_penicillin",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "his_gagarin",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "his_sistine",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "his_mayflower",
+      "set_label": 1
+    },
+    {
+      "prompt_id": "his_genghis",
+      "set_label": 1
+    }
+  ],
+  "last_k": 1,
+  "n_layers_small": 16,
+  "n_layers_large": 36,
+  "n_tokens_total": 132
+}
