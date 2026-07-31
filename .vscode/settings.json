@@ -3,5 +3,6 @@
         "keepdim",
         "qwen",
         "tinyllama"
-    ]
+    ],
+    "editor.fontSize": 12
 }
