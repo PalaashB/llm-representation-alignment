@@ -30,13 +30,16 @@ A100,...,...,...,...
 
 The row label comes from `torch.cuda.get_device_name(0)` (e.g. "NVIDIA GeForce
 RTX 2080 Ti" → `2080`); override it with `--gpu A100` if the detection misses.
+It describes the device actually benchmarked, so `--device cpu` on a GPU node
+writes a `cpu` row, and a local Apple-silicon run writes an `mps` row.
 
 ## What the two numbers mean
 
 * **Load** — `AutoTokenizer.from_pretrained` + `AutoModelForCausalLM.from_pretrained`
   (weights to GPU) + `.eval()`. One untimed warm-up load runs first so the timed
-  loads never pay the download / cold page-cache cost, and the previous copy is
-  freed (`del` + `gc.collect()` + `empty_cache()`) before each one.
+  loads never pay the download / cold page-cache cost. The previous copy is
+  released (drop the reference, then `gc.collect()` + `empty_cache()`) *before*
+  the next load allocates, so peak VRAM stays at one model rather than two.
 * **Inference** — one greedy `generate` of exactly `MAX_NEW_TOKENS` (24) tokens on
   a fixed chat-formatted prompt, batch size 1, KV cache on. `min_new_tokens` is
   pinned to `max_new_tokens` so early EOS can't make one model look faster by
@@ -67,7 +70,8 @@ node with a cold cache is much slower and is deliberately excluded.
 **dtype differs across these cards, by design.** `--dtype auto` uses bfloat16
 where the card supports it (A100, Ampere and newer) and float16 where it does
 not (the 2080 is Turing — bf16 there is emulated and would time a path nobody
-actually runs). The dtype used is recorded per-row in `raw_timings.csv`. If you
+actually runs); on CPU it uses float32, for the same reason. The dtype used is
+recorded per-row in `raw_timings.csv`. If you
 want a strictly like-for-like cross-GPU comparison, pass `--dtype fp16`
 everywhere. Also expect the 3B models to be tight or OOM on an 8 GB 2080 — a
 model that fails to load is logged as an `error` row in `raw_timings.csv`, left

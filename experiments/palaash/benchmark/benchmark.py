@@ -72,44 +72,67 @@ GPU_ORDER = ["2080", "3060", "A100"]
 # Fixed prompt for every model / GPU so the inference numbers are comparable.
 BENCH_QUESTION = "What is the capital city of Bhutan?"
 
+# Column order of raw_timings.csv — fixed, because rows are appended headerless.
+RAW_COLUMNS = ["gpu", "gpu_name", "model", "model_id", "dtype", "timestamp",
+               "phase", "iteration", "seconds", "new_tokens", "error"]
+
 RESULTS_DIR = Path(__file__).resolve().parent / "results"
 LOAD_CSV = RESULTS_DIR / "model_load_time_seconds.csv"
 INFER_CSV = RESULTS_DIR / "model_inference_time_ms.csv"
 RAW_CSV = RESULTS_DIR / "raw_timings.csv"
 
 
-# ── GPU identification ────────────────────────────────────────────────────────
-def detect_gpu() -> tuple[str, str]:
+# ── Device identification ─────────────────────────────────────────────────────
+def pick_device() -> str:
+    """cuda > mps > cpu, matching q1.model_utils.pick_device."""
+    if torch.cuda.is_available():
+        return "cuda"
+    if torch.backends.mps.is_available():
+        return "mps"
+    return "cpu"
+
+
+def describe_device(device: str) -> tuple[str, str]:
     """Return (short label used as the CSV row, full device name).
 
-    The short label is matched out of the CUDA device name, e.g.
-    "NVIDIA GeForce RTX 2080 Ti" -> "2080", "NVIDIA A100-SXM4-40GB" -> "A100".
-    Anything unrecognised falls back to the full name (override with --gpu).
+    The label must describe the device we actually benchmark on, not whatever
+    card happens to be in the box — `--device cpu` on a GPU node is a CPU row.
+    For CUDA the label is matched out of the device name, e.g. "NVIDIA GeForce
+    RTX 2080 Ti" -> "2080", "NVIDIA A100-SXM4-40GB" -> "A100". Anything
+    unrecognised falls back to the full name (override with --gpu).
     """
-    if not torch.cuda.is_available():
-        return "cpu", platform.processor() or "cpu"
-    name = torch.cuda.get_device_name(0)
-    upper = name.upper()
-    for label in ("2080", "3060", "A100", "A6000", "V100", "H100", "L40", "3090", "4090"):
-        if label in upper:
-            return label, name
-    return name, name
+    if device == "cuda" and torch.cuda.is_available():
+        name = torch.cuda.get_device_name(0)
+        upper = name.upper()
+        for label in ("2080", "3060", "A100", "A6000", "V100", "H100", "L40", "3090", "4090"):
+            if label in upper:
+                return label, name
+        return name, name
+    if device == "mps":
+        return "mps", f"Apple {platform.machine()} (MPS)"
+    return "cpu", platform.processor() or platform.machine() or "cpu"
 
 
-def pick_dtype(requested: str) -> torch.dtype:
-    """bfloat16 where the card supports it, float16 otherwise.
+def pick_dtype(requested: str, device: str) -> torch.dtype:
+    """bfloat16 where the accelerator supports it, float16 otherwise.
 
     Turing cards (2080) have no native bf16, so forcing bf16 there would time
-    an emulated path rather than what the model would really run at.
+    an emulated path rather than what the model would really run at. The same
+    argument rules out half precision on CPU, where fp16 kernels are emulated
+    and pathologically slow — CPU runs default to fp32.
     """
     if requested == "bf16":
+        if device == "cuda" and not torch.cuda.is_bf16_supported():
+            print("  [warn] this card has no native bf16 — timing an emulated path")
         return torch.bfloat16
     if requested == "fp16":
         return torch.float16
     if requested == "fp32":
         return torch.float32
-    if torch.cuda.is_available() and torch.cuda.is_bf16_supported():
+    if device == "cuda" and torch.cuda.is_bf16_supported():
         return torch.bfloat16
+    if device == "cpu":
+        return torch.float32
     return torch.float16
 
 
@@ -139,11 +162,19 @@ def load_once(model_id: str, device: str, dtype: torch.dtype):
     return tok, model, time.perf_counter() - t0
 
 
-def free(model) -> None:
-    del model
+def reclaim() -> None:
+    """Collect unreferenced models and hand their VRAM back to the driver.
+
+    This only reclaims what nothing points at any more, so every caller must
+    drop its own reference (`model = None`) *before* calling — a `free(model)`
+    helper cannot do that for you, since deleting the parameter inside the
+    helper leaves the caller's name bound and the weights resident.
+    """
     gc.collect()
     if torch.cuda.is_available():
         torch.cuda.empty_cache()
+    if torch.backends.mps.is_available():
+        torch.mps.empty_cache()
 
 
 def time_loads(model_id: str, device: str, dtype: torch.dtype, repeats: int):
@@ -156,18 +187,20 @@ def time_loads(model_id: str, device: str, dtype: torch.dtype, repeats: int):
     # timed loads all measure the same (warm) path.
     tok, model, warm = load_once(model_id, device, dtype)
     print(f"  warm-up load: {warm:8.3f} s")
-    free(model)
 
     times: list[float] = []
     for i in range(repeats):
+        # Release the previous copy *before* the next load allocates, so peak
+        # VRAM is one model and not two — otherwise a 3B model that fits fine
+        # OOMs here on an 8 GB card.
+        model = None
+        reclaim()
         tok, model, secs = load_once(model_id, device, dtype)
         times.append(secs)
-        if i < repeats - 1:           # keep the final copy for the inference phase
-            free(model)
         if (i + 1) % 10 == 0 or i == repeats - 1:
             print(f"  load {i + 1:4d}/{repeats}  last {secs:7.3f} s  "
                   f"mean {sum(times) / len(times):7.3f} s")
-    return times, tok, model
+    return times, tok, model            # final copy stays loaded for inference
 
 
 @torch.no_grad()
@@ -217,7 +250,10 @@ def upsert_cell(csv_path: Path, gpu: str, model_key: str, value: float) -> None:
             df[col] = pd.NA
     df.loc[gpu, model_key] = value
 
-    df = df[list(MODELS)]
+    # A column created from pd.NA is object dtype, and to_csv's float_format is
+    # only applied to float columns — without this the CSV gets full repr noise
+    # like 0.32546864612959325 instead of 0.3255.
+    df = df[list(MODELS)].apply(pd.to_numeric, errors="coerce")
     known = [g for g in GPU_ORDER if g in df.index]
     df = df.reindex(known + [g for g in df.index if g not in known])
     df.index.name = "gpu"
@@ -225,7 +261,9 @@ def upsert_cell(csv_path: Path, gpu: str, model_key: str, value: float) -> None:
 
 
 def append_raw(rows: list[dict]) -> None:
-    df = pd.DataFrame(rows)
+    # Pin the column order: appending with mode="a" writes no header, so a
+    # differently-ordered frame would silently shift values into wrong columns.
+    df = pd.DataFrame(rows, columns=RAW_COLUMNS)
     df.to_csv(RAW_CSV, mode="a", header=not RAW_CSV.exists(), index=False)
 
 
@@ -246,20 +284,29 @@ def main() -> None:
     ap.add_argument("--max-new-tokens", type=int, default=MAX_NEW_TOKENS,
                     help=f"tokens generated per timed inference (default: {MAX_NEW_TOKENS})")
     ap.add_argument("--dtype", choices=["auto", "bf16", "fp16", "fp32"], default="auto",
-                    help="weight dtype; auto = bf16 if the card supports it, else fp16")
+                    help="weight dtype; auto = bf16 if the card supports it, "
+                         "fp32 on cpu, else fp16")
     ap.add_argument("--gpu", default=None,
-                    help="row label for this run (default: detected from the CUDA device)")
+                    help="row label for this run (default: detected from the device)")
     ap.add_argument("--device", default=None, choices=["cuda", "cpu", "mps"],
-                    help="device to benchmark on (default: cuda when available)")
+                    help="device to benchmark on (default: cuda, else mps, else cpu)")
     args = ap.parse_args()
 
     load_repeats = args.load_repeats if args.load_repeats is not None else args.repeats
     infer_repeats = args.infer_repeats if args.infer_repeats is not None else args.repeats
 
-    device = args.device or ("cuda" if torch.cuda.is_available() else "cpu")
-    detected, device_name = detect_gpu()
+    # Both phases average over their timings, so zero repeats is a divide-by-zero.
+    if load_repeats < 1 or infer_repeats < 1:
+        ap.error("repeats must be >= 1")
+    if args.warmup < 0:
+        ap.error("--warmup must be >= 0")
+    if args.max_new_tokens < 1:
+        ap.error("--max-new-tokens must be >= 1")
+
+    device = args.device or pick_device()
+    detected, device_name = describe_device(device)
     gpu = args.gpu or detected
-    dtype = pick_dtype(args.dtype)
+    dtype = pick_dtype(args.dtype, device)
     stamp = datetime.now().isoformat(timespec="seconds")
 
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -277,17 +324,22 @@ def main() -> None:
         print(f"[{key}] {model_id}")
         common = dict(gpu=gpu, gpu_name=device_name, model=key, model_id=model_id,
                       dtype=str(dtype).replace("torch.", ""), timestamp=stamp)
+        tok = model = None
         try:
             load_times, tok, model = time_loads(model_id, device, dtype, load_repeats)
             infer_times = time_inference(tok, model, device, infer_repeats,
                                          args.warmup, args.max_new_tokens)
-            free(model)
         except Exception as exc:             # OOM / gated repo / missing weights
             print(f"  [skip] {key} on {gpu}: {type(exc).__name__}: {exc}\n")
             append_raw([{**common, "phase": "error", "iteration": 0,
                          "seconds": float("nan"), "new_tokens": 0,
                          "error": f"{type(exc).__name__}: {exc}"}])
             continue
+        finally:
+            # Runs on the `continue` too: an OOM part-way through must not leave
+            # this model resident while the next one loads.
+            tok = model = None
+            reclaim()
 
         mean_load = sum(load_times) / len(load_times)
         mean_infer_ms = 1000 * sum(infer_times) / len(infer_times)
