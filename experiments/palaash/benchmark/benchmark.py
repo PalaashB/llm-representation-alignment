@@ -241,7 +241,12 @@ def time_inference(tok, model, device: str, repeats: int, warmup: int,
 def upsert_cell(csv_path: Path, gpu: str, model_key: str, value: float) -> None:
     """Set one (gpu row, model column) cell, creating/extending the CSV."""
     if csv_path.exists():
-        df = pd.read_csv(csv_path, index_col="gpu")
+        # dtype is not optional: read_csv infers int64 for a gpu column holding
+        # only "2080"/"3060", and the `gpu` we index with here is always a str.
+        # "2080" != 2080 in pandas, so .loc below would append a second, all-NaN
+        # row for the same card instead of filling in the existing one — once per
+        # run, and only for the numeric labels ("A100" round-trips as a string).
+        df = pd.read_csv(csv_path, index_col="gpu", dtype={"gpu": str})
     else:
         df = pd.DataFrame(index=pd.Index([], name="gpu"))
 
