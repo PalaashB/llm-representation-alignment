@@ -1,0 +1,76 @@
+{
+  "pair": "qwen",
+  "i": 24,
+  "j": 35,
+  "checks": [
+    {
+      "check": "full_stack_small",
+      "max_abs_logit_diff": 0.03125,
+      "rel_l2": 2.924057116615586e-05,
+      "argmax_match": true,
+      "bit_identical": false,
+      "rel_tol": 0.05,
+      "passed": true
+    },
+    {
+      "check": "full_stack_large",
+      "max_abs_logit_diff": 0.015625,
+      "rel_l2": 1.2748500012094155e-05,
+      "argmax_match": true,
+      "bit_identical": false,
+      "rel_tol": 0.05,
+      "passed": true
+    },
+    {
+      "check": "baseline_matches_hf_generate_small",
+      "loop": "Wellington",
+      "hf_generate": "Wellington",
+      "passed": true
+    },
+    {
+      "check": "baseline_matches_hf_generate_large",
+      "loop": "Wellington",
+      "hf_generate": "Wellington",
+      "passed": true
+    },
+    {
+      "check": "prefix_exact",
+      "n_positions": 1,
+      "rel_l2_vs_hf_prefix": 0.0,
+      "max_abs_diff_vs_hf_prefix": 0.0,
+      "shape_drift_rel_l2": 0.008414182811975479,
+      "hf_own_shape_drift_rel_l2": 0.008414182811975479,
+      "passed": true
+    },
+    {
+      "check": "fast_equals_v1_prefill",
+      "max_abs_logit_diff": 0.125,
+      "rel_l2": 0.0037360608112066984,
+      "argmax_match": true,
+      "bit_identical": false,
+      "rel_tol": 0.05,
+      "passed": true
+    },
+    {
+      "check": "cached_equals_lockstep",
+      "n_positions": 9,
+      "max_rel_l2": 0.05422377958893776,
+      "argmax_agree": 8,
+      "unmodified_large_max_rel_l2": 0.045722559094429016,
+      "unmodified_large_argmax_agree": 9,
+      "budget": 0.13716767728328705,
+      "slack": 3.0,
+      "tokens": "Well0\u8e4aP",
+      "passed": true
+    },
+    {
+      "check": "warm_prefill_equals_large",
+      "max_abs_logit_diff": 0.0,
+      "rel_l2": 0.0,
+      "argmax_match": true,
+      "bit_identical": true,
+      "rel_tol": 0.05,
+      "passed": true
+    }
+  ]
+}

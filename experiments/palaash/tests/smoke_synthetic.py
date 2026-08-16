@@ -30,7 +30,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import q1.config as config
 from q1.config import PAIRS, LAST_K
-from q1 import extract_states, train_dm, analyze, cka
+from q1 import extract_states, train_dm, analyze, cka, fit_adapter
 from q1.prompts import PROMPTS
 
 LATENT = 32          # shared latent dim linking small and large fake states
@@ -136,7 +136,46 @@ def run_pair(pair_name: str, n_div: int, n_ctrl: int) -> None:
         assert np.allclose(g["cka_all"], g["cka_last"], equal_nan=True)
     assert (config.figures_dir(pair) / "cka_curve.png").exists()
     assert (config.results_dir(pair) / "verdict_cka.txt").exists()
-    print(f"[ok] {pair_name}: layout, train, analyze, cka all pass")
+
+    # ── fit_adapter (numpy-only; stitch itself needs real models) ─────────────
+    steps = "layout, train, analyze, cka"
+    if pair.align == "token":
+        i = summary["divergence_layer_small"]
+        j = summary["divergent"]["best_match_large_layer_last"][i]
+        assert 1 <= j < pair.n_layers_large, \
+            f"selected target j={j} is not an injectable residual stream"
+        meta = fit_adapter.run(pair, i, j)
+        assert meta["small_layer_i"] == i and meta["large_layer_j"] == j
+
+        arrays, loaded = fit_adapter.load_adapter(pair, i, j)
+        assert arrays["W"].shape == (pair.dim_small, pair.dim_large)
+        assert arrays["b"].shape == (pair.dim_large,)
+        assert loaded["form"] == meta["form"]
+        assert all(np.isfinite(a).all() for a in arrays.values())
+
+        # the saved coefficients must reproduce the reported in-sample fit
+        X, Y, _, set_label, _ = fit_adapter.load_layer_pair(pair, i, j)
+        m = set_label == fit_adapter.SET_LABEL[meta["fit_set"]]
+        q = fit_adapter.quality(
+            fit_adapter.apply_adapter(X[m], **{k: arrays[k]
+                                               for k in ("W", "b", "mu_x", "sd_x")}), Y[m])
+        assert abs(q["r2"] - meta["in_sample"]["r2"]) < 1e-4, \
+            f"saved adapter does not reproduce reported R2: {q['r2']} vs {meta['in_sample']['r2']}"
+
+        # the synthetic large states are a fixed linear map of a shared latent,
+        # so a linear adapter must recover them well
+        assert q["r2"] > 0.5, f"adapter failed on linear synthetic data: R2={q['r2']}"
+
+        # a post-norm / embedding target must be refused, not silently fitted
+        for bad in (0, pair.n_layers_large):
+            try:
+                fit_adapter.run(pair, i, bad)
+            except SystemExit:
+                pass
+            else:
+                raise AssertionError(f"fit_adapter accepted invalid target j={bad}")
+        steps += ", fit_adapter"
+    print(f"[ok] {pair_name}: {steps} all pass")
 
 
 def main() -> None:

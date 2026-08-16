@@ -34,6 +34,8 @@ import numpy as np
 from q1.config import (
     ModelPair, PAIRS, DEFAULT_PAIR,
     RIDGE_ALPHA, TEST_FRAC, N_SPLITS, TRAIN_TOK_CAP, TEST_TOK_CAP, SEED,
+    DEPTH_BAND, MIN_TARGET_LAYER, DROP_POST_NORM_LAYER,
+    ONSET_THRESH, ONSET_SCAN_START,
     states_dir, dm_dir,
 )
 
@@ -164,22 +166,44 @@ def fit_grid(X, Y, prompt_index, is_last, row_mask):
     return accum
 
 
-def best_match_curve(grid_r2):
-    """For each small layer, the best R^2 over all large layers and which layer."""
-    best_r2 = np.nanmax(grid_r2, axis=1)
-    best_j = np.nanargmax(grid_r2, axis=1)
+def target_layer_band(i, pair: ModelPair):
+    """Allowed large-layer indices for small layer i: a DEPTH_BAND-wide window
+    around i's relative depth. See config.DEPTH_BAND for why an unrestricted
+    argmax is degenerate. Returns an inclusive (lo, hi) pair."""
+    j_max = pair.n_layers_large - (1 if DROP_POST_NORM_LAYER else 0)
+    centre = i / pair.n_layers_small * pair.n_layers_large
+    lo = max(MIN_TARGET_LAYER, int(np.floor(centre - DEPTH_BAND)))
+    hi = min(j_max, int(np.ceil(centre + DEPTH_BAND)))
+    return lo, max(lo, hi)
+
+
+def best_match_curve(grid_r2, pair: ModelPair):
+    """For each small layer, the best R^2 over its allowed large layers (see
+    target_layer_band) and which layer that was."""
+    n_small = grid_r2.shape[0]
+    best_r2 = np.full(n_small, np.nan)
+    best_j = np.zeros(n_small, dtype=int)
+    for i in range(n_small):
+        lo, hi = target_layer_band(i, pair)
+        window = grid_r2[i, lo:hi + 1]
+        if np.all(np.isnan(window)):
+            continue
+        k = int(np.nanargmax(window))
+        best_j[i] = lo + k
+        best_r2[i] = window[k]
     return best_r2, best_j
 
 
-def find_divergence_layers(best_r2_div, best_r2_ctrl=None, onset_thresh=0.95):
+def find_divergence_layers(best_r2_div, best_r2_ctrl=None,
+                           onset_thresh=ONSET_THRESH, scan_start=ONSET_SCAN_START):
     """
     Localise divergence with two complementary readouts:
 
-      onset_layer   the first small-model layer whose best-match R^2 into the
-                    large model's space drops below `onset_thresh` — the depth at
-                    which the small model's representation stops being
-                    (near-)perfectly linearly translatable at all. This is a
-                    generic depth effect.
+      onset_layer   the first small-model layer (at or after `scan_start`) whose
+                    best-match R^2 into the large model's space drops below
+                    `onset_thresh` — the depth at which the small model's
+                    representation stops being (near-)perfectly linearly
+                    translatable at all. This is a generic depth effect.
 
       hallucination_specific_layer
                     the layer (at or after onset) with the most negative
@@ -187,11 +211,16 @@ def find_divergence_layers(best_r2_div, best_r2_ctrl=None, onset_thresh=0.95):
                     representation is *additionally* harder to translate
                     specifically on prompts it hallucinates on, beyond the
                     generic depth effect. This is the candidate root-cause layer.
+
+    `scan_start` exists because layer 0 is the embedding table, which has no
+    meaningful depth-matched counterpart; including it makes every layer-0 R^2
+    trip the threshold and report onset=0 regardless of the real curve.
     """
     div = np.asarray(best_r2_div, dtype=float)
-    below = np.where(div < onset_thresh)[0]
-    onset = int(below[0]) if len(below) else int(np.nanargmin(div))
-    out = {"onset_layer": onset, "onset_thresh": onset_thresh}
+    tail = div[scan_start:]
+    below = np.where(tail < onset_thresh)[0]
+    onset = int(below[0] + scan_start) if len(below) else int(np.nanargmin(tail) + scan_start)
+    out = {"onset_layer": onset, "onset_thresh": onset_thresh, "onset_scan_start": scan_start}
     if best_r2_ctrl is not None:
         gap = div - np.asarray(best_r2_ctrl, dtype=float)   # <0 => divergent worse
         masked = gap.copy()
@@ -223,8 +252,8 @@ def run(pair: ModelPair) -> dict:
         g = fit_grid(X, Y, prompt_index, is_last, mask)
         np.savez(out_dir / f"grids_{name}.npz",
                  r2_all=g["r2_all"], r2_last=g["r2_last"], nmse_all=g["nmse_all"])
-        br_all, bj_all = best_match_curve(g["r2_all"])
-        br_last, bj_last = best_match_curve(g["r2_last"])
+        br_all, bj_all = best_match_curve(g["r2_all"], pair)
+        br_last, bj_last = best_match_curve(g["r2_last"], pair)
         out[name] = {
             "n_prompts": g["n_prompts"],
             "n_train_tokens": g["n_train_tokens"],
@@ -234,12 +263,16 @@ def run(pair: ModelPair) -> dict:
             "best_match_large_layer_all": bj_all.tolist(),
             "best_r2_last_per_small_layer": br_last.tolist(),
             "best_match_large_layer_last": bj_last.tolist(),
+            "target_layer_band": [list(target_layer_band(i, pair))
+                                  for i in range(pair.n_layers_small + 1)],
         }
         print(f"\n[{name}] prompts={g['n_prompts']} "
               f"train_tok={g['n_train_tokens']} test_tok={g['n_test_tokens']}")
-        print(f"  {pair.small_tag} layer :  best-R2(all)  best-R2(last)  ->{pair.large_tag}(all)")
+        print(f"  {pair.small_tag} layer :  band   best-R2(last) ->{pair.large_tag}   best-R2(all) ->{pair.large_tag}")
         for i in range(pair.n_layers_small + 1):
-            print(f"   {i:2d}      :   {br_all[i]:+.3f}        {br_last[i]:+.3f}        {bj_all[i]:2d}")
+            lo, hi = target_layer_band(i, pair)
+            print(f"   {i:2d}      : [{lo:2d},{hi:2d}]     {br_last[i]:+.3f}      {bj_last[i]:2d}"
+                  f"        {br_all[i]:+.3f}      {bj_all[i]:2d}")
 
     # ── divergence layers (uses last-token best-R^2 curves) ───────────────────
     if "divergent" in out:
@@ -256,7 +289,10 @@ def run(pair: ModelPair) -> dict:
         print("=" * 60)
 
     out["config"] = {"ridge_alpha": RIDGE_ALPHA, "test_frac": TEST_FRAC,
-                     "seed": SEED, "n_splits": N_SPLITS}
+                     "seed": SEED, "n_splits": N_SPLITS,
+                     "depth_band": DEPTH_BAND, "min_target_layer": MIN_TARGET_LAYER,
+                     "drop_post_norm_layer": DROP_POST_NORM_LAYER,
+                     "onset_thresh": ONSET_THRESH, "onset_scan_start": ONSET_SCAN_START}
     with open(out_dir / "dm_summary.json", "w") as f:
         json.dump(out, f, indent=2)
     print(f"\nWrote {out_dir}/dm_summary.json and grids_*.npz")

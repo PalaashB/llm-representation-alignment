@@ -9,31 +9,37 @@ QUESTION 1 — can alignment identify the root cause of hallucination?
 Divergent set: 12 prompts (4 held-out answer positions)
 Control set  : 120 prompts
 
- 1B layer | best-R^2 (divergent) | best-R^2 (control) | gap
- ---------+----------------------+--------------------+-------
-    0    |       +1.000        |      +1.000       | +0.000
-    1    |       +1.000        |      +1.000       | +0.000
-    2    |       +1.000        |      +0.999       | +0.000
-    3    |       +0.999        |      +0.998       | +0.001
-    4    |       +0.996        |      +0.996       | -0.000
-    5    |       +0.994        |      +0.995       | -0.000
-    6    |       +0.994        |      +0.994       | -0.001
-    7    |       +0.992        |      +0.994       | -0.002
-    8    |       +0.993        |      +0.994       | -0.000
-    9    |       +0.989        |      +0.988       | +0.001
-   10    |       +0.904        |      +0.925       | -0.020  <- onset
-   11    |       +0.863        |      +0.894       | -0.032
-   12    |       +0.759        |      +0.807       | -0.048  <== hallucination-specific (root-cause candidate)
-   13    |       +0.760        |      +0.765       | -0.005
-   14    |       +0.729        |      +0.749       | -0.020
-   15    |       +0.748        |      +0.766       | -0.018
-   16    |       +0.768        |      +0.813       | -0.045
+Target 3B layer j is restricted to a depth-matched band around i/16*28
+(width +/-3, j >= 1, post-norm layer 28 excluded). An unrestricted argmax
+collapses onto the shallowest large layers and does not localise anything.
 
-VERDICT: through layers 0-9 the 1B representation is near-perfectly
+ 1B layer | band  | ->3B | best-R^2 (div) | ->3B | best-R^2 (ctrl) | gap
+ ---------+-------+------+----------------+------+-----------------+-------
+    0    |  1, 3 |   1  |     +0.862     |   1  |     +0.848      | +0.014
+    1    |  1, 5 |   1  |     +0.998     |   1  |     +0.996      | +0.002
+    2    |  1, 7 |   1  |     +0.998     |   1  |     +0.995      | +0.002
+    3    |  2, 9 |   2  |     +0.991     |   2  |     +0.987      | +0.003
+    4    |  4,10 |  10  |     +0.966     |  10  |     +0.971      | -0.005
+    5    |  5,12 |  11  |     +0.969     |  11  |     +0.977      | -0.008
+    6    |  7,14 |  11  |     +0.969     |  11  |     +0.977      | -0.008
+    7    |  9,16 |  11  |     +0.969     |  11  |     +0.976      | -0.007
+    8    | 11,17 |  11  |     +0.971     |  11  |     +0.976      | -0.005
+    9    | 12,19 |  12  |     +0.950     |  12  |     +0.958      | -0.008  <- onset
+   10    | 14,21 |  14  |     +0.775     |  14  |     +0.835      | -0.060
+   11    | 16,23 |  16  |     +0.561     |  16  |     +0.708      | -0.147
+   12    | 18,24 |  18  |     +0.392     |  18  |     +0.556      | -0.163  <== hallucination-specific (root-cause candidate)
+   13    | 19,26 |  19  |     +0.334     |  19  |     +0.490      | -0.156
+   14    | 21,27 |  21  |     +0.233     |  21  |     +0.390      | -0.157
+   15    | 23,27 |  27  |     +0.158     |  23  |     +0.284      | -0.126
+   16    | 25,27 |  27  |     +0.176     |  27  |     +0.270      | -0.094
+
+VERDICT: through layers 0-8 the 1B representation is near-perfectly
 linearly translatable into the 3B space on BOTH hallucination
 and control prompts — the small model's early representations are not the
-problem. Translatability then falls off from layer 10 (onset), and on
+problem. Translatability then falls off from layer 9 (onset), and on
 hallucination prompts it drops further than on controls, with the largest
-hallucination-specific gap at layer 12 (gap -0.048).
+hallucination-specific gap at layer 12 (gap -0.163).
 Alignment thus localises the divergence to the layers around 12,
 the candidate root-cause region for the hallucination.
+Its depth-matched counterpart is 3B layer 18 — that is the
+layer an adapter would stitch into.

@@ -9,39 +9,45 @@ QUESTION 1 — can alignment identify the root cause of hallucination?
 Divergent set: 43 prompts (13 held-out answer positions)
 Control set  : 89 prompts
 
- 0.5B layer | best-R^2 (divergent) | best-R^2 (control) | gap
- ---------+----------------------+--------------------+-------
-    0    |       +1.000        |      +1.000       | -0.000
-    1    |       +0.999        |      +0.999       | +0.000
-    2    |       +0.999        |      +0.999       | -0.000
-    3    |       +0.999        |      +0.999       | -0.000
-    4    |       +0.999        |      +1.000       | -0.000
-    5    |       +0.999        |      +0.999       | -0.000
-    6    |       +0.999        |      +0.999       | -0.000
-    7    |       +0.999        |      +0.999       | -0.000
-    8    |       +0.999        |      +0.999       | -0.000
-    9    |       +0.999        |      +0.999       | -0.000
-   10    |       +0.999        |      +0.999       | -0.001
-   11    |       +0.999        |      +0.999       | -0.000
-   12    |       +0.999        |      +0.999       | -0.000
-   13    |       +0.997        |      +0.998       | -0.001
-   14    |       +0.998        |      +0.998       | -0.000
-   15    |       +0.983        |      +0.992       | -0.008
-   16    |       +0.978        |      +0.982       | -0.004
-   17    |       +0.965        |      +0.972       | -0.008
-   18    |       +0.945        |      +0.972       | -0.027  <- onset
-   19    |       +0.946        |      +0.971       | -0.024
-   20    |       +0.938        |      +0.962       | -0.024
-   21    |       +0.872        |      +0.885       | -0.013
-   22    |       +0.708        |      +0.757       | -0.049  <== hallucination-specific (root-cause candidate)
-   23    |       +0.693        |      +0.722       | -0.029
-   24    |       +0.746        |      +0.759       | -0.013
+Target 3B layer j is restricted to a depth-matched band around i/24*36
+(width +/-3, j >= 1, post-norm layer 36 excluded). An unrestricted argmax
+collapses onto the shallowest large layers and does not localise anything.
 
-VERDICT: through layers 0-17 the 0.5B representation is near-perfectly
+ 0.5B layer | band  | ->3B | best-R^2 (div) | ->3B | best-R^2 (ctrl) | gap
+ ---------+-------+------+----------------+------+-----------------+-------
+    0    |  1, 3 |   3  |     +0.993     |   3  |     +0.994      | -0.002
+    1    |  1, 5 |   3  |     +0.997     |   3  |     +0.997      | -0.000
+    2    |  1, 6 |   1  |     +0.996     |   3  |     +0.997      | -0.001
+    3    |  1, 8 |   3  |     +0.999     |   3  |     +0.999      | -0.000
+    4    |  3, 9 |   3  |     +0.999     |   3  |     +1.000      | -0.000
+    5    |  4,11 |   4  |     +0.999     |   4  |     +0.999      | -0.000
+    6    |  6,12 |   6  |     +0.998     |   6  |     +0.999      | -0.000
+    7    |  7,14 |   7  |     +0.998     |   7  |     +0.998      | -0.000
+    8    |  9,15 |  15  |     +0.998     |  15  |     +0.998      | -0.001
+    9    | 10,17 |  15  |     +0.998     |  15  |     +0.998      | -0.000
+   10    | 12,18 |  15  |     +0.997     |  15  |     +0.998      | -0.001
+   11    | 13,20 |  15  |     +0.997     |  15  |     +0.998      | -0.000
+   12    | 15,21 |  15  |     +0.997     |  15  |     +0.998      | -0.001
+   13    | 16,23 |  16  |     +0.995     |  16  |     +0.996      | -0.001
+   14    | 18,24 |  18  |     +0.994     |  18  |     +0.995      | -0.001
+   15    | 19,26 |  21  |     +0.968     |  21  |     +0.984      | -0.015
+   16    | 21,27 |  21  |     +0.959     |  21  |     +0.973      | -0.014
+   17    | 22,29 |  22  |     +0.943     |  22  |     +0.962      | -0.018  <- onset
+   18    | 24,30 |  24  |     +0.907     |  24  |     +0.956      | -0.050
+   19    | 25,32 |  25  |     +0.894     |  26  |     +0.949      | -0.055
+   20    | 27,33 |  27  |     +0.857     |  27  |     +0.926      | -0.069
+   21    | 28,35 |  28  |     +0.702     |  28  |     +0.792      | -0.090
+   22    | 30,35 |  35  |     -0.054     |  35  |     +0.096      | -0.151
+   23    | 31,35 |  35  |     -0.030     |  35  |     +0.125      | -0.156
+   24    | 33,35 |  35  |     -0.029     |  35  |     +0.200      | -0.229  <== hallucination-specific (root-cause candidate)
+
+VERDICT: through layers 0-16 the 0.5B representation is near-perfectly
 linearly translatable into the 3B space on BOTH hallucination
 and control prompts — the small model's early representations are not the
-problem. Translatability then falls off from layer 18 (onset), and on
+problem. Translatability then falls off from layer 17 (onset), and on
 hallucination prompts it drops further than on controls, with the largest
-hallucination-specific gap at layer 22 (gap -0.049).
-Alignment thus localises the divergence to the layers around 22,
+hallucination-specific gap at layer 24 (gap -0.229).
+Alignment thus localises the divergence to the layers around 24,
 the candidate root-cause region for the hallucination.
+Its depth-matched counterpart is 3B layer 35 — that is the
+layer an adapter would stitch into.

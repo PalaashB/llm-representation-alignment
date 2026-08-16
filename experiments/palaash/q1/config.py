@@ -91,8 +91,50 @@ TRAIN_TOK_CAP = 1200    # cap fitted train tokens per split (bounds compute)
 TEST_TOK_CAP = 800      # cap held-out non-final tokens per split (last tokens always kept)
 SEED = 0
 
+# ── Target-layer selection (which large layer j a small layer i is matched to) ─
+# A bare argmax over all j is degenerate: early residual-stream layers are
+# near-deterministic functions of token identity, which the small model retains
+# at every depth, so "best over all j" collapses toward the shallow end (for the
+# llama pair on r2_last, j=0 wins for 16 of 17 small layers; mean R² is 0.91 at
+# j=0 vs a median of 0.67 across j>=1). We therefore restrict j to a band around
+# i's *relative depth*, which is also the only regime where the chosen j is a
+# plausible stitching target.
+DEPTH_BAND = 3          # allow |j - i/n_small*n_large| <= this many large layers
+MIN_TARGET_LAYER = 1    # never match into the large model's embedding layer
+DROP_POST_NORM_LAYER = True
+# ^ HF returns n_layers+1 hidden states, but the final one is the output of
+#   model.norm, not a residual stream. Its scale is discontinuous with the rest
+#   (llama-3B: RMS climbs smoothly 0.018 -> 0.525 over layers 0-27, then jumps
+#   to 1.622 at layer 28), and it is not a valid injection point, so exclude it.
+
+ONSET_THRESH = 0.95     # best-match R² below this counts as "no longer translatable"
+ONSET_SCAN_START = 1
+# ^ Start the onset scan at layer 1. Layer 0 is the small model's embedding
+#   table, which has no sensible depth-matched counterpart (its band sits at
+#   large layers 1-3, giving R²~0.86) and would otherwise trip the threshold
+#   immediately and report onset=0 for every selection rule.
+
 # ── CKA ───────────────────────────────────────────────────────────────────────
 CKA_ROW_CAP = 1200      # cap rows used for the all-token CKA grid (Gram matrices are n x n)
+
+# ── Stitching (fit_adapter / stitch) ──────────────────────────────────────────
+# The DM grid is a *diagnostic*: train_dm never materialises W (it solves for R²
+# through a hat matrix). Stitching needs the map itself, so fit_adapter re-solves
+# the ridge normal equations explicitly for one (i, j) and saves W/b.
+ADAPTER_FIT_SET = "control"   # "control" | "all" | "divergent" — rows the saved map is fit on
+ADAPTER_TEST_FRAC = 0.25      # prompt-level holdout, used only to *report* map quality
+STITCH_MAX_NEW_TOKENS = 24    # greedy budget for the lockstep stitched decode
+
+PRESERVE_PREFIX = 1
+# ^ Number of leading token positions left as the large model's OWN residual
+#   stream when injecting. This is a correctness requirement, not a knob.
+#   Position 0 is the attention sink / massive-activation token: at llama-3B
+#   layer 18 its residual norm is ~762 against ~12-23 for every other position.
+#   The adapter under-predicts it by >2x (it is also outside the fit: LAST_K=64
+#   keeps only the final 64 rows, and these prompts run 72-73 tokens, so BOS was
+#   never a fitted row). Overwriting it destroys attention globally and the
+#   large model emits pure noise; preserving position 0 alone restores coherent
+#   output. Verified by sweeping this value — 0 fails, 1 and above are identical.
 
 # ── Paths ─────────────────────────────────────────────────────────────────────
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -117,3 +159,15 @@ def cka_dir(pair: ModelPair) -> Path:
 
 def figures_dir(pair: ModelPair) -> Path:
     return results_dir(pair) / "figures"
+
+
+def adapters_dir(pair: ModelPair) -> Path:
+    return results_dir(pair) / "adapters"
+
+
+def stitch_dir(pair: ModelPair) -> Path:
+    return results_dir(pair) / "stitch"
+
+
+def adapter_path(pair: ModelPair, i: int, j: int) -> Path:
+    return adapters_dir(pair) / f"adapter_i{i:02d}_j{j:02d}.npz"

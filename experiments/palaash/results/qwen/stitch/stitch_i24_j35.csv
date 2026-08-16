@@ -1,0 +1,2 @@
+prompt_id,set,question,gold,small,large,stitched,small_first_token,large_first_token,stitched_first_token,first_token_eq_large,first_token_eq_small,stitched_eq_large,stitched_eq_small
+,custom,What is the capital of New Zealand?,,Wellington,Wellington,Well0y,Well,Well,Well,True,True,False,False

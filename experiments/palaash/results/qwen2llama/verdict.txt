@@ -9,36 +9,45 @@ QUESTION 1 — can alignment identify the root cause of hallucination?
 Divergent set: 45 prompts (14 held-out answer positions)
 Control set  : 86 prompts
 
- Qwen-0.5B layer | best-R^2 (divergent) | best-R^2 (control) | gap
- ---------+----------------------+--------------------+-------
-    0    |       +0.000        |      +0.000       | +0.000  <- onset
-    1    |       +0.453        |      +0.542       | -0.088
-    2    |       +0.561        |      +0.662       | -0.101
-    3    |       +0.597        |      +0.671       | -0.075
-    4    |       +0.603        |      +0.668       | -0.066
-    5    |       +0.612        |      +0.675       | -0.063
-    6    |       +0.597        |      +0.668       | -0.071
-    7    |       +0.592        |      +0.666       | -0.074
-    8    |       +0.605        |      +0.676       | -0.071
-    9    |       +0.603        |      +0.688       | -0.085
-   10    |       +0.570        |      +0.674       | -0.104
-   11    |       +0.572        |      +0.684       | -0.112
-   12    |       +0.590        |      +0.665       | -0.075
-   13    |       +0.540        |      +0.680       | -0.141
-   14    |       +0.461        |      +0.661       | -0.199
-   15    |       +0.477        |      +0.653       | -0.177
-   16    |       +0.450        |      +0.654       | -0.203
-   17    |       +0.419        |      +0.633       | -0.215
-   18    |       +0.463        |      +0.654       | -0.191
-   19    |       +0.452        |      +0.657       | -0.204
-   20    |       +0.448        |      +0.643       | -0.196
-   21    |       +0.438        |      +0.627       | -0.189
-   22    |       +0.374        |      +0.590       | -0.216
-   23    |       +0.369        |      +0.592       | -0.223  <== hallucination-specific (root-cause candidate)
-   24    |       +0.369        |      +0.590       | -0.221
+Target Llama-3B layer j is restricted to a depth-matched band around i/24*28
+(width +/-3, j >= 1, post-norm layer 28 excluded). An unrestricted argmax
+collapses onto the shallowest large layers and does not localise anything.
 
-VERDICT: translatability of the Qwen-0.5B into the Llama-3B space falls off already from layer 0 (onset), and on
+ Qwen-0.5B layer | band  | ->Llama-3B | best-R^2 (div) | ->Llama-3B | best-R^2 (ctrl) | gap
+ ---------+-------+------+----------------+------+-----------------+-------
+    0    |  1, 3 |   1  |     +0.000     |   2  |     +0.000      | -0.000
+    1    |  1, 5 |   1  |     +0.453     |   1  |     +0.542      | -0.088  <- onset
+    2    |  1, 6 |   1  |     +0.561     |   1  |     +0.662      | -0.101
+    3    |  1, 7 |   1  |     +0.597     |   1  |     +0.671      | -0.075
+    4    |  1, 8 |   1  |     +0.603     |   1  |     +0.668      | -0.066
+    5    |  2, 9 |   3  |     +0.551     |   4  |     +0.675      | -0.124
+    6    |  4,10 |   4  |     +0.483     |   4  |     +0.668      | -0.185
+    7    |  5,12 |   6  |     +0.452     |   7  |     +0.659      | -0.207
+    8    |  6,13 |   6  |     +0.458     |   7  |     +0.666      | -0.207
+    9    |  7,14 |   8  |     +0.461     |   7  |     +0.688      | -0.227  <== hallucination-specific (root-cause candidate)
+   10    |  8,15 |   8  |     +0.464     |   8  |     +0.668      | -0.204
+   11    |  9,16 |  10  |     +0.494     |  10  |     +0.656      | -0.162
+   12    | 11,17 |  11  |     +0.483     |  11  |     +0.631      | -0.148
+   13    | 12,19 |  12  |     +0.425     |  12  |     +0.622      | -0.198
+   14    | 13,20 |  13  |     +0.356     |  13  |     +0.574      | -0.219
+   15    | 14,21 |  15  |     +0.411     |  15  |     +0.599      | -0.188
+   16    | 15,22 |  15  |     +0.407     |  15  |     +0.610      | -0.203
+   17    | 16,23 |  16  |     +0.237     |  16  |     +0.404      | -0.167
+   18    | 18,24 |  18  |     +0.095     |  18  |     +0.322      | -0.227
+   19    | 19,26 |  19  |     +0.083     |  19  |     +0.268      | -0.185
+   20    | 20,27 |  20  |     +0.002     |  20  |     +0.183      | -0.181
+   21    | 21,27 |  21  |     +0.014     |  21  |     +0.140      | -0.126
+   22    | 22,27 |  22  |     +0.037     |  22  |     +0.134      | -0.097
+   23    | 23,27 |  23  |     +0.052     |  23  |     +0.170      | -0.118
+   24    | 25,27 |  25  |     +0.027     |  25  |     +0.159      | -0.132
+
+VERDICT: through layers 0-0 the Qwen-0.5B representation is near-perfectly
+linearly translatable into the Llama-3B space on BOTH hallucination
+and control prompts — the small model's early representations are not the
+problem. Translatability then falls off from layer 1 (onset), and on
 hallucination prompts it drops further than on controls, with the largest
-hallucination-specific gap at layer 23 (gap -0.223).
-Alignment thus localises the divergence to the layers around 23,
+hallucination-specific gap at layer 9 (gap -0.227).
+Alignment thus localises the divergence to the layers around 9,
 the candidate root-cause region for the hallucination.
+Its depth-matched counterpart is Llama-3B layer 8 — that is the
+layer an adapter would stitch into.

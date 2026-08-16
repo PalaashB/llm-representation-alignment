@@ -10,7 +10,8 @@ folder is self-documenting:
      hallucination prompts. That is the candidate root-cause layer.
 
   2. heatmap_divergent.png / heatmap_control.png — full (small layer x large
-     layer) R^2 grids, showing which large layer each small layer best maps into.
+     layer) R^2 grids, with the depth-matched selection band and the target
+     layer actually chosen for each small layer overlaid.
 
 The script is plot-optional: if matplotlib is unavailable it still prints the
 numeric verdict from dm_summary.json.
@@ -39,6 +40,9 @@ def run(pair: ModelPair) -> None:
     have_ctrl = "control" in s
     bd = np.array(s["divergent"]["best_r2_last_per_small_layer"])
     bc = np.array(s["control"]["best_r2_last_per_small_layer"]) if have_ctrl else None
+    jd = np.array(s["divergent"]["best_match_large_layer_last"])
+    jc = np.array(s["control"]["best_match_large_layer_last"]) if have_ctrl else None
+    bands = s["divergent"].get("target_layer_band")
     layers = np.arange(pair.n_layers_small + 1)
     div = s.get("divergence", {})
     onset = div.get("onset_layer")
@@ -59,17 +63,29 @@ def run(pair: ModelPair) -> None:
                  f"({s['divergent']['n_test_last_tokens']} held-out answer positions)")
     if have_ctrl:
         lines.append(f"Control set  : {s['control']['n_prompts']} prompts")
-    lines.append(f"\n {small} layer | best-R^2 (divergent) | best-R^2 (control) | gap")
-    lines.append(" ---------+----------------------+--------------------+-------")
+    if bands is not None:
+        lines.append(f"\nTarget {large} layer j is restricted to a depth-matched band around "
+                     f"i/{pair.n_layers_small}*{pair.n_layers_large}\n"
+                     f"(width +/-{s.get('config', {}).get('depth_band', '?')}, "
+                     f"j >= {s.get('config', {}).get('min_target_layer', '?')}"
+                     + (f", post-norm layer {pair.n_layers_large} excluded)"
+                        if s.get("config", {}).get("drop_post_norm_layer") else ")")
+                     + ". An unrestricted argmax\ncollapses onto the shallowest large layers "
+                       "and does not localise anything.")
+    lines.append(f"\n {small} layer | band  | ->{large} | best-R^2 (div) | ->{large} | best-R^2 (ctrl) | gap")
+    lines.append(" ---------+-------+------+----------------+------+-----------------+-------")
     for i in layers:
         g = (bd[i] - bc[i]) if have_ctrl else float("nan")
         cstr = f"{bc[i]:+.3f}" if have_ctrl else "  n/a "
+        jcstr = f"{jc[i]:2d}" if have_ctrl else "n/a"
+        bstr = f"{bands[i][0]:2d},{bands[i][1]:2d}" if bands is not None else " n/a "
         mark = ""
         if i == onset:
             mark += "  <- onset"
         if i == dlayer:
             mark += "  <== hallucination-specific (root-cause candidate)"
-        lines.append(f"   {i:2d}    |       {bd[i]:+.3f}        |      {cstr}       | {g:+.3f}{mark}")
+        lines.append(f"   {i:2d}    | {bstr} |  {jd[i]:2d}  |     {bd[i]:+.3f}     "
+                     f"|  {jcstr}  |     {cstr}      | {g:+.3f}{mark}")
 
     if onset is not None:
         early = (f"through layers 0-{onset - 1} the {small} representation is near-perfectly\n"
@@ -83,7 +99,9 @@ def run(pair: ModelPair) -> None:
                      f"hallucination-specific gap at layer {dlayer} "
                      f"(gap {div.get('max_gap', float('nan')):+.3f}).\n"
                      f"Alignment thus localises the divergence to the layers around {dlayer},\n"
-                     f"the candidate root-cause region for the hallucination.")
+                     f"the candidate root-cause region for the hallucination.\n"
+                     f"Its depth-matched counterpart is {large} layer {jd[dlayer]} — that is the\n"
+                     f"layer an adapter would stitch into.")
 
     verdict = "\n".join(lines) + "\n"
     print(verdict, end="")
@@ -126,16 +144,27 @@ def run(pair: ModelPair) -> None:
     fig.savefig(fig_dir / "divergence_curve.png", dpi=140)
     plt.close(fig)
 
-    # Figures 2/3: heatmaps
+    # Figures 2/3: heatmaps. Plot r2_last — the same metric the verdict above is
+    # computed from — and overlay the depth-matched selection band plus the j
+    # actually chosen, so a degenerate selection is visible at a glance.
+    sel_j = {"divergent": jd, "control": jc}
     for name in (["divergent", "control"] if have_ctrl else ["divergent"]):
-        g = np.load(dm_dir(pair) / f"grids_{name}.npz")["r2_all"]
+        g = np.load(dm_dir(pair) / f"grids_{name}.npz")["r2_last"]
         fig, ax = plt.subplots(figsize=(8, 5))
         im = ax.imshow(g, aspect="auto", origin="lower", cmap="viridis",
                        vmin=max(-1.0, np.nanmin(g)), vmax=1.0)
+        if bands is not None:
+            lo = [b[0] - 0.5 for b in bands]
+            hi = [b[1] + 0.5 for b in bands]
+            ax.plot(lo, layers, color="w", lw=1.0, ls=":", alpha=0.8)
+            ax.plot(hi, layers, color="w", lw=1.0, ls=":", alpha=0.8,
+                    label="depth-matched band")
+        ax.plot(sel_j[name], layers, "o", ms=3.5, color="#e74c3c", label="selected j")
         ax.set_xlabel(f"{large} hidden layer j")
         ax.set_ylabel(f"{small} hidden layer i")
-        ax.set_title(f"DM held-out R²(i→j) — {name} set ({pair.name})")
-        fig.colorbar(im, ax=ax, label="R²")
+        ax.set_title(f"DM held-out R²(i→j), answer token — {name} set ({pair.name})")
+        ax.legend(loc="lower right", fontsize=8, framealpha=0.75)
+        fig.colorbar(im, ax=ax, label="R² (last)")
         fig.tight_layout()
         fig.savefig(fig_dir / f"heatmap_{name}.png", dpi=140)
         plt.close(fig)

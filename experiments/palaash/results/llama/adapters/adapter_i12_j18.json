@@ -1,0 +1,44 @@
+{
+  "pair": "llama",
+  "small_id": "meta-llama/Llama-3.2-1B-Instruct",
+  "large_id": "meta-llama/Llama-3.2-3B-Instruct",
+  "align": "token",
+  "small_layer_i": 12,
+  "large_layer_j": 18,
+  "dim_small": 2048,
+  "dim_large": 3072,
+  "n_layers_small": 16,
+  "n_layers_large": 28,
+  "form": "Y_hat = ((X - mu_x) / sd_x) @ W + b",
+  "injection_point": "input to large decoder block 18 (== hidden_states[18] with output_hidden_states=True)",
+  "fit_set": "control",
+  "n_fit_rows": 7680,
+  "n_fit_prompts": 120,
+  "ridge_alpha": 0.1,
+  "seed": 0,
+  "holdout_frac_for_reporting": 0.25,
+  "in_sample": {
+    "cosine_mean": 0.9956583380699158,
+    "cosine_median": 0.9999918341636658,
+    "rel_l2_mean": 0.040374670177698135,
+    "rel_l2_median": 0.005394954700022936,
+    "r2": 0.9845616274414626,
+    "n_rows": 7680
+  },
+  "held_out": {
+    "cosine_mean": 0.9722198247909546,
+    "cosine_median": 0.9999929666519165,
+    "rel_l2_mean": 0.08648203313350677,
+    "rel_l2_median": 0.005146731156855822,
+    "r2": 0.9101104343750943,
+    "n_rows": 1920
+  },
+  "held_out_last_token": {
+    "cosine_mean": 0.8284239172935486,
+    "cosine_median": 0.8684818744659424,
+    "rel_l2_mean": 0.5403624176979065,
+    "rel_l2_median": 0.5008381605148315,
+    "r2": 0.3432447481151848,
+    "n_rows": 30
+  }
+}
