@@ -1,7 +1,7 @@
 """Synthetic smoke test: run extract -> train -> analyze on fake hidden states,
 without downloading or loading any real model weights.
 
-It patches q1.extract_states.hidden_states_for_prompt with a deterministic fake
+It patches diagnosis.extract_states.hidden_states_for_prompt with a deterministic fake
 whose small- and large-"model" states share a low-dim latent per prompt (so the
 DM ridge fit has real linear signal), and points RESULTS_ROOT at a temp dir.
 
@@ -12,8 +12,8 @@ Covers:
   * a token-aligned pair (llama) — equal sequence lengths, LAST_K rows kept —
     to confirm the existing path still produces the same layout.
 
-Run from the repo root:
-    ./venv/bin/python tests/smoke_synthetic.py
+Run from experiments/palaash:
+    python tests/smoke_synthetic.py
 """
 
 import json
@@ -28,10 +28,10 @@ import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-import q1.config as config
-from q1.config import PAIRS, LAST_K
-from q1 import extract_states, train_dm, analyze, cka, fit_adapter
-from q1.prompts import PROMPTS
+import diagnosis.config as config
+from diagnosis.config import PAIRS, LAST_K
+from diagnosis import extract_states, train_dm, analyze, cka, fit_adapter
+from common.prompts import PROMPTS
 
 LATENT = 32          # shared latent dim linking small and large fake states
 _PROJ_CACHE = {}

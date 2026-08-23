@@ -1,0 +1,1240 @@
+{
+  "pair": "llama",
+  "bank": "list",
+  "small_layer_i": 12,
+  "large_layer_j": 14,
+  "depth_matched_j": 21,
+  "split": "dev",
+  "mode": "exit",
+  "device": "mps",
+  "adapter_kind": "mlp",
+  "adapter_taps": [
+    6,
+    12
+  ],
+  "n_prompts": 45,
+  "skipped_large_blocks": 14,
+  "skipped_small_blocks": 4,
+  "paths": {
+    "small": {
+      "label": "1B",
+      "latency": {
+        "prefill_ms": 44.75604195613414,
+        "decode_ms_per_token": 24.40125000430271,
+        "tokens_per_second": 40.98150708769708,
+        "decode_ms_per_token_all": [
+          24.40125000430271,
+          24.402957991696894,
+          24.634041998069733,
+          24.8019170248881,
+          24.819749989546835,
+          24.989791971165687,
+          25.286999996751547,
+          25.428041990380734
+        ],
+        "decode_ms_per_token_median": 24.819749989546835,
+        "decode_spread": 1.042079483055047,
+        "latency_suspect": false,
+        "total_ms_at_64_tokens": 1644.5558962295763,
+        "n_timed_prompts": 4,
+        "n_repeats": 2,
+        "decode_steps": 64,
+        "active_params_per_token": 1235814400
+      },
+      "accuracy": {
+        "n": 45,
+        "n_correct": 33,
+        "accuracy": 0.7333333333333333,
+        "mean_generated_tokens": 12.28888888888889,
+        "rows": [
+          {
+            "prompt_id": "year_ussr_euro",
+            "generation": "The Soviet Union was dissolved in 1991, and euro banknotes and coins were first circulated in 2002.",
+            "correct": true,
+            "n_generated": 25,
+            "n_items_found": 2,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "border_ec",
+            "generation": "Colombia, Peru",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 2,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "art_shakespeare_tragedies",
+            "generation": "Hamlet, Othello, King Lear, Macbeth.",
+            "correct": true,
+            "n_generated": 14,
+            "n_items_found": 4,
+            "n_items_required": 4
+          },
+          {
+            "prompt_id": "cap_au_nz_id",
+            "generation": "Canberra, Wellington, Jakarta",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "hard_border_gt",
+            "generation": "Belize, Honduras, El Salvador, Mexico",
+            "correct": true,
+            "n_generated": 10,
+            "n_items_found": 4,
+            "n_items_required": 4
+          },
+          {
+            "prompt_id": "border_np",
+            "generation": "India and Bhutan share a land border with Nepal.",
+            "correct": false,
+            "n_generated": 12,
+            "n_items_found": 1,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "hist_french_motto",
+            "generation": "Libert\u00e9, \u00c9galit\u00e9, Fraternit\u00e9",
+            "correct": true,
+            "n_generated": 12,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "geo_canada_oceans",
+            "generation": "Atlantic, Pacific, Arctic",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "sym_ba_br_b",
+            "generation": "Barium's symbol is Ba, bromine's symbol is Br, and boron's symbol is B.",
+            "correct": true,
+            "n_generated": 23,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "border_mn",
+            "generation": "China and Russia.",
+            "correct": true,
+            "n_generated": 5,
+            "n_items_found": 2,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "cap_fr_de_it",
+            "generation": "Paris, Berlin, Rome",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "sci_halogens_first3",
+            "generation": "Hydrogen, Helium, Lithium.",
+            "correct": false,
+            "n_generated": 11,
+            "n_items_found": 0,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "art_paint_primaries",
+            "generation": "Red, Yellow, Blue.",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "cap_eg_ke_ng",
+            "generation": "Cairo, Nairobi, Abuja",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "sci_water_elements",
+            "generation": "H2O",
+            "correct": false,
+            "n_generated": 4,
+            "n_items_found": 0,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "cap_no_se_dk",
+            "generation": "Oslo, Stockholm, Copenhagen",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "hard_border_sa",
+            "generation": "Jordan, Iraq, Kuwait, Oman, Qatar, United Arab Emirates, Yemen",
+            "correct": true,
+            "n_generated": 16,
+            "n_items_found": 7,
+            "n_items_required": 7
+          },
+          {
+            "prompt_id": "border_gr",
+            "generation": "North Macedonia, Bulgaria, Albania, Turkey",
+            "correct": true,
+            "n_generated": 9,
+            "n_items_found": 4,
+            "n_items_required": 4
+          },
+          {
+            "prompt_id": "border_de",
+            "generation": "Denmark, Poland, the Czech Republic, Austria, Switzerland, France, Belgium, the Netherlands, and Luxembourg.",
+            "correct": true,
+            "n_generated": 24,
+            "n_items_found": 9,
+            "n_items_required": 9
+          },
+          {
+            "prompt_id": "sci_states",
+            "generation": "Solid, Liquid, Gas.",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "art_olympic_medals",
+            "generation": "Gold, Silver, Bronze",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "sci_states_plasma",
+            "generation": "Solid, Liquid, Gas, Plasma",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 4,
+            "n_items_required": 4
+          },
+          {
+            "prompt_id": "border_ch",
+            "generation": "Austria, Germany, Italy, Liechtenstein, Slovenia",
+            "correct": false,
+            "n_generated": 13,
+            "n_items_found": 4,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "hard_cur_mixed1",
+            "generation": "Japanese yen, Indian rupee, Polish z\u0142oty, Swedish krona, Turkish lira.",
+            "correct": false,
+            "n_generated": 20,
+            "n_items_found": 4,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "math_squares",
+            "generation": "1, 4, 9, 16",
+            "correct": false,
+            "n_generated": 11,
+            "n_items_found": 3,
+            "n_items_required": 4
+          },
+          {
+            "prompt_id": "art_musketeers",
+            "generation": "Athos, Porthos, and Aramis.",
+            "correct": true,
+            "n_generated": 13,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "hard_border_za",
+            "generation": "Namibia, Botswana, Zimbabwe, Mozambique, Swaziland, Lesotho",
+            "correct": true,
+            "n_generated": 19,
+            "n_items_found": 6,
+            "n_items_required": 6
+          },
+          {
+            "prompt_id": "sci_rgb",
+            "generation": "Red, Green, Blue.",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "hard_border_ro",
+            "generation": "Austria, Bulgaria, Hungary, Moldova, Serbia",
+            "correct": false,
+            "n_generated": 12,
+            "n_items_found": 4,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "hard_border_ml",
+            "generation": "Burkina Faso, Niger, Algeria, Libya, Chad, Benin, Guinea.",
+            "correct": false,
+            "n_generated": 20,
+            "n_items_found": 4,
+            "n_items_required": 7
+          },
+          {
+            "prompt_id": "geo_baltic",
+            "generation": "Estonia, Latvia, Lithuania",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "sci_moon_phases",
+            "generation": "New Moon, Waxing Crescent, First Quarter, Waxing Gibbous",
+            "correct": false,
+            "n_generated": 16,
+            "n_items_found": 2,
+            "n_items_required": 4
+          },
+          {
+            "prompt_id": "border_bt",
+            "generation": "India and China share a land border with Bhutan.",
+            "correct": true,
+            "n_generated": 12,
+            "n_items_found": 2,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "hard_sym_five2",
+            "generation": "Cu, Zn, Ni, Co, Mn",
+            "correct": true,
+            "n_generated": 10,
+            "n_items_found": 5,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "hard_border_td",
+            "generation": "Central African Republic, South Sudan, Sudan, Libya, Niger, Cameroon",
+            "correct": false,
+            "n_generated": 15,
+            "n_items_found": 5,
+            "n_items_required": 6
+          },
+          {
+            "prompt_id": "geo_hispaniola",
+            "generation": "Haiti and the Dominican Republic.",
+            "correct": true,
+            "n_generated": 9,
+            "n_items_found": 2,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "art_lotr_books",
+            "generation": "The three volumes of The Lord of the Rings are The Fellowship of the Ring, The Two Towers, and The Return of the King.",
+            "correct": true,
+            "n_generated": 28,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "cap_be_nl_lu",
+            "generation": "Brussels, The Hague, and Luxembourg City.",
+            "correct": false,
+            "n_generated": 11,
+            "n_items_found": 2,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "sci_neuron_parts",
+            "generation": "Dendrites, Cell body, Axon.",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "geo_us_neighbours",
+            "generation": "Canada and Mexico share a land border with the United States.",
+            "correct": true,
+            "n_generated": 13,
+            "n_items_found": 2,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "sci_cell_division",
+            "generation": "Mitosis and Meiosis.",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 2,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "hard_cur_mideast",
+            "generation": "Israeli Shekel, Saudi Riyal, United Arab Emirates Dirham, Egyptian Pound, Nigerian Naira",
+            "correct": true,
+            "n_generated": 21,
+            "n_items_found": 5,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "sym_ni_co_cr",
+            "generation": "Ni, Co, Cr",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "hard_border_ar",
+            "generation": "Buenos Aires, Mendoza, Neuqu\u00e9n, Chubut, Tierra del Fuego",
+            "correct": false,
+            "n_generated": 22,
+            "n_items_found": 0,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "sci_dna_bases",
+            "generation": "Adenine, Guanine, Cytosine, Thymine",
+            "correct": true,
+            "n_generated": 16,
+            "n_items_found": 4,
+            "n_items_required": 4
+          }
+        ]
+      }
+    },
+    "large": {
+      "label": "3B",
+      "latency": {
+        "prefill_ms": 115.45858398312703,
+        "decode_ms_per_token": 60.24120899382979,
+        "tokens_per_second": 16.599932449935146,
+        "decode_ms_per_token_all": [
+          60.24120899382979,
+          60.24733395315707,
+          60.53541699657217,
+          61.962791020050645,
+          64.33358299545944,
+          64.78245800826699,
+          64.92825003806502,
+          66.46154198097065
+        ],
+        "decode_ms_per_token_median": 64.33358299545944,
+        "decode_spread": 1.1032571074026416,
+        "latency_suspect": false,
+        "total_ms_at_64_tokens": 4224.996104472666,
+        "n_timed_prompts": 4,
+        "n_repeats": 2,
+        "decode_steps": 64,
+        "active_params_per_token": 3212749824
+      },
+      "accuracy": {
+        "n": 45,
+        "n_correct": 41,
+        "accuracy": 0.9111111111111111,
+        "mean_generated_tokens": 10.333333333333334,
+        "rows": [
+          {
+            "prompt_id": "year_ussr_euro",
+            "generation": "1991, 2002",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 2,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "border_ec",
+            "generation": "Colombia, Peru",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 2,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "art_shakespeare_tragedies",
+            "generation": "Romeo and Juliet, Hamlet, Othello, Macbeth",
+            "correct": false,
+            "n_generated": 16,
+            "n_items_found": 3,
+            "n_items_required": 4
+          },
+          {
+            "prompt_id": "cap_au_nz_id",
+            "generation": "Canberra, Wellington, Jakarta",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "hard_border_gt",
+            "generation": "Mexico, Belize, Honduras, El Salvador",
+            "correct": true,
+            "n_generated": 9,
+            "n_items_found": 4,
+            "n_items_required": 4
+          },
+          {
+            "prompt_id": "border_np",
+            "generation": "India, China",
+            "correct": true,
+            "n_generated": 4,
+            "n_items_found": 2,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "hist_french_motto",
+            "generation": "Libert\u00e9, \u00c9galit\u00e9, Fraternit\u00e9",
+            "correct": true,
+            "n_generated": 12,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "geo_canada_oceans",
+            "generation": "Arctic Ocean, Atlantic Ocean, Pacific Ocean",
+            "correct": true,
+            "n_generated": 10,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "sym_ba_br_b",
+            "generation": "Ba, Br, B",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "border_mn",
+            "generation": "China, Russia",
+            "correct": true,
+            "n_generated": 4,
+            "n_items_found": 2,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "cap_fr_de_it",
+            "generation": "Paris, Berlin, Rome",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "sci_halogens_first3",
+            "generation": "Fluorine, Chlorine, Bromine",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "art_paint_primaries",
+            "generation": "Red, Yellow, Blue",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "cap_eg_ke_ng",
+            "generation": "Cairo, Nairobi, Abuja",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "sci_water_elements",
+            "generation": "Hydrogen, Oxygen",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 2,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "cap_no_se_dk",
+            "generation": "Oslo, Stockholm, Copenhagen",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "hard_border_sa",
+            "generation": "Jordan, Iraq, Kuwait, Oman, Qatar, United Arab Emirates, Yemen",
+            "correct": true,
+            "n_generated": 16,
+            "n_items_found": 7,
+            "n_items_required": 7
+          },
+          {
+            "prompt_id": "border_gr",
+            "generation": "Albania, Bulgaria, North Macedonia, Turkey",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 4,
+            "n_items_required": 4
+          },
+          {
+            "prompt_id": "border_de",
+            "generation": "Denmark, Poland, Czech Republic, Austria, Switzerland, France, Belgium, Netherlands, Luxembourg",
+            "correct": true,
+            "n_generated": 20,
+            "n_items_found": 9,
+            "n_items_required": 9
+          },
+          {
+            "prompt_id": "sci_states",
+            "generation": "Solid, Liquid, Gas",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "art_olympic_medals",
+            "generation": "Gold, Silver, Bronze",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "sci_states_plasma",
+            "generation": "Solid, Liquid, Gas, Plasma",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 4,
+            "n_items_required": 4
+          },
+          {
+            "prompt_id": "border_ch",
+            "generation": "Germany, France, Italy, Austria, Liechtenstein",
+            "correct": true,
+            "n_generated": 12,
+            "n_items_found": 5,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "hard_cur_mixed1",
+            "generation": "Japanese yen, Indian rupee, Polish z\u0142oty, Swedish krona, Turkish lira",
+            "correct": false,
+            "n_generated": 19,
+            "n_items_found": 4,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "math_squares",
+            "generation": "4, 9, 16, 25",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 4,
+            "n_items_required": 4
+          },
+          {
+            "prompt_id": "art_musketeers",
+            "generation": "Athos, Porthos, Aramis",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "hard_border_za",
+            "generation": "Namibia, Botswana, Zimbabwe, Mozambique, Eswatini, Lesotho",
+            "correct": true,
+            "n_generated": 20,
+            "n_items_found": 6,
+            "n_items_required": 6
+          },
+          {
+            "prompt_id": "sci_rgb",
+            "generation": "Red, Green, Blue",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "hard_border_ro",
+            "generation": "Ukraine, Bulgaria, Serbia, Hungary, Moldova",
+            "correct": true,
+            "n_generated": 12,
+            "n_items_found": 5,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "hard_border_ml",
+            "generation": "Algeria, Burkina Faso, Guinea, Libya, Niger, Senegal, and Mauritania.",
+            "correct": false,
+            "n_generated": 23,
+            "n_items_found": 6,
+            "n_items_required": 7
+          },
+          {
+            "prompt_id": "geo_baltic",
+            "generation": "Estonia, Latvia, Lithuania",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "sci_moon_phases",
+            "generation": "New Moon, Waxing Crescent, First Quarter, Waxing Gibbous",
+            "correct": false,
+            "n_generated": 16,
+            "n_items_found": 2,
+            "n_items_required": 4
+          },
+          {
+            "prompt_id": "border_bt",
+            "generation": "India, China",
+            "correct": true,
+            "n_generated": 4,
+            "n_items_found": 2,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "hard_sym_five2",
+            "generation": "Cu, Zn, Ni, Co, Mn",
+            "correct": true,
+            "n_generated": 10,
+            "n_items_found": 5,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "hard_border_td",
+            "generation": "Niger, Libya, Sudan, Central African Republic, Cameroon, Nigeria",
+            "correct": true,
+            "n_generated": 15,
+            "n_items_found": 6,
+            "n_items_required": 6
+          },
+          {
+            "prompt_id": "geo_hispaniola",
+            "generation": "Dominican Republic, Haiti",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 2,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "art_lotr_books",
+            "generation": "The Fellowship of the Ring, The Two Towers, The Return of the King",
+            "correct": true,
+            "n_generated": 16,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "cap_be_nl_lu",
+            "generation": "Brussels, Amsterdam, Luxembourg City",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "sci_neuron_parts",
+            "generation": "Dendrite, cell body, axon",
+            "correct": true,
+            "n_generated": 10,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "geo_us_neighbours",
+            "generation": "Canada, Mexico",
+            "correct": true,
+            "n_generated": 4,
+            "n_items_found": 2,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "sci_cell_division",
+            "generation": "Mitosis, Meiosis",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 2,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "hard_cur_mideast",
+            "generation": "Israeli Shekel, Saudi Riyal, United Arab Emirates Dirham, Egyptian Pound, Nigerian Naira",
+            "correct": true,
+            "n_generated": 21,
+            "n_items_found": 5,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "sym_ni_co_cr",
+            "generation": "Ni, Co, Cr",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "hard_border_ar",
+            "generation": "Bolivia, Chile, Paraguay, Uruguay, Brazil",
+            "correct": true,
+            "n_generated": 13,
+            "n_items_found": 5,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "sci_dna_bases",
+            "generation": "Adenine, Guanine, Cytosine, Thymine",
+            "correct": true,
+            "n_generated": 16,
+            "n_items_found": 4,
+            "n_items_required": 4
+          }
+        ]
+      }
+    },
+    "stitch": {
+      "label": "stitch-exit-t2-mlp-L12->L14",
+      "latency": {
+        "prefill_ms": 121.43745797220618,
+        "decode_ms_per_token": 49.90233399439603,
+        "tokens_per_second": 20.039142860778792,
+        "decode_ms_per_token_all": [
+          49.90233399439603,
+          49.98766694916412,
+          50.091832992620766,
+          50.27479102136567,
+          50.341791997198015,
+          50.81741698086262,
+          51.03566701291129,
+          51.87962495256215
+        ],
+        "decode_ms_per_token_median": 50.341791997198015,
+        "decode_spread": 1.0396232159880172,
+        "latency_suspect": false,
+        "total_ms_at_64_tokens": 3342.596307709755,
+        "n_timed_prompts": 4,
+        "n_repeats": 2,
+        "decode_steps": 64,
+        "active_params_per_token": 2553167872
+      },
+      "accuracy": {
+        "n": 45,
+        "n_correct": 24,
+        "accuracy": 0.5333333333333333,
+        "mean_generated_tokens": 10.155555555555555,
+        "rows": [
+          {
+            "prompt_id": "year_ussr_euro",
+            "generation": "Soviet Union, 1991, 1991, 1993",
+            "correct": false,
+            "n_generated": 17,
+            "n_items_found": 1,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "border_ec",
+            "generation": "Colombia, Peru",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 2,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "art_shakespeare_tragedies",
+            "generation": "Lion of Mede, The Seven, The Aeneum, The Histories",
+            "correct": false,
+            "n_generated": 18,
+            "n_items_found": 0,
+            "n_items_required": 4
+          },
+          {
+            "prompt_id": "cap_au_nz_id",
+            "generation": "Canberra, Wellington, Jakarta",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "hard_border_gt",
+            "generation": "Mexico, Belize, Honduras, El Salvador",
+            "correct": true,
+            "n_generated": 9,
+            "n_items_found": 4,
+            "n_items_required": 4
+          },
+          {
+            "prompt_id": "border_np",
+            "generation": "India, China",
+            "correct": true,
+            "n_generated": 4,
+            "n_items_found": 2,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "hist_french_motto",
+            "generation": "Tricolor, Tricolore",
+            "correct": false,
+            "n_generated": 7,
+            "n_items_found": 0,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "geo_canada_oceans",
+            "generation": "Arctic, Atlantic, Pacific",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "sym_ba_br_b",
+            "generation": "Ba, Br, B",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "border_mn",
+            "generation": "China, Russia",
+            "correct": true,
+            "n_generated": 4,
+            "n_items_found": 2,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "cap_fr_de_it",
+            "generation": "Paris, Berlin, Rome",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "sci_halogens_first3",
+            "generation": "Hydrogen, Helium, Lithium",
+            "correct": false,
+            "n_generated": 10,
+            "n_items_found": 0,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "art_paint_primaries",
+            "generation": "Red, Blue, Yellow",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "cap_eg_ke_ng",
+            "generation": "Cairo, Nairobi, Abuja",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "sci_water_elements",
+            "generation": "Hydrogen, Oxygen",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 2,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "cap_no_se_dk",
+            "generation": "Oslo, Copenhagen, Copenhagen",
+            "correct": false,
+            "n_generated": 7,
+            "n_items_found": 2,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "hard_border_sa",
+            "generation": "Jordan, Iraq, Oman, United Arab Emirates, Qatar, Bahrain, Kuwait",
+            "correct": false,
+            "n_generated": 16,
+            "n_items_found": 6,
+            "n_items_required": 7
+          },
+          {
+            "prompt_id": "border_gr",
+            "generation": "Albania, Bulgaria, North Macedonia, Turkey",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 4,
+            "n_items_required": 4
+          },
+          {
+            "prompt_id": "border_de",
+            "generation": "Denmark, Poland, Czech Republic, Austria, Switzerland, France, Belgium, Luxembourg, Netherlands",
+            "correct": true,
+            "n_generated": 20,
+            "n_items_found": 9,
+            "n_items_required": 9
+          },
+          {
+            "prompt_id": "sci_states",
+            "generation": "Solid, liquid, gas",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "art_olympic_medals",
+            "generation": "Gold, Silver, Bronze",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "sci_states_plasma",
+            "generation": "Solid, liquid, gas, plasma",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 4,
+            "n_items_required": 4
+          },
+          {
+            "prompt_id": "border_ch",
+            "generation": "Germany, France, Italy, Austria, Liechtenstein",
+            "correct": true,
+            "n_generated": 12,
+            "n_items_found": 5,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "hard_cur_mixed1",
+            "generation": "Japanese yen, Indian rupee, Polish z\u0142oty, Swedish krona, Turkish lira",
+            "correct": false,
+            "n_generated": 19,
+            "n_items_found": 4,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "math_squares",
+            "generation": "4, 8, 16, 36",
+            "correct": false,
+            "n_generated": 11,
+            "n_items_found": 2,
+            "n_items_required": 4
+          },
+          {
+            "prompt_id": "art_musketeers",
+            "generation": "Rene, Jean, Philippe",
+            "correct": false,
+            "n_generated": 7,
+            "n_items_found": 0,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "hard_border_za",
+            "generation": "Namibia, Botswana, Zambia, Zimbabwe, Mozambique, Eswatland",
+            "correct": false,
+            "n_generated": 18,
+            "n_items_found": 4,
+            "n_items_required": 6
+          },
+          {
+            "prompt_id": "sci_rgb",
+            "generation": "Red, Blue, Yellow",
+            "correct": false,
+            "n_generated": 6,
+            "n_items_found": 2,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "hard_border_ro",
+            "generation": "Ukraine, Bulgaria, Serbia, Hungary, Moldova",
+            "correct": true,
+            "n_generated": 12,
+            "n_items_found": 5,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "hard_border_ml",
+            "generation": "Algeria, Burkina Faso, Guinea, Ivory Coast, Niger, Senegal, and Mauritania.",
+            "correct": true,
+            "n_generated": 24,
+            "n_items_found": 7,
+            "n_items_required": 7
+          },
+          {
+            "prompt_id": "geo_baltic",
+            "generation": "Estonia, Latvia, Lithuania",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "sci_moon_phases",
+            "generation": "Crater, Magma, Core, Mantle",
+            "correct": false,
+            "n_generated": 11,
+            "n_items_found": 0,
+            "n_items_required": 4
+          },
+          {
+            "prompt_id": "border_bt",
+            "generation": "India, China",
+            "correct": true,
+            "n_generated": 4,
+            "n_items_found": 2,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "hard_sym_five2",
+            "generation": "Cu, Zn, Ni, Ni, Mn",
+            "correct": false,
+            "n_generated": 10,
+            "n_items_found": 4,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "hard_border_td",
+            "generation": "Cameroon, Central African Republic, Democratic Republic of the Congo, Libya, Nigeria, Sudan",
+            "correct": false,
+            "n_generated": 19,
+            "n_items_found": 5,
+            "n_items_required": 6
+          },
+          {
+            "prompt_id": "geo_hispaniola",
+            "generation": "Cuba, Haiti",
+            "correct": false,
+            "n_generated": 5,
+            "n_items_found": 1,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "art_lotr_books",
+            "generation": "Episody, The Descent of the Lord of Rings, The Return of the King",
+            "correct": false,
+            "n_generated": 19,
+            "n_items_found": 1,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "cap_be_nl_lu",
+            "generation": "Brussels, Amsterdam, Luxembourg",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "sci_neuron_parts",
+            "generation": "Cell membrane, axile, dendrium",
+            "correct": false,
+            "n_generated": 9,
+            "n_items_found": 0,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "geo_us_neighbours",
+            "generation": "Canada, Mexico",
+            "correct": true,
+            "n_generated": 4,
+            "n_items_found": 2,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "sci_cell_division",
+            "generation": "Prophase, Metaphase",
+            "correct": false,
+            "n_generated": 7,
+            "n_items_found": 0,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "hard_cur_mideast",
+            "generation": "Israeli Shekel, United Arab Emirates Dirham, Egyptian Pound, Nigerian Naira, Nigerian Naira",
+            "correct": false,
+            "n_generated": 21,
+            "n_items_found": 4,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "sym_ni_co_cr",
+            "generation": "Ni, Co, Cr",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "hard_border_ar",
+            "generation": "Bolivia, Chile, Paraguay, Peru, Uruguay",
+            "correct": false,
+            "n_generated": 13,
+            "n_items_found": 4,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "sci_dna_bases",
+            "generation": "Carbon, Hydrogen, Oxygen, Nitrogen",
+            "correct": false,
+            "n_generated": 10,
+            "n_items_found": 0,
+            "n_items_required": 4
+          }
+        ]
+      }
+    }
+  },
+  "tradeoff": {
+    "accuracy_small": 0.7333333333333333,
+    "accuracy_large": 0.9111111111111111,
+    "accuracy_stitch": 0.5333333333333333,
+    "acc_gap_vs_large_pts": -37.77777777777778,
+    "acc_gain_vs_small_pts": -19.999999999999996,
+    "gap_recovered": -1.1249999999999996,
+    "decode_speedup_vs_large": 1.2071821931333873,
+    "decode_speedup_small_vs_large": 2.4687755333520767,
+    "answer_tokens_priced": 10.333333333333334,
+    "end_to_end_ms": {
+      "small": 296.9022920005955,
+      "large": 737.9510769193682,
+      "stitch": 637.0949092476319
+    },
+    "end_to_end_speedup_vs_large": 1.158306346837461,
+    "end_to_end_speedup_small_vs_large": 2.485501448799486,
+    "params_frac_of_large": 0.7946986263689855
+  },
+  "adapter": {
+    "kind": "mlp",
+    "n_taps": 2,
+    "taps": [
+      6,
+      12
+    ],
+    "dim_in": 4096,
+    "mlp_hidden": 1024,
+    "n_map_params": 19930112,
+    "ridge_alpha": 0.01,
+    "answer_weight": 4.0,
+    "norm_match": true,
+    "norm_gain": 1.009109377861023,
+    "n_rows": 8531,
+    "n_answer_rows": 1111,
+    "held_out_r2_all": 0.9982622352129248,
+    "held_out_r2_answer": 0.3130942147194
+  }
+}

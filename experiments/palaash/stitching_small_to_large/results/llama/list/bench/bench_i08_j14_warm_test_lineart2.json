@@ -1,0 +1,1240 @@
+{
+  "pair": "llama",
+  "bank": "list",
+  "small_layer_i": 8,
+  "large_layer_j": 14,
+  "depth_matched_j": 14,
+  "split": "test",
+  "mode": "warm",
+  "device": "mps",
+  "adapter_kind": "linear",
+  "adapter_taps": [
+    4,
+    8
+  ],
+  "n_prompts": 45,
+  "skipped_large_blocks": 14,
+  "skipped_small_blocks": 8,
+  "paths": {
+    "small": {
+      "label": "1B",
+      "latency": {
+        "prefill_ms": 44.80237502139062,
+        "decode_ms_per_token": 24.097624991554767,
+        "tokens_per_second": 41.49786546808904,
+        "decode_ms_per_token_all": [
+          24.097624991554767,
+          24.10854201298207,
+          24.13620799779892,
+          24.13862501271069,
+          24.14387499447912,
+          24.150666955392808,
+          24.184125009924173,
+          24.211834010202438
+        ],
+        "decode_ms_per_token_median": 24.14387499447912,
+        "decode_spread": 1.0047394304910835,
+        "latency_suspect": false,
+        "total_ms_at_64_tokens": 1574.3156390890363,
+        "n_timed_prompts": 4,
+        "n_repeats": 2,
+        "decode_steps": 64,
+        "active_params_per_token": 1235814400
+      },
+      "accuracy": {
+        "n": 45,
+        "n_correct": 33,
+        "accuracy": 0.7333333333333333,
+        "mean_generated_tokens": 15.355555555555556,
+        "rows": [
+          {
+            "prompt_id": "border_kh",
+            "generation": "Laos, Thailand, Vietnam",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "year_ww1",
+            "generation": "World War I began in 1914 and ended in 1918.",
+            "correct": true,
+            "n_generated": 16,
+            "n_items_found": 2,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "border_fi",
+            "generation": "Estonia, Latvia, Russia",
+            "correct": false,
+            "n_generated": 8,
+            "n_items_found": 1,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "sci_heart_chambers",
+            "generation": "The four chambers of the human heart are: \n\n1. Right Atrium \n2. Right Ventricle \n3. Left Atrium \n4. Left Ventricle",
+            "correct": true,
+            "n_generated": 38,
+            "n_items_found": 4,
+            "n_items_required": 4
+          },
+          {
+            "prompt_id": "math_square_roots",
+            "generation": "The square roots of 144 are 12, 12, and 12.\n\nThe square roots of 169 are 13, 13, and 13.\n\nThe square roots of 196 are 14, 14, and 14.",
+            "correct": true,
+            "n_generated": 52,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "geo_nordic",
+            "generation": "Denmark, Finland, Norway, Sweden, Iceland",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 5,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "cap_in_pk_bd",
+            "generation": "New Delhi, Islamabad, Dhaka.",
+            "correct": true,
+            "n_generated": 9,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "hard_border_tr",
+            "generation": "Armenia, Azerbaijan, Georgia, Iran, Iraq, Syria, United States, United Kingdom",
+            "correct": false,
+            "n_generated": 20,
+            "n_items_found": 6,
+            "n_items_required": 8
+          },
+          {
+            "prompt_id": "geo_nyc_boroughs",
+            "generation": "Manhattan, Brooklyn, Queens, The Bronx, Staten Island",
+            "correct": true,
+            "n_generated": 13,
+            "n_items_found": 5,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "math_powers_of_two",
+            "generation": "2^1, 2^2, 2^3, 2^4",
+            "correct": false,
+            "n_generated": 19,
+            "n_items_found": 0,
+            "n_items_required": 4
+          },
+          {
+            "prompt_id": "border_no",
+            "generation": "Sweden, Finland, Russia",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "cap_sa_ir_iq",
+            "generation": "Riyadh, Tehran, Baghdad",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "hard_cap_southasia",
+            "generation": "Colombo, Kathmandu, Thimphu, Male, Kabul",
+            "correct": true,
+            "n_generated": 16,
+            "n_items_found": 5,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "cap_ph_mm_np",
+            "generation": "Manila, Naypyidaw, Kathmandu.",
+            "correct": true,
+            "n_generated": 13,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "sci_triangles",
+            "generation": "Acute, Right, Obtuse",
+            "correct": false,
+            "n_generated": 8,
+            "n_items_found": 0,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "hard_cap_easteurope",
+            "generation": "Tallinn, Riga, Vilnius, Minsk, Chisinau.",
+            "correct": true,
+            "n_generated": 20,
+            "n_items_found": 5,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "sym_mg_mn_al",
+            "generation": "Magnesium's symbol is Mg, manganese's symbol is Mn, and aluminium's symbol is Al.",
+            "correct": true,
+            "n_generated": 21,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "geo_korea",
+            "generation": "North Korea and South Korea.",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 2,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "border_af",
+            "generation": "Azerbaijan, Iran, Pakistan, Tajikistan, Turkmenistan, Uzbekistan",
+            "correct": false,
+            "n_generated": 19,
+            "n_items_found": 5,
+            "n_items_required": 6
+          },
+          {
+            "prompt_id": "border_uy",
+            "generation": "Brazil and Argentina share a land border with Uruguay.",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 2,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "geo_benelux",
+            "generation": "Belgium, Netherlands, Luxembourg",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "cap_jp_kr_cn",
+            "generation": "Tokyo, Seoul, Beijing",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "geo_continents",
+            "generation": "Africa, Antarctica, Asia, Australia, Europe, North America, South America",
+            "correct": true,
+            "n_generated": 16,
+            "n_items_found": 7,
+            "n_items_required": 7
+          },
+          {
+            "prompt_id": "border_bd",
+            "generation": "India and Myanmar share a land border with Bangladesh.",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 2,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "hard_border_et",
+            "generation": "Eritrea, Djibouti, Somalia, Kenya, Sudan, Italy",
+            "correct": false,
+            "n_generated": 17,
+            "n_items_found": 5,
+            "n_items_required": 6
+          },
+          {
+            "prompt_id": "sym_pb_sn_cu",
+            "generation": "Pb, Sn, Cu",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "year_moon_wall",
+            "generation": "The first Moon landing occurred in 1969, and the fall of the Berlin Wall happened in 1989.",
+            "correct": true,
+            "n_generated": 24,
+            "n_items_found": 2,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "hist_columbus_ships",
+            "generation": "The three ships of Columbus's 1492 voyage were the Santa Maria, the Pinta, and the Ni\u00f1a.",
+            "correct": true,
+            "n_generated": 25,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "border_th",
+            "generation": "Cambodia, Laos, Myanmar, Malaysia",
+            "correct": true,
+            "n_generated": 9,
+            "n_items_found": 4,
+            "n_items_required": 4
+          },
+          {
+            "prompt_id": "hard_cur_europe",
+            "generation": "Switzerland uses the Swiss franc, Denmark uses the Danish krone, the Czech Republic uses the Czech koruna, Hungary uses the Hungarian forint, and Bulgaria uses the Bulgarian lev.",
+            "correct": true,
+            "n_generated": 38,
+            "n_items_found": 5,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "hard_border_ir",
+            "generation": "Afghanistan, Armenia, Azerbaijan, Bahrain, Iraq, Pakistan, Turkmenistan",
+            "correct": false,
+            "n_generated": 18,
+            "n_items_found": 6,
+            "n_items_required": 7
+          },
+          {
+            "prompt_id": "hard_border_in",
+            "generation": "Afghanistan, Bangladesh, Bhutan, Nepal, Pakistan, Sri Lanka",
+            "correct": false,
+            "n_generated": 16,
+            "n_items_found": 4,
+            "n_items_required": 6
+          },
+          {
+            "prompt_id": "art_orchestra_families",
+            "generation": "Violin, Viola, Cello, Double Bass",
+            "correct": false,
+            "n_generated": 12,
+            "n_items_found": 0,
+            "n_items_required": 4
+          },
+          {
+            "prompt_id": "z_na_cl_ca",
+            "generation": "Sodium, 11, Chlorine, 17, Calcium, 20",
+            "correct": true,
+            "n_generated": 17,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "hard_border_br",
+            "generation": "Argentina, Bolivia, Paraguay, Peru, Suriname, Uruguay, Venezuela",
+            "correct": false,
+            "n_generated": 16,
+            "n_items_found": 7,
+            "n_items_required": 10
+          },
+          {
+            "prompt_id": "hist_axis",
+            "generation": "Germany, Italy, Japan.",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "math_primes_under_10",
+            "generation": "2, 3, 5, 7",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 4,
+            "n_items_required": 4
+          },
+          {
+            "prompt_id": "hist_us_branches",
+            "generation": "The three branches of the United States federal government are the Legislative, Executive, and Judicial.",
+            "correct": true,
+            "n_generated": 19,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "hard_border_kz",
+            "generation": "Azerbaijan, Armenia, Georgia, Russia, Turkmenistan",
+            "correct": false,
+            "n_generated": 14,
+            "n_items_found": 2,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "hist_unsc",
+            "generation": "China, France, Russia, United Kingdom, United States",
+            "correct": true,
+            "n_generated": 12,
+            "n_items_found": 5,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "geo_great_lakes",
+            "generation": "Lake Superior, Lake Michigan, Lake Huron, Lake Erie, Lake Ontario",
+            "correct": true,
+            "n_generated": 16,
+            "n_items_found": 5,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "border_pl",
+            "generation": "Germany, Czech Republic, Slovakia, Ukraine, Belarus, Lithuania, Hungary",
+            "correct": false,
+            "n_generated": 15,
+            "n_items_found": 6,
+            "n_items_required": 7
+          },
+          {
+            "prompt_id": "sym_si_s_p",
+            "generation": "Si, S, P",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "border_vn",
+            "generation": "China, Laos, Cambodia",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "hard_cap_centralasia",
+            "generation": "Astana, Tashkent, Bishkek, Dushanbe, Ashgabat.",
+            "correct": true,
+            "n_generated": 23,
+            "n_items_found": 5,
+            "n_items_required": 5
+          }
+        ]
+      }
+    },
+    "large": {
+      "label": "3B",
+      "latency": {
+        "prefill_ms": 112.88545798743144,
+        "decode_ms_per_token": 59.08337503205985,
+        "tokens_per_second": 16.925234881341485,
+        "decode_ms_per_token_all": [
+          59.08337503205985,
+          59.09183400217444,
+          59.192415967117995,
+          59.19758399249986,
+          59.30779199115932,
+          59.35916694579646,
+          59.48783300118521,
+          59.51549997553229
+        ],
+        "decode_ms_per_token_median": 59.30779199115932,
+        "decode_spread": 1.0073138161663575,
+        "latency_suspect": false,
+        "total_ms_at_64_tokens": 3857.2141353288316,
+        "n_timed_prompts": 4,
+        "n_repeats": 2,
+        "decode_steps": 64,
+        "active_params_per_token": 3212749824
+      },
+      "accuracy": {
+        "n": 45,
+        "n_correct": 44,
+        "accuracy": 0.9777777777777777,
+        "mean_generated_tokens": 11.688888888888888,
+        "rows": [
+          {
+            "prompt_id": "border_kh",
+            "generation": "Thailand, Laos, Vietnam",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "year_ww1",
+            "generation": "1914, 1918",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 2,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "border_fi",
+            "generation": "Norway, Russia, Sweden",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "sci_heart_chambers",
+            "generation": "Right atrium, right ventricle, left atrium, left ventricle",
+            "correct": true,
+            "n_generated": 18,
+            "n_items_found": 4,
+            "n_items_required": 4
+          },
+          {
+            "prompt_id": "math_square_roots",
+            "generation": "12, 13, 14",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "geo_nordic",
+            "generation": "Denmark, Norway, Sweden, Finland, Iceland",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 5,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "cap_in_pk_bd",
+            "generation": "New Delhi, Islamabad, Dhaka",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "hard_border_tr",
+            "generation": "Bulgaria, Greece, Georgia, Iran, Iraq, Syria, Armenia, Azerbaijan",
+            "correct": true,
+            "n_generated": 18,
+            "n_items_found": 8,
+            "n_items_required": 8
+          },
+          {
+            "prompt_id": "geo_nyc_boroughs",
+            "generation": "Manhattan, Brooklyn, Queens, The Bronx, Staten Island",
+            "correct": true,
+            "n_generated": 13,
+            "n_items_found": 5,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "math_powers_of_two",
+            "generation": "2, 4, 8, 16",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 4,
+            "n_items_required": 4
+          },
+          {
+            "prompt_id": "border_no",
+            "generation": "Sweden, Finland, Russia",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "cap_sa_ir_iq",
+            "generation": "Riyadh, Tehran, Baghdad",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "hard_cap_southasia",
+            "generation": "Sri Lanka - Colombo, Nepal - Kathmandu, Bhutan - Thimphu, Maldives - Mal\u00e9, Afghanistan - Kabul",
+            "correct": true,
+            "n_generated": 31,
+            "n_items_found": 5,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "cap_ph_mm_np",
+            "generation": "Manila, Naypyidaw, Kathmandu",
+            "correct": true,
+            "n_generated": 12,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "sci_triangles",
+            "generation": "Equilateral, Isosceles, Scalene",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "hard_cap_easteurope",
+            "generation": "Tallinn, Riga, Vilnius, Minsk, Chi\u0219in\u0103u",
+            "correct": true,
+            "n_generated": 20,
+            "n_items_found": 5,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "sym_mg_mn_al",
+            "generation": "Mg, Mn, Al",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "geo_korea",
+            "generation": "North Korea, South Korea",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 2,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "border_af",
+            "generation": "Pakistan, Iran, Turkmenistan, Uzbekistan, Tajikistan, China",
+            "correct": true,
+            "n_generated": 17,
+            "n_items_found": 6,
+            "n_items_required": 6
+          },
+          {
+            "prompt_id": "border_uy",
+            "generation": "Argentina, Brazil",
+            "correct": true,
+            "n_generated": 4,
+            "n_items_found": 2,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "geo_benelux",
+            "generation": "Belgium, Netherlands, Luxembourg",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "cap_jp_kr_cn",
+            "generation": "Tokyo, Seoul, Beijing",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "geo_continents",
+            "generation": "Africa, Antarctica, Asia, Australia, Europe, North America, South America",
+            "correct": true,
+            "n_generated": 16,
+            "n_items_found": 7,
+            "n_items_required": 7
+          },
+          {
+            "prompt_id": "border_bd",
+            "generation": "India, Myanmar",
+            "correct": true,
+            "n_generated": 4,
+            "n_items_found": 2,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "hard_border_et",
+            "generation": "Eritrea, Djibouti, Somalia, South Sudan, Sudan, Kenya",
+            "correct": true,
+            "n_generated": 18,
+            "n_items_found": 6,
+            "n_items_required": 6
+          },
+          {
+            "prompt_id": "sym_pb_sn_cu",
+            "generation": "Pb, Sn, Cu",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "year_moon_wall",
+            "generation": "1969, 1989",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 2,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "hist_columbus_ships",
+            "generation": "Santa Maria, Pinta, Ni\u00f1a",
+            "correct": true,
+            "n_generated": 9,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "border_th",
+            "generation": "Myanmar, Laos, Cambodia, Malaysia",
+            "correct": true,
+            "n_generated": 9,
+            "n_items_found": 4,
+            "n_items_required": 4
+          },
+          {
+            "prompt_id": "hard_cur_europe",
+            "generation": "Swiss franc, Danish krone, Czech koruna, Hungarian forint, Bulgarian lev",
+            "correct": true,
+            "n_generated": 19,
+            "n_items_found": 5,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "hard_border_ir",
+            "generation": "Turkey, Iraq, Armenia, Azerbaijan, Turkmenistan, Afghanistan, Pakistan",
+            "correct": true,
+            "n_generated": 16,
+            "n_items_found": 7,
+            "n_items_required": 7
+          },
+          {
+            "prompt_id": "hard_border_in",
+            "generation": "Pakistan, China, Nepal, Bhutan, Bangladesh, Myanmar",
+            "correct": true,
+            "n_generated": 13,
+            "n_items_found": 6,
+            "n_items_required": 6
+          },
+          {
+            "prompt_id": "art_orchestra_families",
+            "generation": "Strings, Woodwinds, Brass, Percussion",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 4,
+            "n_items_required": 4
+          },
+          {
+            "prompt_id": "z_na_cl_ca",
+            "generation": "11, 17, 20",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "hard_border_br",
+            "generation": "Argentina, Bolivia, Colombia, French Guiana, Guyana, Paraguay, Peru, Suriname, Trinidad and Tobago, Venezuela",
+            "correct": false,
+            "n_generated": 28,
+            "n_items_found": 9,
+            "n_items_required": 10
+          },
+          {
+            "prompt_id": "hist_axis",
+            "generation": "Germany, Italy, Japan",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "math_primes_under_10",
+            "generation": "2, 3, 5, 7",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 4,
+            "n_items_required": 4
+          },
+          {
+            "prompt_id": "hist_us_branches",
+            "generation": "Legislative, Executive, Judicial",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "hard_border_kz",
+            "generation": "China, Kyrgyzstan, Russia, Turkmenistan, Uzbekistan",
+            "correct": true,
+            "n_generated": 15,
+            "n_items_found": 5,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "hist_unsc",
+            "generation": "China, France, Russia, United Kingdom, United States",
+            "correct": true,
+            "n_generated": 12,
+            "n_items_found": 5,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "geo_great_lakes",
+            "generation": "Lake Superior, Lake Michigan, Lake Huron, Lake Erie, Lake Ontario",
+            "correct": true,
+            "n_generated": 16,
+            "n_items_found": 5,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "border_pl",
+            "generation": "Germany, Czech Republic, Slovakia, Ukraine, Belarus, Lithuania, Russia",
+            "correct": true,
+            "n_generated": 15,
+            "n_items_found": 7,
+            "n_items_required": 7
+          },
+          {
+            "prompt_id": "sym_si_s_p",
+            "generation": "Si, S, P",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "border_vn",
+            "generation": "China, Laos, Cambodia",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "hard_cap_centralasia",
+            "generation": "Astana, Tashkent, Bishkek, Dushanbe, Ashgabat",
+            "correct": true,
+            "n_generated": 22,
+            "n_items_found": 5,
+            "n_items_required": 5
+          }
+        ]
+      }
+    },
+    "stitch": {
+      "label": "stitch-warm-t2-linear-L8->L14",
+      "latency": {
+        "prefill_ms": 136.97608397342265,
+        "decode_ms_per_token": 44.089750037528574,
+        "tokens_per_second": 22.681008605147774,
+        "decode_ms_per_token_all": [
+          44.089750037528574,
+          44.16504199616611,
+          44.224874989595264,
+          44.30837498512119,
+          44.326125003863126,
+          44.56395795568824,
+          44.732124952133745,
+          44.99620897695422
+        ],
+        "decode_ms_per_token_median": 44.326125003863126,
+        "decode_spread": 1.0205594030053262,
+        "latency_suspect": false,
+        "total_ms_at_64_tokens": 2964.863802291802,
+        "n_timed_prompts": 4,
+        "n_repeats": 2,
+        "decode_steps": 64,
+        "active_params_per_token": 2302537728
+      },
+      "accuracy": {
+        "n": 45,
+        "n_correct": 33,
+        "accuracy": 0.7333333333333333,
+        "mean_generated_tokens": 10.911111111111111,
+        "rows": [
+          {
+            "prompt_id": "border_kh",
+            "generation": "Thailand, Laos, Vietnam",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "year_ww1",
+            "generation": "1914, 1918",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 2,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "border_fi",
+            "generation": "Norway, Sweden, Russia",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "sci_heart_chambers",
+            "generation": "Right, left, right, left",
+            "correct": false,
+            "n_generated": 8,
+            "n_items_found": 0,
+            "n_items_required": 4
+          },
+          {
+            "prompt_id": "math_square_roots",
+            "generation": "12, 14, 16",
+            "correct": false,
+            "n_generated": 8,
+            "n_items_found": 2,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "geo_nordic",
+            "generation": "Denmark, Norway, Sweden, Iceland, Finland",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 5,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "cap_in_pk_bd",
+            "generation": "New Delhi, Islamabad, Dhaka",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "hard_border_tr",
+            "generation": "Bulgaria, Greece, Georgia, Iran, Iraq, Iran, Armenia, Azerbaijan",
+            "correct": false,
+            "n_generated": 18,
+            "n_items_found": 7,
+            "n_items_required": 8
+          },
+          {
+            "prompt_id": "geo_nyc_boroughs",
+            "generation": "Manhattan, Brooklyn, Queens, The Bronx, Staten",
+            "correct": false,
+            "n_generated": 12,
+            "n_items_found": 4,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "math_powers_of_two",
+            "generation": "2, 4, 8, 16",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 4,
+            "n_items_required": 4
+          },
+          {
+            "prompt_id": "border_no",
+            "generation": "Sweden, Finland, Russia",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "cap_sa_ir_iq",
+            "generation": "Riyadh, Tehran, Baghdad",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "hard_cap_southasia",
+            "generation": "Sri Lanka, Kathmandu, Kathmandu, Kathmandu",
+            "correct": false,
+            "n_generated": 16,
+            "n_items_found": 1,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "cap_ph_mm_np",
+            "generation": "Manila, Naypyidaw, Kathmandu",
+            "correct": true,
+            "n_generated": 12,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "sci_triangles",
+            "generation": "Equilateral, isosceles, scalene",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "hard_cap_easteurope",
+            "generation": "Tallinn, Riga, Vilnius, Minsk, Chi\u0219inau",
+            "correct": true,
+            "n_generated": 19,
+            "n_items_found": 5,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "sym_mg_mn_al",
+            "generation": "Mg, Mn, Al",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "geo_korea",
+            "generation": "North Korea, South Korea",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 2,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "border_af",
+            "generation": "Pakistan, Iran, Turkmenistan, Uzbekistan, Tajikistan, Iran",
+            "correct": false,
+            "n_generated": 17,
+            "n_items_found": 5,
+            "n_items_required": 6
+          },
+          {
+            "prompt_id": "border_uy",
+            "generation": "Argentina, Brazil",
+            "correct": true,
+            "n_generated": 4,
+            "n_items_found": 2,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "geo_benelux",
+            "generation": "Belgium, Netherlands, Luxembourg",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "cap_jp_kr_cn",
+            "generation": "Tokyo, Seoul, Beijing",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "geo_continents",
+            "generation": "Africa, Antarctica, Asia, Australia, Europe, North America, South America",
+            "correct": true,
+            "n_generated": 16,
+            "n_items_found": 7,
+            "n_items_required": 7
+          },
+          {
+            "prompt_id": "border_bd",
+            "generation": "India, Myanmar",
+            "correct": true,
+            "n_generated": 4,
+            "n_items_found": 2,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "hard_border_et",
+            "generation": "Eritrea, Djibouti, South Sudan, Sudan, Kenya, Somalia",
+            "correct": true,
+            "n_generated": 18,
+            "n_items_found": 6,
+            "n_items_required": 6
+          },
+          {
+            "prompt_id": "sym_pb_sn_cu",
+            "generation": "Pb, Sn, Hg",
+            "correct": false,
+            "n_generated": 8,
+            "n_items_found": 2,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "year_moon_wall",
+            "generation": "1969, 1989",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 2,
+            "n_items_required": 2
+          },
+          {
+            "prompt_id": "hist_columbus_ships",
+            "generation": "Santa Maria, Ni\u00f1a, Pinta",
+            "correct": true,
+            "n_generated": 9,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "border_th",
+            "generation": "Myanmar, Laos, Cambodia, Malaysia",
+            "correct": true,
+            "n_generated": 9,
+            "n_items_found": 4,
+            "n_items_required": 4
+          },
+          {
+            "prompt_id": "hard_cur_europe",
+            "generation": "Swiss franc, Czech koruna, Hungarian forgert, Bulgarian lev, Czech koruna",
+            "correct": false,
+            "n_generated": 20,
+            "n_items_found": 3,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "hard_border_ir",
+            "generation": "Turkey, Iraq, Iraq, Armenia, Azerbaijan, Turkmenistan",
+            "correct": false,
+            "n_generated": 14,
+            "n_items_found": 5,
+            "n_items_required": 7
+          },
+          {
+            "prompt_id": "hard_border_in",
+            "generation": "Pakistan, China, Nepal, Bhutan, Bangladesh, Myanmar",
+            "correct": true,
+            "n_generated": 13,
+            "n_items_found": 6,
+            "n_items_required": 6
+          },
+          {
+            "prompt_id": "art_orchestra_families",
+            "generation": "Strings, Woodwind, Brass, Percussion",
+            "correct": true,
+            "n_generated": 10,
+            "n_items_found": 4,
+            "n_items_required": 4
+          },
+          {
+            "prompt_id": "z_na_cl_ca",
+            "generation": "11, 17, 20",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "hard_border_br",
+            "generation": "Argentina, Bolivia, Paraguay, Peru, Colombia, Venezuela, Guyana, Suriname, French Guiana, Uruguay",
+            "correct": true,
+            "n_generated": 25,
+            "n_items_found": 10,
+            "n_items_required": 10
+          },
+          {
+            "prompt_id": "hist_axis",
+            "generation": "Germany, Italy, Japan",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "math_primes_under_10",
+            "generation": "2, 3, 5, 7",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 4,
+            "n_items_required": 4
+          },
+          {
+            "prompt_id": "hist_us_branches",
+            "generation": "Legislary, Executive, Judiciary",
+            "correct": false,
+            "n_generated": 8,
+            "n_items_found": 2,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "hard_border_kz",
+            "generation": "China, Kyrgyzstan, Russia, Turkmenistan, Uzbekistan",
+            "correct": true,
+            "n_generated": 15,
+            "n_items_found": 5,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "hist_unsc",
+            "generation": "China, France, Russia, United Kingdom, United States",
+            "correct": true,
+            "n_generated": 12,
+            "n_items_found": 5,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "geo_great_lakes",
+            "generation": "Lake Erie, Ontario, Michigan, Huron, Erie",
+            "correct": false,
+            "n_generated": 12,
+            "n_items_found": 4,
+            "n_items_required": 5
+          },
+          {
+            "prompt_id": "border_pl",
+            "generation": "Germany, Czech Republic, Slovakia, Ukraine, Belarus, Lithuania, Russia",
+            "correct": true,
+            "n_generated": 15,
+            "n_items_found": 7,
+            "n_items_required": 7
+          },
+          {
+            "prompt_id": "sym_si_s_p",
+            "generation": "Si, S, P",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "border_vn",
+            "generation": "China, Laos, Cambodia",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "hard_cap_centralasia",
+            "generation": "Astana, Tashkent, Tashkent, Dushar, Ashgabat",
+            "correct": false,
+            "n_generated": 22,
+            "n_items_found": 3,
+            "n_items_required": 5
+          }
+        ]
+      }
+    }
+  },
+  "tradeoff": {
+    "accuracy_small": 0.7333333333333333,
+    "accuracy_large": 0.9777777777777777,
+    "accuracy_stitch": 0.7333333333333333,
+    "acc_gap_vs_large_pts": -24.444444444444446,
+    "acc_gain_vs_small_pts": 0.0,
+    "gap_recovered": 0.0,
+    "decode_speedup_vs_large": 1.3400705375233226,
+    "decode_speedup_small_vs_large": 2.4518339484810707,
+    "answer_tokens_priced": 11.688888888888888,
+    "end_to_end_ms": {
+      "small": 326.4768360337863,
+      "large": 803.504463917731,
+      "stitch": 652.3362733009789
+    },
+    "end_to_end_speedup_vs_large": 1.2317335349938532,
+    "end_to_end_speedup_small_vs_large": 2.4611377446532785,
+    "params_frac_of_large": 0.716687527550231
+  },
+  "adapter": {
+    "kind": "linear",
+    "n_taps": 2,
+    "taps": [
+      4,
+      8
+    ],
+    "dim_in": 4096,
+    "mlp_hidden": null,
+    "n_map_params": 12585984,
+    "ridge_alpha": 0.01,
+    "answer_weight": 4.0,
+    "norm_match": true,
+    "norm_gain": 1.0191620588302612,
+    "n_rows": 8531,
+    "n_answer_rows": 1111,
+    "held_out_r2_all": 0.9980681991574712,
+    "held_out_r2_answer": 0.31251678528528604
+  }
+}

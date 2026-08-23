@@ -1,0 +1,638 @@
+{
+  "pair": "qwen",
+  "small_layer_i": 14,
+  "large_layer_j": 24,
+  "depth_matched_j": 21,
+  "split": "dev",
+  "mode": "warm",
+  "device": "mps",
+  "n_prompts": 35,
+  "skipped_large_blocks": 24,
+  "skipped_small_blocks": 10,
+  "paths": {
+    "small": {
+      "label": "0.5B",
+      "latency": {
+        "prefill_ms": 39.02770800050348,
+        "decode_ms_per_token": 30.206916999304667,
+        "tokens_per_second": 33.105000421692125,
+        "decode_ms_per_token_all": [
+          30.206916999304667,
+          31.02724999189377,
+          35.95429201959632,
+          37.70687500946224
+        ],
+        "decode_ms_per_token_median": 35.95429201959632,
+        "total_ms_at_32_tokens": 1156.9914374922519,
+        "n_timed_prompts": 4,
+        "decode_steps": 32,
+        "active_params_per_token": 494032768
+      },
+      "accuracy": {
+        "n": 35,
+        "n_correct": 27,
+        "accuracy": 0.7714285714285715,
+        "rows": [
+          {
+            "prompt_id": "mis_currency_jp",
+            "generation": "Yen",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_hr",
+            "generation": "Zagreb",
+            "correct": true
+          },
+          {
+            "prompt_id": "lit_pride",
+            "generation": "Jane Austen wrote the novel 'Pride and Prejudice'.",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_sk",
+            "generation": "Bratislava",
+            "correct": true
+          },
+          {
+            "prompt_id": "his_berlin",
+            "generation": "1989",
+            "correct": true
+          },
+          {
+            "prompt_id": "cur_dk",
+            "generation": "Danish Krone",
+            "correct": true
+          },
+          {
+            "prompt_id": "us_ak",
+            "generation": "Juneau",
+            "correct": true
+          },
+          {
+            "prompt_id": "us_nd",
+            "generation": "Bismarck",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_sa",
+            "generation": "Riyadh",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_lk",
+            "generation": "Colombo",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_bz",
+            "generation": "Bras\u00edlia",
+            "correct": true
+          },
+          {
+            "prompt_id": "his_chernobyl",
+            "generation": "1986",
+            "correct": true
+          },
+          {
+            "prompt_id": "geo_waterfall",
+            "generation": "Vadodara Waterfall",
+            "correct": false
+          },
+          {
+            "prompt_id": "his_ww1",
+            "generation": "1914",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_nz",
+            "generation": "Wellington",
+            "correct": true
+          },
+          {
+            "prompt_id": "mis_language_at",
+            "generation": "Austrian Language",
+            "correct": false
+          },
+          {
+            "prompt_id": "geo_namt",
+            "generation": "Mount McKinley",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_mn",
+            "generation": "Ulaanbaatar",
+            "correct": true
+          },
+          {
+            "prompt_id": "us_ky",
+            "generation": "Frankfort",
+            "correct": true
+          },
+          {
+            "prompt_id": "mis_keys",
+            "generation": "108",
+            "correct": false
+          },
+          {
+            "prompt_id": "lit_warpeace",
+            "generation": "Leo Tolstoy wrote the novel 'War and Peace'.",
+            "correct": true
+          },
+          {
+            "prompt_id": "geo_africabig",
+            "generation": "Zambia",
+            "correct": false
+          },
+          {
+            "prompt_id": "bio_chrom",
+            "generation": "23 pairs",
+            "correct": true
+          },
+          {
+            "prompt_id": "geo_samt",
+            "generation": "Mount Everest",
+            "correct": false
+          },
+          {
+            "prompt_id": "his_french",
+            "generation": "1789",
+            "correct": true
+          },
+          {
+            "prompt_id": "geo_strait",
+            "generation": "Baltic Sea",
+            "correct": false
+          },
+          {
+            "prompt_id": "el_sn",
+            "generation": "Sn",
+            "correct": true
+          },
+          {
+            "prompt_id": "lit_1984",
+            "generation": "George Orwell",
+            "correct": true
+          },
+          {
+            "prompt_id": "spo_olymp2012",
+            "generation": "London",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_ro",
+            "generation": "Bucharest",
+            "correct": true
+          },
+          {
+            "prompt_id": "geo_deeplake",
+            "generation": "Great Barrier Reef",
+            "correct": false
+          },
+          {
+            "prompt_id": "geo_asiarriver",
+            "generation": "Yangtze River",
+            "correct": true
+          },
+          {
+            "prompt_id": "us_or",
+            "generation": "Salem",
+            "correct": true
+          },
+          {
+            "prompt_id": "us_pa",
+            "generation": "Philadelphia",
+            "correct": false
+          },
+          {
+            "prompt_id": "el_ag",
+            "generation": "Ag",
+            "correct": true
+          }
+        ]
+      }
+    },
+    "large": {
+      "label": "3B",
+      "latency": {
+        "prefill_ms": 81.49933299864642,
+        "decode_ms_per_token": 55.173125001601875,
+        "tokens_per_second": 18.124766359907408,
+        "decode_ms_per_token_all": [
+          55.173125001601875,
+          55.31020800117403,
+          55.540416011353955,
+          70.62787498580292
+        ],
+        "decode_ms_per_token_median": 55.540416011353955,
+        "total_ms_at_32_tokens": 2255.782825690403,
+        "n_timed_prompts": 4,
+        "decode_steps": 32,
+        "active_params_per_token": 3085938688
+      },
+      "accuracy": {
+        "n": 35,
+        "n_correct": 34,
+        "accuracy": 0.9714285714285714,
+        "rows": [
+          {
+            "prompt_id": "mis_currency_jp",
+            "generation": "Japanese yen",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_hr",
+            "generation": "Zagreb",
+            "correct": true
+          },
+          {
+            "prompt_id": "lit_pride",
+            "generation": "Jane Austen",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_sk",
+            "generation": "Bratislava",
+            "correct": true
+          },
+          {
+            "prompt_id": "his_berlin",
+            "generation": "1989",
+            "correct": true
+          },
+          {
+            "prompt_id": "cur_dk",
+            "generation": "Danish krone",
+            "correct": true
+          },
+          {
+            "prompt_id": "us_ak",
+            "generation": "Juneau",
+            "correct": true
+          },
+          {
+            "prompt_id": "us_nd",
+            "generation": "Bismarck",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_sa",
+            "generation": "Riyadh",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_lk",
+            "generation": "Colombo",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_bz",
+            "generation": "Bras\u00edlia",
+            "correct": true
+          },
+          {
+            "prompt_id": "his_chernobyl",
+            "generation": "1986",
+            "correct": true
+          },
+          {
+            "prompt_id": "geo_waterfall",
+            "generation": "Angel Falls",
+            "correct": true
+          },
+          {
+            "prompt_id": "his_ww1",
+            "generation": "1914",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_nz",
+            "generation": "Wellington",
+            "correct": true
+          },
+          {
+            "prompt_id": "mis_language_at",
+            "generation": "German",
+            "correct": true
+          },
+          {
+            "prompt_id": "geo_namt",
+            "generation": "Denali",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_mn",
+            "generation": "Ulaanbaatar",
+            "correct": true
+          },
+          {
+            "prompt_id": "us_ky",
+            "generation": "Frankfort",
+            "correct": true
+          },
+          {
+            "prompt_id": "mis_keys",
+            "generation": "88",
+            "correct": true
+          },
+          {
+            "prompt_id": "lit_warpeace",
+            "generation": "Leo Tolstoy",
+            "correct": true
+          },
+          {
+            "prompt_id": "geo_africabig",
+            "generation": "Algeria",
+            "correct": true
+          },
+          {
+            "prompt_id": "bio_chrom",
+            "generation": "46",
+            "correct": false
+          },
+          {
+            "prompt_id": "geo_samt",
+            "generation": "Aconcagua",
+            "correct": true
+          },
+          {
+            "prompt_id": "his_french",
+            "generation": "1789",
+            "correct": true
+          },
+          {
+            "prompt_id": "geo_strait",
+            "generation": "Straight of Gibraltar",
+            "correct": true
+          },
+          {
+            "prompt_id": "el_sn",
+            "generation": "Sn",
+            "correct": true
+          },
+          {
+            "prompt_id": "lit_1984",
+            "generation": "George Orwell",
+            "correct": true
+          },
+          {
+            "prompt_id": "spo_olymp2012",
+            "generation": "London",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_ro",
+            "generation": "Bucharest",
+            "correct": true
+          },
+          {
+            "prompt_id": "geo_deeplake",
+            "generation": "Lake Baikal",
+            "correct": true
+          },
+          {
+            "prompt_id": "geo_asiarriver",
+            "generation": "Yangtze River",
+            "correct": true
+          },
+          {
+            "prompt_id": "us_or",
+            "generation": "Salem",
+            "correct": true
+          },
+          {
+            "prompt_id": "us_pa",
+            "generation": "Harrisburg",
+            "correct": true
+          },
+          {
+            "prompt_id": "el_ag",
+            "generation": "Ag",
+            "correct": true
+          }
+        ]
+      }
+    },
+    "stitch": {
+      "label": "stitch-warm-L14->L24",
+      "latency": {
+        "prefill_ms": 174.9781249964144,
+        "decode_ms_per_token": 48.065624985611066,
+        "tokens_per_second": 20.80488915517816,
+        "decode_ms_per_token_all": [
+          48.065624985611066,
+          56.42491701291874,
+          67.8277499973774,
+          74.92095799534582
+        ],
+        "decode_ms_per_token_median": 67.8277499973774,
+        "total_ms_at_32_tokens": 2151.2551542182337,
+        "n_timed_prompts": 4,
+        "decode_steps": 32,
+        "active_params_per_token": 1446702208
+      },
+      "accuracy": {
+        "n": 35,
+        "n_correct": 15,
+        "accuracy": 0.42857142857142855,
+        "rows": [
+          {
+            "prompt_id": "mis_currency_jp",
+            "generation": "Japanese yen",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_hr",
+            "generation": "Zagreb",
+            "correct": true
+          },
+          {
+            "prompt_id": "lit_pride",
+            "generation": "Jane Austissy",
+            "correct": false
+          },
+          {
+            "prompt_id": "cap_sk",
+            "generation": "Bratisau",
+            "correct": false
+          },
+          {
+            "prompt_id": "his_berlin",
+            "generation": "1980",
+            "correct": false
+          },
+          {
+            "prompt_id": "cur_dk",
+            "generation": "Dan Danish kr\u00e6nt",
+            "correct": false
+          },
+          {
+            "prompt_id": "us_ak",
+            "generation": "Juneau",
+            "correct": true
+          },
+          {
+            "prompt_id": "us_nd",
+            "generation": "Bismus",
+            "correct": false
+          },
+          {
+            "prompt_id": "cap_sa",
+            "generation": "Riyya",
+            "correct": false
+          },
+          {
+            "prompt_id": "cap_lk",
+            "generation": "Colagururu",
+            "correct": false
+          },
+          {
+            "prompt_id": "cap_bz",
+            "generation": "Brass\u00e3o",
+            "correct": false
+          },
+          {
+            "prompt_id": "his_chernobyl",
+            "generation": "1986",
+            "correct": true
+          },
+          {
+            "prompt_id": "geo_waterfall",
+            "generation": "Angel \u00c1\u00fat",
+            "correct": true
+          },
+          {
+            "prompt_id": "his_ww1",
+            "generation": "1914",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_nz",
+            "generation": "Welleni",
+            "correct": false
+          },
+          {
+            "prompt_id": "mis_language_at",
+            "generation": "German",
+            "correct": true
+          },
+          {
+            "prompt_id": "geo_namt",
+            "generation": "Denangang",
+            "correct": false
+          },
+          {
+            "prompt_id": "cap_mn",
+            "generation": "Ulaueu\u016b",
+            "correct": false
+          },
+          {
+            "prompt_id": "us_ky",
+            "generation": "Frankville",
+            "correct": false
+          },
+          {
+            "prompt_id": "mis_keys",
+            "generation": "82",
+            "correct": false
+          },
+          {
+            "prompt_id": "lit_warpeace",
+            "generation": "Leo Tolol\u00ed\u0301t\u00ed",
+            "correct": false
+          },
+          {
+            "prompt_id": "geo_africabig",
+            "generation": "Algeria",
+            "correct": true
+          },
+          {
+            "prompt_id": "bio_chrom",
+            "generation": "43",
+            "correct": false
+          },
+          {
+            "prompt_id": "geo_samt",
+            "generation": "Aconcia",
+            "correct": false
+          },
+          {
+            "prompt_id": "his_french",
+            "generation": "1780",
+            "correct": false
+          },
+          {
+            "prompt_id": "geo_strait",
+            "generation": "Straight of Gibraltar",
+            "correct": true
+          },
+          {
+            "prompt_id": "el_sn",
+            "generation": "Sn",
+            "correct": true
+          },
+          {
+            "prompt_id": "lit_1984",
+            "generation": "George Orwell",
+            "correct": true
+          },
+          {
+            "prompt_id": "spo_olymp2012",
+            "generation": "London",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_ro",
+            "generation": "Bucharest",
+            "correct": true
+          },
+          {
+            "prompt_id": "geo_deeplake",
+            "generation": "Lake Baol",
+            "correct": false
+          },
+          {
+            "prompt_id": "geo_asiarriver",
+            "generation": "Yangturuyu",
+            "correct": false
+          },
+          {
+            "prompt_id": "us_or",
+            "generation": "Salem",
+            "correct": true
+          },
+          {
+            "prompt_id": "us_pa",
+            "generation": "Harrisville",
+            "correct": false
+          },
+          {
+            "prompt_id": "el_ag",
+            "generation": "Ag",
+            "correct": true
+          }
+        ]
+      }
+    }
+  },
+  "tradeoff": {
+    "accuracy_small": 0.7714285714285715,
+    "accuracy_large": 0.9714285714285714,
+    "accuracy_stitch": 0.42857142857142855,
+    "acc_gap_vs_large_pts": -54.28571428571429,
+    "acc_gain_vs_small_pts": -34.28571428571429,
+    "gap_recovered": -1.7142857142857149,
+    "decode_speedup_vs_large": 1.1478707500031158,
+    "decode_speedup_small_vs_large": 1.8265063264441024,
+    "params_frac_of_large": 0.4688045856599987
+  },
+  "adapter": {
+    "ridge_alpha": 0.01,
+    "answer_weight": 4.0,
+    "norm_match": true,
+    "norm_gain": 1.0246634483337402,
+    "n_rows": 3911,
+    "n_answer_rows": 258,
+    "held_out_r2_all": 0.9983594639981627,
+    "held_out_r2_answer": 0.3902546370742487
+  }
+}

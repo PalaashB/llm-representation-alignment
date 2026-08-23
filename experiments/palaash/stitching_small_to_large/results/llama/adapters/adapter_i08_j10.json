@@ -1,0 +1,43 @@
+{
+  "pair": "llama",
+  "small_layer_i": 8,
+  "large_layer_j": 10,
+  "dim_small": 2048,
+  "dim_large": 3072,
+  "depth_matched_j": 14,
+  "form": "Y_hat = ((X - mu_x) / sd_x) @ W + b",
+  "injection_point": "input to large decoder block 10",
+  "ridge_alpha": 0.01,
+  "answer_weight": 4.0,
+  "norm_match": true,
+  "norm_gain": 1.0096451044082642,
+  "n_rows": 5438,
+  "n_answer_rows": 258,
+  "n_prompts": 70,
+  "in_sample": {
+    "r2": 0.9998886829698072,
+    "cosine_mean": 0.9989204406738281,
+    "rel_l2_mean": 0.028760084882378578,
+    "n_rows": 5438
+  },
+  "held_out": {
+    "all": {
+      "r2": 0.9994316994422167,
+      "cosine_mean": 0.9730388522148132,
+      "rel_l2_mean": 0.08614353090524673,
+      "n_rows": 1386
+    },
+    "answer": {
+      "r2": 0.3031851818311463,
+      "cosine_mean": 0.7767891883850098,
+      "rel_l2_mean": 0.6022368669509888,
+      "n_rows": 66
+    },
+    "prompt": {
+      "r2": 0.999625847472324,
+      "cosine_mean": 0.9828513264656067,
+      "rel_l2_mean": 0.060338858515024185,
+      "n_rows": 1320
+    }
+  }
+}

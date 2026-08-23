@@ -1,0 +1,36 @@
+[
+  {
+    "check": "full_stack_small",
+    "rel_l2": 3.3851774787763134e-05,
+    "max_abs_logit_diff": 0.03125,
+    "argmax_match": true,
+    "passed": true
+  },
+  {
+    "check": "full_stack_large",
+    "rel_l2": 2.4374237909796648e-05,
+    "max_abs_logit_diff": 0.015625,
+    "argmax_match": true,
+    "passed": true
+  },
+  {
+    "check": "baseline_matches_hf_generate_small",
+    "loop": "Auckland",
+    "hf_generate": "Auckland",
+    "passed": true
+  },
+  {
+    "check": "baseline_matches_hf_generate_large",
+    "loop": "Wellington",
+    "hf_generate": "Wellington",
+    "passed": true
+  },
+  {
+    "check": "prefix_exact",
+    "n_positions": 1,
+    "rel_l2_vs_hf_prefix": 0.0,
+    "shape_drift_rel_l2": 0.00010527990525588393,
+    "hf_own_shape_drift_rel_l2": 0.00010527990525588393,
+    "passed": true
+  }
+]

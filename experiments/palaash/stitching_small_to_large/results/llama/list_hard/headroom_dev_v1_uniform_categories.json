@@ -1,0 +1,2866 @@
+{
+  "pair": "llama",
+  "bank": "list_hard",
+  "split": "dev",
+  "n_prompts": 172,
+  "accuracy_small": 0.8488372093023255,
+  "accuracy_large": 0.9593023255813954,
+  "headroom_pts": 11.046511627906986,
+  "decode_speedup_small_vs_large": 2.4367315806631806,
+  "large_right_small_wrong": [
+    "lh_capital_dev_0002",
+    "lh_capital_dev_0009",
+    "lh_capital_dev_0013",
+    "lh_capital_dev_0026",
+    "lh_capital_dev_0034",
+    "lh_capital_dev_0037",
+    "lh_currency_dev_0014",
+    "lh_currency_dev_0019",
+    "lh_currency_dev_0023",
+    "lh_currency_dev_0026",
+    "lh_currency_dev_0027",
+    "lh_element_dev_0008",
+    "lh_element_dev_0013",
+    "lh_element_dev_0018",
+    "lh_history_dev_0002",
+    "lh_history_dev_0005",
+    "lh_history_dev_0008",
+    "lh_us_capital_dev_0005",
+    "lh_us_capital_dev_0007",
+    "lh_us_capital_dev_0010",
+    "lh_us_capital_dev_0015",
+    "lh_us_capital_dev_0018",
+    "lh_us_capital_dev_0020",
+    "lh_us_capital_dev_0022"
+  ],
+  "paths": {
+    "small": {
+      "label": "1B",
+      "latency": {
+        "prefill_ms": 46.13458295352757,
+        "decode_ms_per_token": 24.525457993149757,
+        "tokens_per_second": 40.77395823879462,
+        "decode_ms_per_token_all": [
+          24.525457993149757,
+          24.534249969292432,
+          24.54312500776723,
+          24.54745804425329,
+          24.602541991043836,
+          24.6118750073947,
+          24.67437501763925,
+          24.782666005194187
+        ],
+        "decode_ms_per_token_median": 24.602541991043836,
+        "decode_spread": 1.010487388741783,
+        "latency_suspect": false,
+        "total_ms_at_48_tokens": 1218.554094506544,
+        "n_timed_prompts": 4,
+        "n_repeats": 2,
+        "decode_steps": 48,
+        "active_params_per_token": 1235814400
+      },
+      "accuracy": {
+        "n": 172,
+        "n_correct": 146,
+        "accuracy": 0.8488372093023255,
+        "accuracy_ci95": [
+          0.7877261601383012,
+          0.894706758723935
+        ],
+        "mean_generated_tokens": 22.5,
+        "rows": [
+          {
+            "prompt_id": "lh_atomic_number_dev_0000",
+            "generation": "Germanium's atomic number is 32, cadmium's atomic number is 48, and molybdenum's atomic number is 42.",
+            "correct": true,
+            "n_generated": 32,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0001",
+            "generation": "Gallium, 31, Neon, 10, Tellurium, 52",
+            "correct": true,
+            "n_generated": 19,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0002",
+            "generation": "Bismuth's atomic number is 83, Iridium's atomic number is 77, and Barium's atomic number is 56.",
+            "correct": true,
+            "n_generated": 31,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0003",
+            "generation": "Copper's atomic number is 29, iodine's atomic number is 53, and magnesium's atomic number is 12.",
+            "correct": true,
+            "n_generated": 28,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0004",
+            "generation": "Nitrogen has an atomic number of 7, tin has an atomic number of 50, and selenium has an atomic number of 34.",
+            "correct": true,
+            "n_generated": 30,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0005",
+            "generation": "Rubidium's atomic number is 37, palladium's atomic number is 46, and potassium's atomic number is 19.",
+            "correct": true,
+            "n_generated": 29,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0006",
+            "generation": "Iodine's atomic number is 53, germanium's atomic number is 32, and barium's atomic number is 56.",
+            "correct": true,
+            "n_generated": 30,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0007",
+            "generation": "Bismuth's atomic number is 83, Potassium's atomic number is 19, and Molybdenum's atomic number is 42.",
+            "correct": true,
+            "n_generated": 33,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0008",
+            "generation": "Gallium, magnesium, and tellurium have atomic numbers 31, 12, and 52 respectively.",
+            "correct": true,
+            "n_generated": 25,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0009",
+            "generation": "Rubidium's atomic number is 37, palladium's atomic number is 46, and neon's atomic number is 10.",
+            "correct": true,
+            "n_generated": 29,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0010",
+            "generation": "Nitrogen's atomic number is 7, tin's atomic number is 50, and iridium's atomic number is 77.",
+            "correct": true,
+            "n_generated": 29,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0011",
+            "generation": "Copper's atomic number is 29, cadmium's is 48, and selenium's is 34.",
+            "correct": true,
+            "n_generated": 24,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0012",
+            "generation": "Iodine's atomic number is 53, magnesium's atomic number is 12, and molybdenum's atomic number is 42.",
+            "correct": true,
+            "n_generated": 32,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0013",
+            "generation": "Nitrogen's atomic number is 7, Neon's atomic number is 10, Iridium's atomic number is 77.",
+            "correct": true,
+            "n_generated": 28,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0014",
+            "generation": "Copper's atomic number is 29, germanium's atomic number is 32, and barium's atomic number is 56.",
+            "correct": true,
+            "n_generated": 29,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0015",
+            "generation": "Gallium's atomic number is 31, rubidium's atomic number is 37, and bismuth's atomic number is 83.",
+            "correct": true,
+            "n_generated": 32,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0016",
+            "generation": "Tin's atomic number is 50, cadmium's atomic number is 48, and selenium's atomic number is 34.",
+            "correct": true,
+            "n_generated": 28,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0017",
+            "generation": "Palladium's atomic number is 46, potassium's atomic number is 19, and tellurium's atomic number is 52.",
+            "correct": true,
+            "n_generated": 30,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0018",
+            "generation": "Nitrogen's atomic number is 7, palladium's atomic number is 46, and barium's atomic number is 56.",
+            "correct": true,
+            "n_generated": 29,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0019",
+            "generation": "Iodine's atomic number is 53, bismuth's atomic number is 83, and tellurium's atomic number is 52.",
+            "correct": true,
+            "n_generated": 32,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0020",
+            "generation": "Rubidium's atomic number is 37, Potassium's atomic number is 19, and Germanium's atomic number is 32.",
+            "correct": true,
+            "n_generated": 30,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0021",
+            "generation": "Gallium's atomic number is 31, Neon's atomic number is 10, and Molybdenum's atomic number is 42.",
+            "correct": true,
+            "n_generated": 32,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0022",
+            "generation": "Tin's atomic number is 50, magnesium's atomic number is 12, and selenium's atomic number is 34.",
+            "correct": true,
+            "n_generated": 27,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0023",
+            "generation": "Copper's atomic number is 29, Iridium's atomic number is 77, and Cadmium's atomic number is 48.",
+            "correct": true,
+            "n_generated": 30,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0024",
+            "generation": "Rubidium's atomic number is 37, tin's atomic number is 50, and molybdenum's atomic number is 42.",
+            "correct": true,
+            "n_generated": 32,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0025",
+            "generation": "Gallium, 31, Palladium, 46, Tellurium, 52",
+            "correct": true,
+            "n_generated": 20,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0026",
+            "generation": "Iodine's atomic number is 53, Neon's atomic number is 10, Iridium's atomic number is 77.",
+            "correct": true,
+            "n_generated": 29,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0027",
+            "generation": "Nitrogen has an atomic number of 7, potassium has an atomic number of 19, and germanium has an atomic number of 32.",
+            "correct": true,
+            "n_generated": 31,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0028",
+            "generation": "Bismuth's atomic number is 83, barium's atomic number is 56, and selenium's atomic number is 34.",
+            "correct": true,
+            "n_generated": 29,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0029",
+            "generation": "Copper's atomic number is 29, magnesium's atomic number is 12, and cadmium's atomic number is 48.",
+            "correct": true,
+            "n_generated": 28,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0030",
+            "generation": "Copper's atomic number is 29, tin's atomic number is 50, and barium's atomic number is 56.",
+            "correct": true,
+            "n_generated": 28,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0031",
+            "generation": "Nitrogen has an atomic number of 7, potassium has an atomic number of 19, and selenium has an atomic number of 34.",
+            "correct": true,
+            "n_generated": 30,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0032",
+            "generation": "Iridium's atomic number is 77, germanium's atomic number is 32, and cadmium's atomic number is 48.",
+            "correct": true,
+            "n_generated": 30,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0033",
+            "generation": "Neon's atomic number is 10, tellurium's atomic number is 52, and molybdenum's atomic number is 42.",
+            "correct": true,
+            "n_generated": 33,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0034",
+            "generation": "Palladium's atomic number is 46, bismuth's atomic number is 83, and magnesium's atomic number is 12.",
+            "correct": true,
+            "n_generated": 30,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0035",
+            "generation": "Iodine's atomic number is 53, gallium's atomic number is 31, and rubidium's atomic number is 37.",
+            "correct": true,
+            "n_generated": 31,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0036",
+            "generation": "Rubidium's atomic number is 37, Potassium's atomic number is 19, and Iridium's atomic number is 77.",
+            "correct": true,
+            "n_generated": 31,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0037",
+            "generation": "Nitrogen's atomic number is 7, tellurium's atomic number is 52, and barium's atomic number is 56.",
+            "correct": true,
+            "n_generated": 30,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0038",
+            "generation": "Iodine's atomic number is 53, palladium's atomic number is 46, and bismuth's atomic number is 83.",
+            "correct": true,
+            "n_generated": 31,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0039",
+            "generation": "Neon's atomic number is 10, magnesium's atomic number is 12, and cadmium's atomic number is 48.",
+            "correct": true,
+            "n_generated": 28,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0040",
+            "generation": "Copper's atomic number is 29, gallium's atomic number is 31, and selenium's atomic number is 34.",
+            "correct": true,
+            "n_generated": 28,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0041",
+            "generation": "Tin's atomic number is 50, germanium's atomic number is 32, and molybdenum's atomic number is 42.",
+            "correct": true,
+            "n_generated": 32,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0000",
+            "generation": "Yerevan, Niamey, Santo Domingo",
+            "correct": true,
+            "n_generated": 12,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0001",
+            "generation": "Albania's capital is Tirana, Sri Lanka's capital is Colombo, and Guyana's capital is Georgetown.",
+            "correct": true,
+            "n_generated": 26,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0002",
+            "generation": "Port of Spain, Addis Ababa, Harare",
+            "correct": false,
+            "n_generated": 12,
+            "n_items_found": 2,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0003",
+            "generation": "Gaborone, Ljubljana, Bishkek",
+            "correct": true,
+            "n_generated": 14,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0004",
+            "generation": "Uruguay's capital is Montevideo, Mongolia's capital is Ulaanbaatar, and El Salvador's capital is San Salvador.",
+            "correct": true,
+            "n_generated": 29,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0005",
+            "generation": "San Jos\u00e9, Bamako, Tegucigalpa",
+            "correct": true,
+            "n_generated": 13,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0006",
+            "generation": "Ulaanbaatar, San Salvador, Georgetown",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0007",
+            "generation": "San Jos\u00e9, Santo Domingo, Colombo",
+            "correct": true,
+            "n_generated": 10,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0008",
+            "generation": "Ljubljana, Bishkek, Bamako",
+            "correct": true,
+            "n_generated": 13,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0009",
+            "generation": "Montevideo, Georgetown, Dhaka",
+            "correct": false,
+            "n_generated": 9,
+            "n_items_found": 2,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0010",
+            "generation": "Niger's capital is Niamey, Albania's capital is Tirana, Zimbabwe's capital is Harare.",
+            "correct": true,
+            "n_generated": 24,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0011",
+            "generation": "Yerevan, Gaborone, Thimphu",
+            "correct": true,
+            "n_generated": 13,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0012",
+            "generation": "Ljubljana, Santo Domingo, Ulaanbaatar",
+            "correct": true,
+            "n_generated": 16,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0013",
+            "generation": "Nagua, Managua, Paramaribo",
+            "correct": false,
+            "n_generated": 11,
+            "n_items_found": 1,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0014",
+            "generation": "Thimphu, Addis Ababa, Dhaka",
+            "correct": true,
+            "n_generated": 13,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0015",
+            "generation": "Yerevan, Montevideo, Georgetown",
+            "correct": true,
+            "n_generated": 10,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0016",
+            "generation": "Albania's capital is Tirana, Zimbabwe's capital is Harare, and El Salvador's capital is San Salvador.",
+            "correct": true,
+            "n_generated": 26,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0017",
+            "generation": "Mali's capital is Bamako, Mongolia's capital is Ulaanbaatar, and Bangladesh's capital is Dhaka.",
+            "correct": true,
+            "n_generated": 27,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0018",
+            "generation": "Thimphu, Addis Ababa, San Salvador",
+            "correct": true,
+            "n_generated": 13,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0019",
+            "generation": "Yerevan, Gaborone, Santo Domingo",
+            "correct": true,
+            "n_generated": 12,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0020",
+            "generation": "Ljubljana, Bishkek, Georgetown",
+            "correct": true,
+            "n_generated": 12,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0021",
+            "generation": "Montevideo, San Jos\u00e9, Tegucigalpa",
+            "correct": true,
+            "n_generated": 14,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0022",
+            "generation": "Niger's capital is Niamey, Albania's capital is Tirana, Sri Lanka's capital is Colombo.",
+            "correct": true,
+            "n_generated": 25,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0023",
+            "generation": "Niger's capital is Niamey, Albania's capital is Tirana, and Bangladesh's capital is Dhaka.",
+            "correct": true,
+            "n_generated": 25,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0024",
+            "generation": "Mali's capital is Bamako, El Salvador's capital is San Salvador, Sri Lanka's capital is Colombo.",
+            "correct": true,
+            "n_generated": 25,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0025",
+            "generation": "Yerevan, Santo Domingo, Addis Ababa",
+            "correct": true,
+            "n_generated": 13,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0026",
+            "generation": "Thimphu, Montevideo, Georgetown",
+            "correct": false,
+            "n_generated": 11,
+            "n_items_found": 2,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0027",
+            "generation": "Ljubljana, Harare, Ulaanbaatar",
+            "correct": true,
+            "n_generated": 15,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0028",
+            "generation": "Bishkek, Tegucigalpa, Georgetown",
+            "correct": true,
+            "n_generated": 13,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0029",
+            "generation": "Yerevan, Addis Ababa, Dhaka",
+            "correct": true,
+            "n_generated": 12,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0030",
+            "generation": "Thimphu, Montevideo, San Jos\u00e9",
+            "correct": true,
+            "n_generated": 12,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0031",
+            "generation": "Niger's capital is Niamey, Mongolia's capital is Ulaanbaatar, El Salvador's capital is San Salvador.",
+            "correct": true,
+            "n_generated": 28,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0032",
+            "generation": "Gaborone, Harare, Georgetown",
+            "correct": true,
+            "n_generated": 9,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0033",
+            "generation": "Bishkek, Bamako, Colombo",
+            "correct": true,
+            "n_generated": 10,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0034",
+            "generation": "Santiago, Albania, Paramaribo",
+            "correct": false,
+            "n_generated": 9,
+            "n_items_found": 1,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0035",
+            "generation": "San Jos\u00e9, Bamako, Addis Ababa",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0036",
+            "generation": "Ljubljana, Ulaanbaatar, Colombo",
+            "correct": true,
+            "n_generated": 15,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0037",
+            "generation": "Port of Spain, Harare, Dhaka",
+            "correct": false,
+            "n_generated": 10,
+            "n_items_found": 2,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0038",
+            "generation": "Thimphu, Niamey, San Salvador",
+            "correct": true,
+            "n_generated": 12,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0039",
+            "generation": "Gaborone, Bishkek, Tirana",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0000",
+            "generation": "Cambodia's official currency is the Cambodian riel, Indonesia's official currency is the Indonesian rupiah, and Chile's official currency is the Chilean peso.",
+            "correct": true,
+            "n_generated": 35,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0001",
+            "generation": "Colombia's official currency is the Colombian peso, Poland's official currency is the Polish z\u0142oty, and Qatar's official currency is the Qatari rial.",
+            "correct": false,
+            "n_generated": 35,
+            "n_items_found": 2,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0002",
+            "generation": "Serbia uses the Serbian dinar, Costa Rica uses the Costa Rican col\u00f3n, and the Czech Republic uses the Czech koruna.",
+            "correct": true,
+            "n_generated": 28,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0003",
+            "generation": "Jordan's official currency is the Jordanian dinar, Bangladesh's official currency is the Bangladeshi taka, and Pakistan's official currency is the Pakistani rupee.",
+            "correct": true,
+            "n_generated": 36,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0004",
+            "generation": "Kuwait's official currency is the Kuwaiti dinar, United Arab Emirates' official currency is the United Arab Emirates dirham, and Laos' official currency is the Lao kip.",
+            "correct": true,
+            "n_generated": 40,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0005",
+            "generation": "The official currency of the United Arab Emirates is the United Arab Emirates Dirham (AED). The official currency of Laos is the Lao Kip (LAK). The official currency of Qatar is the Qatar Riyal (QAR).",
+            "correct": true,
+            "n_generated": 48,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0006",
+            "generation": "Jordan's official currency is the Jordanian dinar, Serbia's official currency is the Serbian dinar, and Bangladesh's official currency is the Bangladeshi taka.",
+            "correct": true,
+            "n_generated": 36,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0007",
+            "generation": "Colombia's official currency is the Colombian peso, Kuwait's official currency is the Kuwaiti dinar, and Indonesia's official currency is the Indonesian rupiah.",
+            "correct": true,
+            "n_generated": 35,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0008",
+            "generation": "Poland's official currency is the Polish z\u0142oty, Pakistan's official currency is the Pakistani rupee, and the Czech Republic's official currency is the Czech koruna.",
+            "correct": true,
+            "n_generated": 35,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0009",
+            "generation": "Costa Rica's official currency is the Costa Rican col\u00f3n, Cambodia's official currency is the Cambodian riel, and Chile's official currency is the Chilean peso.",
+            "correct": true,
+            "n_generated": 36,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0010",
+            "generation": "Poland's official currency is the Polish z\u0142oty, United Arab Emirates' official currency is the United Arab Emirates dirham, Chile's official currency is the Chilean peso.",
+            "correct": true,
+            "n_generated": 36,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0011",
+            "generation": "Jordan's official currency is the Jordanian dinar, Costa Rica's official currency is the Costa Rican col\u00f3n, and Cambodia's official currency is the Cambodian riel.",
+            "correct": true,
+            "n_generated": 36,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0012",
+            "generation": "Colombia's official currency is the Colombian peso, Serbia's official currency is the Serbian dinar, and Pakistan's official currency is the Pakistani rupee.",
+            "correct": true,
+            "n_generated": 33,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0013",
+            "generation": "Kuwait's official currency is the Kuwaiti dinar, Indonesia's official currency is the Indonesian rupiah, and Laos' official currency is the Lao kip.",
+            "correct": true,
+            "n_generated": 37,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0014",
+            "generation": "The official currency of Bangladesh is the taka, the Czech Republic is the koruna, and Qatar is the rial.",
+            "correct": false,
+            "n_generated": 26,
+            "n_items_found": 2,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0015",
+            "generation": "Jordan's official currency is the Jordanian dinar, Indonesia's official currency is the Indonesian rupiah, and the Czech Republic's official currency is the Czech koruna.",
+            "correct": true,
+            "n_generated": 36,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0016",
+            "generation": "Poland's official currency is the Polish z\u0142oty, United Arab Emirates' official currency is the United Arab Emirates dirham, Laos' official currency is the Lao kip.",
+            "correct": true,
+            "n_generated": 37,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0017",
+            "generation": "Serbia's official currency is the Serbian dinar, Bangladesh's official currency is the Bangladeshi taka, and Costa Rica's official currency is the Costa Rican col\u00f3n.",
+            "correct": true,
+            "n_generated": 38,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0018",
+            "generation": "Colombia's official currency is the Colombian peso, Pakistan's official currency is the Pakistani rupee, and Chile's official currency is the Chilean peso.",
+            "correct": true,
+            "n_generated": 33,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0019",
+            "generation": "Cambodia, Kuwait, and Qatar are all members of the United Arab Emirates (UAE) currency board, which pegs their currencies to the US dollar.",
+            "correct": false,
+            "n_generated": 33,
+            "n_items_found": 0,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0020",
+            "generation": "Jordan's official currency is the Jordanian dinar, Costa Rica's official currency is the Costa Rican col\u00f3n, and Pakistan's official currency is the Pakistani rupee.",
+            "correct": true,
+            "n_generated": 35,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0021",
+            "generation": "The official currency of the United Arab Emirates is the United Arab Emirates Dirham (AED). The official currency of Laos is the Lao Kip (LAK). The official currency of the Czech Republic is the Czech Koruna (C",
+            "correct": true,
+            "n_generated": 48,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0022",
+            "generation": "Colombia's official currency is the Colombian peso, Cambodia's official currency is the Cambodian riel, and Indonesia's official currency is the Indonesian rupiah.",
+            "correct": true,
+            "n_generated": 35,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0023",
+            "generation": "Serbia's official currency is the Serbian dinar, Bangladesh's official currency is the Bangladeshi taka, and Qatar's official currency is the Qatari rial.",
+            "correct": false,
+            "n_generated": 38,
+            "n_items_found": 2,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0024",
+            "generation": "Poland's official currency is the Polish z\u0142oty, Kuwait's official currency is the Kuwaiti dinar, and Chile's official currency is the Chilean peso.",
+            "correct": true,
+            "n_generated": 34,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0025",
+            "generation": "Jordan's official currency is the Jordanian dinar, Laos' official currency is the Lao kip, and the Czech Republic's official currency is the Czech koruna.",
+            "correct": true,
+            "n_generated": 36,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0026",
+            "generation": "Bangladesh, Kuwait, and Pakistan are all currencies. \n\nBangladesh is the Bangladeshi taka.",
+            "correct": false,
+            "n_generated": 24,
+            "n_items_found": 1,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0027",
+            "generation": "Poland's official currency is the Polish z\u0142oty, United Arab Emirates' official currency is the United Arab Emirates dirham, Qatar's official currency is the Qatar rial.",
+            "correct": false,
+            "n_generated": 36,
+            "n_items_found": 2,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0028",
+            "generation": "Colombia's official currency is the Colombian peso, Cambodia's official currency is the Cambodian riel, and Chile's official currency is the Chilean peso.",
+            "correct": true,
+            "n_generated": 34,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0029",
+            "generation": "Serbia's official currency is the Serbian dinar, Costa Rica's official currency is the Costa Rican col\u00f3n, and Indonesia's official currency is the Indonesian rupiah.",
+            "correct": true,
+            "n_generated": 36,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0030",
+            "generation": "Costa Rica's official currency is the Costa Rican col\u00f3n, Indonesia's official currency is the Indonesian rupiah, Laos' official currency is the Lao kip.",
+            "correct": true,
+            "n_generated": 36,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0031",
+            "generation": "Jordan's official currency is the Jordanian dinar, Kuwait's official currency is the Kuwaiti dinar, and Chile's official currency is the Chilean peso.",
+            "correct": true,
+            "n_generated": 34,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0032",
+            "generation": "Colombia's official currency is the Colombian peso, Cambodia's official currency is the Cambodian riel, and the United Arab Emirates' official currency is the United Arab Emirates dirham.",
+            "correct": true,
+            "n_generated": 39,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_element_dev_0000",
+            "generation": "Ruthenium's symbol is Ru, Barium's symbol is Ba, and Boron's symbol is B.",
+            "correct": true,
+            "n_generated": 25,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_element_dev_0001",
+            "generation": "Beryllium's symbol is Be, Molybdenum's symbol is Mo, and Sodium's symbol is Na.",
+            "correct": true,
+            "n_generated": 27,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_element_dev_0002",
+            "generation": "Antimony's symbol is Sb, tellurium's symbol is Te, and iron's symbol is Fe.",
+            "correct": true,
+            "n_generated": 23,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_element_dev_0003",
+            "generation": "Pt, Mo, Na",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_element_dev_0004",
+            "generation": "Antimony's symbol is Sb, Neon's symbol is Ne, and Boron's symbol is B.",
+            "correct": true,
+            "n_generated": 22,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_element_dev_0005",
+            "generation": "Te, Ru, Ba",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_element_dev_0006",
+            "generation": "Antimony's symbol is Sb, ruthenium's symbol is Ru, and boron's symbol is B.",
+            "correct": true,
+            "n_generated": 24,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_element_dev_0007",
+            "generation": "Pt, Mo, Fe",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_element_dev_0008",
+            "generation": "Neon, Be, Ba",
+            "correct": false,
+            "n_generated": 7,
+            "n_items_found": 2,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_element_dev_0009",
+            "generation": "Beryllium's symbol is Be, Molybdenum's symbol is Mo, and Boron's symbol is B.",
+            "correct": true,
+            "n_generated": 28,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_element_dev_0010",
+            "generation": "Platinum's symbol is Pt, barium's symbol is Ba, and iron's symbol is Fe.",
+            "correct": true,
+            "n_generated": 22,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_element_dev_0011",
+            "generation": "Te, Ru, Na",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_element_dev_0012",
+            "generation": "Antimony's symbol is Sb, Platinum's symbol is Pt, and Boron's symbol is B.",
+            "correct": true,
+            "n_generated": 22,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_element_dev_0013",
+            "generation": "Neon, Be, Ru",
+            "correct": false,
+            "n_generated": 7,
+            "n_items_found": 2,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_element_dev_0014",
+            "generation": "Molybdenum's chemical symbol is Mo, Iron's is Fe, and Sodium's is Na.",
+            "correct": true,
+            "n_generated": 23,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_element_dev_0015",
+            "generation": "Antimony's symbol is Sb, Barium's symbol is Ba, and Iron's symbol is Fe.",
+            "correct": true,
+            "n_generated": 22,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_element_dev_0016",
+            "generation": "Beryllium's symbol is Be, Ruthenium's symbol is Ru, and Boron's symbol is B.",
+            "correct": true,
+            "n_generated": 26,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_element_dev_0017",
+            "generation": "Te, Pt, Fe",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_element_dev_0018",
+            "generation": "Neon, Mo, Ba",
+            "correct": false,
+            "n_generated": 7,
+            "n_items_found": 2,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_history_dev_0000",
+            "generation": "The Louisiana Purchase was completed in 1803, The Cuban Missile Crisis took place in 1962, and The first modern Olympic Games were held in Athens in 1896.",
+            "correct": true,
+            "n_generated": 37,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_history_dev_0001",
+            "generation": "1944, 1957, 1986",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_history_dev_0002",
+            "generation": "1944, 1863, 1517",
+            "correct": false,
+            "n_generated": 11,
+            "n_items_found": 2,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_history_dev_0003",
+            "generation": "Sputnik 1 was launched in 1957, The Cuban Missile Crisis took place in 1962, and The first modern Olympic Games were held in Athens in 1896.",
+            "correct": true,
+            "n_generated": 39,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_history_dev_0004",
+            "generation": "1944, 1986, 1803",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_history_dev_0005",
+            "generation": "Mount Everest was first summited in 1922, The Cuban Missile Crisis took place in 1962, and The first modern Olympic Games were held in Athens in 1896.",
+            "correct": false,
+            "n_generated": 38,
+            "n_items_found": 2,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_history_dev_0006",
+            "generation": "Mount Everest was first summited in 1922, The Louisiana Purchase was completed in 1803, and The first modern Olympic Games were held in Athens in 1896.",
+            "correct": false,
+            "n_generated": 37,
+            "n_items_found": 2,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_history_dev_0007",
+            "generation": "Sputnik 1 was launched in 1957, Martin Luther published his Ninety-five Theses in 1517, and The Cuban Missile Crisis took place in 1962.",
+            "correct": true,
+            "n_generated": 39,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_history_dev_0008",
+            "generation": "Mount Everest was first summited in 1922, Martin Luther published his Ninety-five Theses in 1517, and The Cuban Missile Crisis took place in 1962.",
+            "correct": false,
+            "n_generated": 38,
+            "n_items_found": 2,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_history_dev_0009",
+            "generation": "1944, 1803, 1896",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_history_dev_0010",
+            "generation": "1944, 1517, 1803",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_history_dev_0011",
+            "generation": "Sputnik 1 was launched in 1957, The Chernobyl disaster occurred in 1986, and The Cuban Missile Crisis took place in 1962.",
+            "correct": true,
+            "n_generated": 36,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0000",
+            "generation": "Indianapolis, Concord, Helena",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0001",
+            "generation": "Madison, Montpelier, Olympia",
+            "correct": true,
+            "n_generated": 9,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0002",
+            "generation": "Montgomery, Santa Fe, Trenton",
+            "correct": true,
+            "n_generated": 9,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0003",
+            "generation": "Little Rock, Providence, Columbus",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0004",
+            "generation": "Little Rock, Olympia, Concord",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0005",
+            "generation": "Montpelier, Ohio, Helena",
+            "correct": false,
+            "n_generated": 8,
+            "n_items_found": 2,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0006",
+            "generation": "Providence, Indianapolis, Trenton",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0007",
+            "generation": "Madison, Atlanta, Santa Fe",
+            "correct": false,
+            "n_generated": 8,
+            "n_items_found": 2,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0008",
+            "generation": "Montpelier, Olympia, Columbus",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0009",
+            "generation": "Madison, Concord, Trenton",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0010",
+            "generation": "Providence, New Mexico City, Indianapolis",
+            "correct": false,
+            "n_generated": 9,
+            "n_items_found": 2,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0011",
+            "generation": "Little Rock, Montgomery, Helena",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0012",
+            "generation": "Alabama's capital is Montgomery, New Mexico's capital is Santa Fe, Indiana's capital is Indianapolis.",
+            "correct": true,
+            "n_generated": 21,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0013",
+            "generation": "Madison, Providence, Helena",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0014",
+            "generation": "Little Rock, Concord, Trenton",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0015",
+            "generation": "Madison, Atlanta, Indianapolis",
+            "correct": false,
+            "n_generated": 7,
+            "n_items_found": 2,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0016",
+            "generation": "Little Rock, Montpelier, Concord",
+            "correct": true,
+            "n_generated": 9,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0017",
+            "generation": "Providence, Columbus, Helena",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0018",
+            "generation": "Seattle, Olympia, Trenton",
+            "correct": false,
+            "n_generated": 7,
+            "n_items_found": 2,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0019",
+            "generation": "Little Rock, Concord, Helena",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0020",
+            "generation": "Montpelier, Birmingham, Providence",
+            "correct": false,
+            "n_generated": 8,
+            "n_items_found": 2,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0021",
+            "generation": "Madison, Columbus, Trenton",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0022",
+            "generation": "Seattle, Oklahoma City, Indianapolis",
+            "correct": false,
+            "n_generated": 7,
+            "n_items_found": 1,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0023",
+            "generation": "Little Rock, Indianapolis, Trenton",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0024",
+            "generation": "Madison, Concord, Helena",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0025",
+            "generation": "Alabama's capital is Montgomery, Rhode Island's capital is Providence, New Mexico's capital is Santa Fe",
+            "correct": true,
+            "n_generated": 21,
+            "n_items_found": 3,
+            "n_items_required": 3
+          }
+        ]
+      }
+    },
+    "large": {
+      "label": "3B",
+      "latency": {
+        "prefill_ms": 114.99941704096273,
+        "decode_ms_per_token": 59.76195802213624,
+        "tokens_per_second": 16.73305281646885,
+        "decode_ms_per_token_all": [
+          59.76195802213624,
+          59.87670796457678,
+          60.057499969843775,
+          60.23537501459941,
+          60.66787499003112,
+          60.900958022102714,
+          62.24879203364253,
+          62.924667028710246
+        ],
+        "decode_ms_per_token_median": 60.66787499003112,
+        "decode_spread": 1.0529217768501244,
+        "latency_suspect": false,
+        "total_ms_at_48_tokens": 3002.8706830053125,
+        "n_timed_prompts": 4,
+        "n_repeats": 2,
+        "decode_steps": 48,
+        "active_params_per_token": 3212749824
+      },
+      "accuracy": {
+        "n": 172,
+        "n_correct": 165,
+        "accuracy": 0.9593023255813954,
+        "accuracy_ci95": [
+          0.9183881731975246,
+          0.9801485033044198
+        ],
+        "mean_generated_tokens": 10.133720930232558,
+        "rows": [
+          {
+            "prompt_id": "lh_atomic_number_dev_0000",
+            "generation": "32, 48, 42",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0001",
+            "generation": "31, 10, 52",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0002",
+            "generation": "83, 77, 56",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0003",
+            "generation": "29, 53, 12",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0004",
+            "generation": "7, 50, 34",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0005",
+            "generation": "37, 46, 19",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0006",
+            "generation": "53, 32, 56",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0007",
+            "generation": "83, 19, 42",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0008",
+            "generation": "31, 12, 52",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0009",
+            "generation": "37, 46, 10",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0010",
+            "generation": "7, 50, 77",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0011",
+            "generation": "29, 48, 34",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0012",
+            "generation": "53, 12, 42",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0013",
+            "generation": "7, 10, 77",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0014",
+            "generation": "29, 32, 56",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0015",
+            "generation": "31, 37, 83",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0016",
+            "generation": "50, 48, 34",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0017",
+            "generation": "46, 19, 52",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0018",
+            "generation": "7, 46, 56",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0019",
+            "generation": "53, 83, 52",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0020",
+            "generation": "37, 19, 32",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0021",
+            "generation": "31, 10, 42",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0022",
+            "generation": "50, 12, 34",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0023",
+            "generation": "29, 77, 48",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0024",
+            "generation": "37, 50, 42",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0025",
+            "generation": "31, 46, 52",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0026",
+            "generation": "53, 10, 77",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0027",
+            "generation": "7, 19, 32",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0028",
+            "generation": "83, 56, 34",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0029",
+            "generation": "29, 12, 48",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0030",
+            "generation": "29, 50, 56",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0031",
+            "generation": "7, 19, 34",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0032",
+            "generation": "77, 32, 48",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0033",
+            "generation": "10, 52, 42",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0034",
+            "generation": "46, 83, 12",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0035",
+            "generation": "53, 31, 37",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0036",
+            "generation": "37, 19, 77",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0037",
+            "generation": "7, 52, 56",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0038",
+            "generation": "53, 46, 83",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0039",
+            "generation": "10, 12, 48",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0040",
+            "generation": "29, 31, 34",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_atomic_number_dev_0041",
+            "generation": "50, 32, 42",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0000",
+            "generation": "Yerevan, Niamey, Santo Domingo",
+            "correct": true,
+            "n_generated": 12,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0001",
+            "generation": "Tirana, Colombo, Georgetown",
+            "correct": true,
+            "n_generated": 9,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0002",
+            "generation": "Paramaribo, Addis Ababa, Harare",
+            "correct": true,
+            "n_generated": 12,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0003",
+            "generation": "Gaborone, Ljubljana, Bishkek",
+            "correct": true,
+            "n_generated": 14,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0004",
+            "generation": "Montevideo, Ulaanbaatar, San Salvador",
+            "correct": true,
+            "n_generated": 13,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0005",
+            "generation": "San Jos\u00e9, Bamako, Tegucigalpa",
+            "correct": true,
+            "n_generated": 13,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0006",
+            "generation": "Ulaanbaatar, San Salvador, Georgetown",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0007",
+            "generation": "San Jos\u00e9, Santo Domingo, Colombo",
+            "correct": true,
+            "n_generated": 10,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0008",
+            "generation": "Ljubljana, Bishkek, Bamako",
+            "correct": true,
+            "n_generated": 13,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0009",
+            "generation": "Montevideo, Paramaribo, Dhaka",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0010",
+            "generation": "Niamey, Tirana, Harare",
+            "correct": true,
+            "n_generated": 10,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0011",
+            "generation": "Yerevan, Gaborone, Thimphu",
+            "correct": true,
+            "n_generated": 13,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0012",
+            "generation": "Ljubljana, Santo Domingo, Ulaanbaatar",
+            "correct": true,
+            "n_generated": 16,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0013",
+            "generation": "Niamey, Bishkek, Paramaribo",
+            "correct": true,
+            "n_generated": 12,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0014",
+            "generation": "Thimphu, Addis Ababa, Dhaka",
+            "correct": true,
+            "n_generated": 13,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0015",
+            "generation": "Yerevan, Montevideo, Georgetown",
+            "correct": true,
+            "n_generated": 10,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0016",
+            "generation": "Tirana, Harare, San Salvador",
+            "correct": true,
+            "n_generated": 10,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0017",
+            "generation": "Bamako, Ulaanbaatar, Dhaka",
+            "correct": true,
+            "n_generated": 13,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0018",
+            "generation": "Thimphu, Addis Ababa, San Salvador",
+            "correct": true,
+            "n_generated": 13,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0019",
+            "generation": "Yerevan, Gaborone, Santo Domingo",
+            "correct": true,
+            "n_generated": 12,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0020",
+            "generation": "Ljubljana, Bishkek, Georgetown",
+            "correct": true,
+            "n_generated": 12,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0021",
+            "generation": "Montevideo, San Jos\u00e9, Tegucigalpa",
+            "correct": true,
+            "n_generated": 14,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0022",
+            "generation": "Niamey, Tirana, Colombo",
+            "correct": true,
+            "n_generated": 10,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0023",
+            "generation": "Niamey, Tirana, Dhaka",
+            "correct": true,
+            "n_generated": 10,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0024",
+            "generation": "Bamako, San Salvador, Colombo",
+            "correct": true,
+            "n_generated": 10,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0025",
+            "generation": "Yerevan, Santo Domingo, Addis Ababa",
+            "correct": true,
+            "n_generated": 13,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0026",
+            "generation": "Thimphu, Montevideo, Paramaribo",
+            "correct": true,
+            "n_generated": 13,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0027",
+            "generation": "Ljubljana, Harare, Ulaanbaatar",
+            "correct": true,
+            "n_generated": 15,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0028",
+            "generation": "Bishkek, Tegucigalpa, Georgetown",
+            "correct": true,
+            "n_generated": 13,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0029",
+            "generation": "Yerevan, Addis Ababa, Dhaka",
+            "correct": true,
+            "n_generated": 12,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0030",
+            "generation": "Thimphu, Montevideo, San Jos\u00e9",
+            "correct": true,
+            "n_generated": 12,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0031",
+            "generation": "Niamey, Ulaanbaatar, San Salvador",
+            "correct": true,
+            "n_generated": 13,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0032",
+            "generation": "Gaborone, Harare, Georgetown",
+            "correct": true,
+            "n_generated": 9,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0033",
+            "generation": "Bishkek, Bamako, Colombo",
+            "correct": true,
+            "n_generated": 10,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0034",
+            "generation": "Santo Domingo, Tirana, Paramaribo",
+            "correct": true,
+            "n_generated": 12,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0035",
+            "generation": "San Jos\u00e9, Bamako, Addis Ababa",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0036",
+            "generation": "Ljubljana, Ulaanbaatar, Colombo",
+            "correct": true,
+            "n_generated": 15,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0037",
+            "generation": "Paramaribo, Harare, Dhaka",
+            "correct": true,
+            "n_generated": 10,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0038",
+            "generation": "Thimphu, Niamey, San Salvador",
+            "correct": true,
+            "n_generated": 12,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_capital_dev_0039",
+            "generation": "Gaborone, Bishkek, Tirana",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0000",
+            "generation": "Cambodian Riel, Indonesian Rupiah, Chilean Peso",
+            "correct": true,
+            "n_generated": 15,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0001",
+            "generation": "COP, PLN, QAR",
+            "correct": false,
+            "n_generated": 9,
+            "n_items_found": 0,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0002",
+            "generation": "Serbian dinar, Costa Rican col\u00f3n, Czech koruna",
+            "correct": true,
+            "n_generated": 14,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0003",
+            "generation": "Jordanian Dinar, Bangladeshi Taka, Pakistani Rupee",
+            "correct": true,
+            "n_generated": 16,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0004",
+            "generation": "Kuwaiti Dinar, United Arab Emirates Dirham, Lao Kip",
+            "correct": true,
+            "n_generated": 18,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0005",
+            "generation": "United Arab Emirates Dirham, Lao Kip, Qatari Riyal",
+            "correct": true,
+            "n_generated": 17,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0006",
+            "generation": "Jordanian Dinar, Serbian Dinar, Bangladeshi Taka",
+            "correct": true,
+            "n_generated": 16,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0007",
+            "generation": "COP, KWD, IDR",
+            "correct": false,
+            "n_generated": 8,
+            "n_items_found": 0,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0008",
+            "generation": "Polish z\u0142oty, Pakistani rupee, Czech koruna",
+            "correct": true,
+            "n_generated": 13,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0009",
+            "generation": "Costa Rican col\u00f3n, Cambodian riel, Chilean peso",
+            "correct": true,
+            "n_generated": 15,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0010",
+            "generation": "Polish z\u0142oty, United Arab Emirates dirham, Chilean peso",
+            "correct": true,
+            "n_generated": 15,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0011",
+            "generation": "Jordanian Dinar, Costa Rican Col\u00f3n, Cambodian Riel",
+            "correct": true,
+            "n_generated": 15,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0012",
+            "generation": "Columbian peso, Serbian dinar, Pakistani rupee",
+            "correct": true,
+            "n_generated": 13,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0013",
+            "generation": "Kuwaiti Dinar, Indonesian Rupiah, Lao Kip",
+            "correct": true,
+            "n_generated": 17,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0014",
+            "generation": "Bangladeshi taka, Czech koruna, Qatari riyal",
+            "correct": true,
+            "n_generated": 18,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0015",
+            "generation": "Jordanian Dinar, Indonesian Rupiah, Czech Koruna",
+            "correct": true,
+            "n_generated": 14,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0016",
+            "generation": "Polish z\u0142oty, United Arab Emirates dirham, Lao kip",
+            "correct": true,
+            "n_generated": 16,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0017",
+            "generation": "Serbian dinar, Bangladeshi taka, Costa Rican col\u00f3n",
+            "correct": true,
+            "n_generated": 17,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0018",
+            "generation": "COP, PKR, CLP",
+            "correct": false,
+            "n_generated": 9,
+            "n_items_found": 0,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0019",
+            "generation": "Cambodian riel, Kuwaiti dinar, Qatari riyal",
+            "correct": true,
+            "n_generated": 17,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0020",
+            "generation": "Jordanian Dinar, Costa Rican Col\u00f3n, Pakistani Rupee",
+            "correct": true,
+            "n_generated": 14,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0021",
+            "generation": "United Arab Emirates dirham, Lao kip, Czech koruna",
+            "correct": true,
+            "n_generated": 15,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0022",
+            "generation": "COP, Riel, IDR",
+            "correct": false,
+            "n_generated": 8,
+            "n_items_found": 1,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0023",
+            "generation": "Serbian dinar, Bangladeshi taka, Qatari riyal",
+            "correct": true,
+            "n_generated": 19,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0024",
+            "generation": "Polish z\u0142oty, Kuwaiti dinar, Chilean peso",
+            "correct": true,
+            "n_generated": 14,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0025",
+            "generation": "Jordanian Dinar, Lao Kip, Czech Koruna",
+            "correct": true,
+            "n_generated": 14,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0026",
+            "generation": "Bangladeshi taka, Kuwaiti dinar, Pakistani rupee",
+            "correct": true,
+            "n_generated": 16,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0027",
+            "generation": "Polish z\u0142oty, United Arab Emirates dirham, Qatari riyal",
+            "correct": true,
+            "n_generated": 18,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0028",
+            "generation": "COP, Riel, CLP",
+            "correct": false,
+            "n_generated": 9,
+            "n_items_found": 1,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0029",
+            "generation": "Serbian dinar, Costa Rican col\u00f3n, Indonesian rupiah",
+            "correct": true,
+            "n_generated": 15,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0030",
+            "generation": "Costa Rican col\u00f3n, Indonesian rupiah, Lao kip",
+            "correct": true,
+            "n_generated": 16,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0031",
+            "generation": "Jordanian Dinar, Kuwaiti Dinar, Chilean Peso",
+            "correct": true,
+            "n_generated": 15,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_currency_dev_0032",
+            "generation": "COP, Riel, AED",
+            "correct": false,
+            "n_generated": 9,
+            "n_items_found": 1,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_element_dev_0000",
+            "generation": "Ru, Ba, B",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_element_dev_0001",
+            "generation": "Be, Mo, Na",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_element_dev_0002",
+            "generation": "Sb, Te, Fe",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_element_dev_0003",
+            "generation": "Pt, Mo, Na",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_element_dev_0004",
+            "generation": "Sb, Ne, B",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_element_dev_0005",
+            "generation": "Te, Ru, Ba",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_element_dev_0006",
+            "generation": "Sb, Ru, B",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_element_dev_0007",
+            "generation": "Pt, Mo, Fe",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_element_dev_0008",
+            "generation": "Ne, Be, Ba",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_element_dev_0009",
+            "generation": "Be, Mo, B",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_element_dev_0010",
+            "generation": "Pt, Ba, Fe",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_element_dev_0011",
+            "generation": "Te, Ru, Na",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_element_dev_0012",
+            "generation": "Sb, Pt, B",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_element_dev_0013",
+            "generation": "Ne, Be, Ru",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_element_dev_0014",
+            "generation": "Mo, Fe, Na",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_element_dev_0015",
+            "generation": "Sb, Ba, Fe",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_element_dev_0016",
+            "generation": "Be, Ru, B",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_element_dev_0017",
+            "generation": "Te, Pt, Fe",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_element_dev_0018",
+            "generation": "Ne, Mo, Ba",
+            "correct": true,
+            "n_generated": 6,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_history_dev_0000",
+            "generation": "1803, 1962, 1896",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_history_dev_0001",
+            "generation": "1944, 1957, 1986",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_history_dev_0002",
+            "generation": "1944, 1953, 1517",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_history_dev_0003",
+            "generation": "1957, 1962, 1896",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_history_dev_0004",
+            "generation": "1944, 1986, 1803",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_history_dev_0005",
+            "generation": "1953, 1962, 1896",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_history_dev_0006",
+            "generation": "1856, 1803, 1896",
+            "correct": false,
+            "n_generated": 11,
+            "n_items_found": 2,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_history_dev_0007",
+            "generation": "1957, 1517, 1962",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_history_dev_0008",
+            "generation": "1953, 1517, 1962",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_history_dev_0009",
+            "generation": "1944, 1803, 1896",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_history_dev_0010",
+            "generation": "1944, 1517, 1803",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_history_dev_0011",
+            "generation": "1957, 1986, 1962",
+            "correct": true,
+            "n_generated": 11,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0000",
+            "generation": "Indianapolis, Concord, Helena",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0001",
+            "generation": "Madison, Montpelier, Olympia",
+            "correct": true,
+            "n_generated": 9,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0002",
+            "generation": "Montgomery, Santa Fe, Trenton",
+            "correct": true,
+            "n_generated": 9,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0003",
+            "generation": "Little Rock, Providence, Columbus",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0004",
+            "generation": "Little Rock, Olympia, Concord",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0005",
+            "generation": "Montpelier, Columbus, Helena",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0006",
+            "generation": "Providence, Indianapolis, Trenton",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0007",
+            "generation": "Madison, Montgomery, Santa Fe",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0008",
+            "generation": "Montpelier, Olympia, Columbus",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0009",
+            "generation": "Madison, Concord, Trenton",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0010",
+            "generation": "Providence, Santa Fe, Indianapolis",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0011",
+            "generation": "Little Rock, Montgomery, Helena",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0012",
+            "generation": "Montgomery, Santa Fe, Indianapolis",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0013",
+            "generation": "Madison, Providence, Helena",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0014",
+            "generation": "Little Rock, Concord, Trenton",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0015",
+            "generation": "Madison, Montgomery, Indianapolis",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0016",
+            "generation": "Little Rock, Montpelier, Concord",
+            "correct": true,
+            "n_generated": 9,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0017",
+            "generation": "Providence, Columbus, Helena",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0018",
+            "generation": "Olympia, Santa Fe, Trenton",
+            "correct": true,
+            "n_generated": 10,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0019",
+            "generation": "Little Rock, Concord, Helena",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0020",
+            "generation": "Montpelier, Montgomery, Providence",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0021",
+            "generation": "Madison, Columbus, Trenton",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0022",
+            "generation": "Olympia, Santa Fe, Indianapolis",
+            "correct": true,
+            "n_generated": 9,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0023",
+            "generation": "Little Rock, Indianapolis, Trenton",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0024",
+            "generation": "Madison, Concord, Helena",
+            "correct": true,
+            "n_generated": 7,
+            "n_items_found": 3,
+            "n_items_required": 3
+          },
+          {
+            "prompt_id": "lh_us_capital_dev_0025",
+            "generation": "Montgomery, Providence, Santa Fe",
+            "correct": true,
+            "n_generated": 8,
+            "n_items_found": 3,
+            "n_items_required": 3
+          }
+        ]
+      }
+    }
+  }
+}

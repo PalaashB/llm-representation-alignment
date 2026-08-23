@@ -1,0 +1,638 @@
+{
+  "pair": "llama",
+  "small_layer_i": 10,
+  "large_layer_j": 10,
+  "depth_matched_j": 18,
+  "split": "test",
+  "mode": "warm",
+  "device": "mps",
+  "n_prompts": 35,
+  "skipped_large_blocks": 10,
+  "skipped_small_blocks": 6,
+  "paths": {
+    "small": {
+      "label": "1B",
+      "latency": {
+        "prefill_ms": 43.378249974921346,
+        "decode_ms_per_token": 23.953374999109656,
+        "tokens_per_second": 41.7477704096884,
+        "decode_ms_per_token_all": [
+          23.953374999109656,
+          23.97083299001679,
+          23.986667016288266,
+          24.082832998828962
+        ],
+        "decode_ms_per_token_median": 23.986667016288266,
+        "total_ms_at_32_tokens": 792.1330419703736,
+        "n_timed_prompts": 4,
+        "decode_steps": 32,
+        "active_params_per_token": 1235814400
+      },
+      "accuracy": {
+        "n": 35,
+        "n_correct": 31,
+        "accuracy": 0.8857142857142857,
+        "rows": [
+          {
+            "prompt_id": "cur_za",
+            "generation": "Rands",
+            "correct": false
+          },
+          {
+            "prompt_id": "mis_chess",
+            "generation": "64",
+            "correct": true
+          },
+          {
+            "prompt_id": "spo_wc2014",
+            "generation": "Germany",
+            "correct": true
+          },
+          {
+            "prompt_id": "geo_smallest",
+            "generation": "Vatican City",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_et",
+            "generation": "Addis Ababa",
+            "correct": true
+          },
+          {
+            "prompt_id": "his_president1",
+            "generation": "George Washington",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_vn",
+            "generation": "Hanoi",
+            "correct": true
+          },
+          {
+            "prompt_id": "geo_mountain",
+            "generation": "Mount Everest",
+            "correct": true
+          },
+          {
+            "prompt_id": "lit_odyssey",
+            "generation": "Homer",
+            "correct": true
+          },
+          {
+            "prompt_id": "el_u_num",
+            "generation": "92",
+            "correct": true
+          },
+          {
+            "prompt_id": "geo_ocean",
+            "generation": "Pacific Ocean",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_gh",
+            "generation": "Accra",
+            "correct": true
+          },
+          {
+            "prompt_id": "his_indep",
+            "generation": "August 15, 1947",
+            "correct": true
+          },
+          {
+            "prompt_id": "cur_th",
+            "generation": "Baht",
+            "correct": true
+          },
+          {
+            "prompt_id": "us_il",
+            "generation": "Springfield",
+            "correct": true
+          },
+          {
+            "prompt_id": "sci_k",
+            "generation": "K",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_tr",
+            "generation": "Ankara",
+            "correct": true
+          },
+          {
+            "prompt_id": "geo_uscounty",
+            "generation": "California",
+            "correct": false
+          },
+          {
+            "prompt_id": "sci_dna",
+            "generation": "James Watson",
+            "correct": true
+          },
+          {
+            "prompt_id": "mis_language_br",
+            "generation": "Portuguese",
+            "correct": true
+          },
+          {
+            "prompt_id": "geo_africamt",
+            "generation": "Mount Kilimanjaro",
+            "correct": true
+          },
+          {
+            "prompt_id": "his_penicillin",
+            "generation": "Alexander Fleming.",
+            "correct": true
+          },
+          {
+            "prompt_id": "his_moon",
+            "generation": "1969",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_ca",
+            "generation": "Ottawa",
+            "correct": true
+          },
+          {
+            "prompt_id": "us_wa",
+            "generation": "Olympia",
+            "correct": true
+          },
+          {
+            "prompt_id": "his_columbus",
+            "generation": "1492",
+            "correct": true
+          },
+          {
+            "prompt_id": "sci_element79",
+            "generation": "Osmium.",
+            "correct": false
+          },
+          {
+            "prompt_id": "us_ca",
+            "generation": "Sacramento",
+            "correct": true
+          },
+          {
+            "prompt_id": "spo_marathon",
+            "generation": "26.2",
+            "correct": false
+          },
+          {
+            "prompt_id": "his_pharaoh",
+            "generation": "Cleopatra VII",
+            "correct": true
+          },
+          {
+            "prompt_id": "sci_w",
+            "generation": "W",
+            "correct": true
+          },
+          {
+            "prompt_id": "geo_river",
+            "generation": "Nile River",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_si",
+            "generation": "Ljubljana",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_za",
+            "generation": "Pretoria",
+            "correct": true
+          },
+          {
+            "prompt_id": "mis_bones",
+            "generation": "206",
+            "correct": true
+          }
+        ]
+      }
+    },
+    "large": {
+      "label": "3B",
+      "latency": {
+        "prefill_ms": 114.19175000628456,
+        "decode_ms_per_token": 58.6804159975145,
+        "tokens_per_second": 17.041460647490236,
+        "decode_ms_per_token_all": [
+          58.6804159975145,
+          58.83324999012984,
+          58.863458019914106,
+          59.121582977240905
+        ],
+        "decode_ms_per_token_median": 58.863458019914106,
+        "total_ms_at_32_tokens": 1943.484530209389,
+        "n_timed_prompts": 4,
+        "decode_steps": 32,
+        "active_params_per_token": 3212749824
+      },
+      "accuracy": {
+        "n": 35,
+        "n_correct": 33,
+        "accuracy": 0.9428571428571428,
+        "rows": [
+          {
+            "prompt_id": "cur_za",
+            "generation": "South African rand",
+            "correct": true
+          },
+          {
+            "prompt_id": "mis_chess",
+            "generation": "64",
+            "correct": true
+          },
+          {
+            "prompt_id": "spo_wc2014",
+            "generation": "Germany",
+            "correct": true
+          },
+          {
+            "prompt_id": "geo_smallest",
+            "generation": "Vatican City",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_et",
+            "generation": "Addis Ababa",
+            "correct": true
+          },
+          {
+            "prompt_id": "his_president1",
+            "generation": "George Washington",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_vn",
+            "generation": "Hanoi",
+            "correct": true
+          },
+          {
+            "prompt_id": "geo_mountain",
+            "generation": "Mount Everest",
+            "correct": true
+          },
+          {
+            "prompt_id": "lit_odyssey",
+            "generation": "Homer",
+            "correct": true
+          },
+          {
+            "prompt_id": "el_u_num",
+            "generation": "92",
+            "correct": true
+          },
+          {
+            "prompt_id": "geo_ocean",
+            "generation": "Pacific Ocean",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_gh",
+            "generation": "Accra",
+            "correct": true
+          },
+          {
+            "prompt_id": "his_indep",
+            "generation": "1947",
+            "correct": true
+          },
+          {
+            "prompt_id": "cur_th",
+            "generation": "Baht",
+            "correct": true
+          },
+          {
+            "prompt_id": "us_il",
+            "generation": "Springfield",
+            "correct": true
+          },
+          {
+            "prompt_id": "sci_k",
+            "generation": "K",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_tr",
+            "generation": "Ankara",
+            "correct": true
+          },
+          {
+            "prompt_id": "geo_uscounty",
+            "generation": "Texas",
+            "correct": true
+          },
+          {
+            "prompt_id": "sci_dna",
+            "generation": "James Watson",
+            "correct": true
+          },
+          {
+            "prompt_id": "mis_language_br",
+            "generation": "Portuguese",
+            "correct": true
+          },
+          {
+            "prompt_id": "geo_africamt",
+            "generation": "Mount Kilimanjaro",
+            "correct": true
+          },
+          {
+            "prompt_id": "his_penicillin",
+            "generation": "Alexander Fleming",
+            "correct": true
+          },
+          {
+            "prompt_id": "his_moon",
+            "generation": "1969",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_ca",
+            "generation": "Ottawa",
+            "correct": true
+          },
+          {
+            "prompt_id": "us_wa",
+            "generation": "Olympia",
+            "correct": true
+          },
+          {
+            "prompt_id": "his_columbus",
+            "generation": "1492",
+            "correct": true
+          },
+          {
+            "prompt_id": "sci_element79",
+            "generation": "Astatine",
+            "correct": false
+          },
+          {
+            "prompt_id": "us_ca",
+            "generation": "Sacramento",
+            "correct": true
+          },
+          {
+            "prompt_id": "spo_marathon",
+            "generation": "42.195",
+            "correct": false
+          },
+          {
+            "prompt_id": "his_pharaoh",
+            "generation": "Cleopatra VII",
+            "correct": true
+          },
+          {
+            "prompt_id": "sci_w",
+            "generation": "W",
+            "correct": true
+          },
+          {
+            "prompt_id": "geo_river",
+            "generation": "Nile River",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_si",
+            "generation": "Ljubljana",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_za",
+            "generation": "Pretoria",
+            "correct": true
+          },
+          {
+            "prompt_id": "mis_bones",
+            "generation": "206",
+            "correct": true
+          }
+        ]
+      }
+    },
+    "stitch": {
+      "label": "stitch-warm-L10->L10",
+      "latency": {
+        "prefill_ms": 139.21895899693482,
+        "decode_ms_per_token": 53.08599999989383,
+        "tokens_per_second": 18.83735824891685,
+        "decode_ms_per_token_all": [
+          53.08599999989383,
+          53.13620899687521,
+          53.343333973316476,
+          53.3766669977922
+        ],
+        "decode_ms_per_token_median": 53.343333973316476,
+        "total_ms_at_32_tokens": 1797.731185957673,
+        "n_timed_prompts": 4,
+        "decode_steps": 32,
+        "active_params_per_token": 2820567040
+      },
+      "accuracy": {
+        "n": 35,
+        "n_correct": 32,
+        "accuracy": 0.9142857142857143,
+        "rows": [
+          {
+            "prompt_id": "cur_za",
+            "generation": "South African Rand",
+            "correct": true
+          },
+          {
+            "prompt_id": "mis_chess",
+            "generation": "64",
+            "correct": true
+          },
+          {
+            "prompt_id": "spo_wc2014",
+            "generation": "Germany",
+            "correct": true
+          },
+          {
+            "prompt_id": "geo_smallest",
+            "generation": "Vatican City",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_et",
+            "generation": "Addis Ababa",
+            "correct": true
+          },
+          {
+            "prompt_id": "his_president1",
+            "generation": "George Washington",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_vn",
+            "generation": "Hanoi",
+            "correct": true
+          },
+          {
+            "prompt_id": "geo_mountain",
+            "generation": "Mount Everest",
+            "correct": true
+          },
+          {
+            "prompt_id": "lit_odyssey",
+            "generation": "Homer",
+            "correct": true
+          },
+          {
+            "prompt_id": "el_u_num",
+            "generation": "92",
+            "correct": true
+          },
+          {
+            "prompt_id": "geo_ocean",
+            "generation": "Pacific",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_gh",
+            "generation": "Accra",
+            "correct": true
+          },
+          {
+            "prompt_id": "his_indep",
+            "generation": "1947",
+            "correct": true
+          },
+          {
+            "prompt_id": "cur_th",
+            "generation": "Baht",
+            "correct": true
+          },
+          {
+            "prompt_id": "us_il",
+            "generation": "Springfield",
+            "correct": true
+          },
+          {
+            "prompt_id": "sci_k",
+            "generation": "K",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_tr",
+            "generation": "Anstanbul",
+            "correct": false
+          },
+          {
+            "prompt_id": "geo_uscounty",
+            "generation": "Texas",
+            "correct": true
+          },
+          {
+            "prompt_id": "sci_dna",
+            "generation": "James Watson",
+            "correct": true
+          },
+          {
+            "prompt_id": "mis_language_br",
+            "generation": "Portuguese",
+            "correct": true
+          },
+          {
+            "prompt_id": "geo_africamt",
+            "generation": "Mount Kilimanjaro",
+            "correct": true
+          },
+          {
+            "prompt_id": "his_penicillin",
+            "generation": "Alexander Fleming",
+            "correct": true
+          },
+          {
+            "prompt_id": "his_moon",
+            "generation": "1969",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_ca",
+            "generation": "Ottawa",
+            "correct": true
+          },
+          {
+            "prompt_id": "us_wa",
+            "generation": "Olympia",
+            "correct": true
+          },
+          {
+            "prompt_id": "his_columbus",
+            "generation": "1492",
+            "correct": true
+          },
+          {
+            "prompt_id": "sci_element79",
+            "generation": "Australin",
+            "correct": false
+          },
+          {
+            "prompt_id": "us_ca",
+            "generation": "Sacramento",
+            "correct": true
+          },
+          {
+            "prompt_id": "spo_marathon",
+            "generation": "42",
+            "correct": true
+          },
+          {
+            "prompt_id": "his_pharaoh",
+            "generation": "Cleopatra VII's sister was not not not not not not not not not not not not not not not not",
+            "correct": true
+          },
+          {
+            "prompt_id": "sci_w",
+            "generation": "W",
+            "correct": true
+          },
+          {
+            "prompt_id": "geo_river",
+            "generation": "Nile River",
+            "correct": true
+          },
+          {
+            "prompt_id": "cap_si",
+            "generation": "Ljubeta",
+            "correct": false
+          },
+          {
+            "prompt_id": "cap_za",
+            "generation": "Pretoria",
+            "correct": true
+          },
+          {
+            "prompt_id": "mis_bones",
+            "generation": "206",
+            "correct": true
+          }
+        ]
+      }
+    }
+  },
+  "tradeoff": {
+    "accuracy_small": 0.8857142857142857,
+    "accuracy_large": 0.9428571428571428,
+    "accuracy_stitch": 0.9142857142857143,
+    "acc_gap_vs_large_pts": -2.857142857142858,
+    "acc_gain_vs_small_pts": 2.857142857142858,
+    "gap_recovered": 0.5,
+    "decode_speedup_vs_large": 1.1053840183406523,
+    "decode_speedup_small_vs_large": 2.4497765346092417,
+    "params_frac_of_large": 0.8779292489348838
+  },
+  "adapter": {
+    "ridge_alpha": 0.01,
+    "answer_weight": 4.0,
+    "norm_match": true,
+    "norm_gain": 1.0077909231185913,
+    "n_rows": 5438,
+    "n_answer_rows": 258,
+    "held_out_r2_all": 0.9993770984291612,
+    "held_out_r2_answer": 0.19417002842453912
+  }
+}

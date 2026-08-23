@@ -1,0 +1,2063 @@
+{
+  "pair": "llama",
+  "bank": "hard_factual",
+  "split": "dev",
+  "n_prompts": 106,
+  "accuracy_small": 0.7358490566037735,
+  "accuracy_large": 0.9716981132075472,
+  "headroom_pts": 23.584905660377366,
+  "divergent_ids": [
+    "hcap_paraguay",
+    "hcur_peru",
+    "hcur_qatar",
+    "hev_constantinople_fell_to_t",
+    "hev_mount_everest_was_first_",
+    "hmis_amendments_bill",
+    "hmis_chess_pieces",
+    "hmis_senators",
+    "hmis_soccer_players",
+    "hnum_antimony",
+    "hnum_chlorine",
+    "hnum_fluorine",
+    "hnum_indium",
+    "hnum_iron",
+    "hnum_krypton",
+    "hnum_phosphorus",
+    "hnum_plutonium",
+    "hnum_radium",
+    "hnum_rubidium",
+    "hnum_ruthenium",
+    "hnum_tungsten",
+    "hnum_xenon",
+    "hnum_yttrium",
+    "hpeak_antarctica",
+    "hsym_magnesium",
+    "hus_maryland"
+  ],
+  "n_divergent": 26,
+  "both_wrong_ids": [
+    "hcur_panama",
+    "hmis_haiku"
+  ],
+  "usable": true,
+  "mean_generated_tokens_small": 4.122641509433962,
+  "mean_generated_tokens_large": 3.4716981132075473,
+  "paths": {
+    "small": {
+      "label": "1B",
+      "latency": {
+        "prefill_ms": 43.61849999986589,
+        "decode_ms_per_token": 24.10954103106633,
+        "tokens_per_second": 41.477355322171036,
+        "decode_ms_per_token_all": [
+          24.10954103106633,
+          24.154250044375658,
+          24.30462499614805,
+          24.31974996579811,
+          24.349374987650663,
+          24.46833299472928,
+          24.49999999953434,
+          24.7008329606615
+        ],
+        "decode_spread": 1.024525225462951,
+        "latency_suspect": false,
+        "n_timed_prompts": 4,
+        "n_repeats": 2,
+        "decode_steps": 32,
+        "active_params_per_token": 1235814400
+      },
+      "accuracy": {
+        "n": 106,
+        "n_correct": 78,
+        "accuracy": 0.7358490566037735,
+        "mean_generated_tokens": 4.122641509433962,
+        "rows": [
+          {
+            "prompt_id": "hus_georgia",
+            "gold": [
+              "Atlanta"
+            ],
+            "generation": "Atlanta",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hnum_plutonium",
+            "gold": [
+              "94"
+            ],
+            "generation": "92",
+            "correct": false,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hcap_sri_lanka",
+            "gold": [
+              "Sri Jayawardenepura Kotte",
+              "Colombo"
+            ],
+            "generation": "Colombo",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hcur_switzerland",
+            "gold": [
+              "franc"
+            ],
+            "generation": "Swiss Franc",
+            "correct": true,
+            "n_generated": 4
+          },
+          {
+            "prompt_id": "hev_the_titanic_sank",
+            "gold": [
+              "1912"
+            ],
+            "generation": "1912",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hnum_osmium",
+            "gold": [
+              "76"
+            ],
+            "generation": "76",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hus_maine",
+            "gold": [
+              "Augusta"
+            ],
+            "generation": "Augusta",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hsym_tellurium",
+            "gold": [
+              "Te"
+            ],
+            "generation": "Te",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hnum_tungsten",
+            "gold": [
+              "74"
+            ],
+            "generation": "83",
+            "correct": false,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hcap_yemen",
+            "gold": [
+              "Sanaa",
+              "Sana'a"
+            ],
+            "generation": "Sana'a",
+            "correct": true,
+            "n_generated": 4
+          },
+          {
+            "prompt_id": "hcap_ghana",
+            "gold": [
+              "Accra"
+            ],
+            "generation": "Accra",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hcur_turkey",
+            "gold": [
+              "lira"
+            ],
+            "generation": "Turkish Lira",
+            "correct": true,
+            "n_generated": 5
+          },
+          {
+            "prompt_id": "hcap_ivory_coast",
+            "gold": [
+              "Yamoussoukro"
+            ],
+            "generation": "Yamoussoukro",
+            "correct": true,
+            "n_generated": 7
+          },
+          {
+            "prompt_id": "hev_constantinople_fell_to_t",
+            "gold": [
+              "1453"
+            ],
+            "generation": "1521",
+            "correct": false,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hmis_deck",
+            "gold": [
+              "52",
+              "fifty-two"
+            ],
+            "generation": "52",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hcap_dominican_republic",
+            "gold": [
+              "Santo Domingo"
+            ],
+            "generation": "Santo Domingo",
+            "correct": true,
+            "n_generated": 5
+          },
+          {
+            "prompt_id": "hnum_ruthenium",
+            "gold": [
+              "44"
+            ],
+            "generation": "76",
+            "correct": false,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hnum_xenon",
+            "gold": [
+              "54"
+            ],
+            "generation": "92",
+            "correct": false,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hnum_rubidium",
+            "gold": [
+              "37"
+            ],
+            "generation": "86",
+            "correct": false,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hlit_ulysses",
+            "gold": [
+              "Joyce",
+              "James Joyce"
+            ],
+            "generation": "James Joyce",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hev_martin_luther_published_",
+            "gold": [
+              "1517"
+            ],
+            "generation": "July 31, 1517",
+            "correct": true,
+            "n_generated": 8
+          },
+          {
+            "prompt_id": "hev_the_magna_carta_was_seal",
+            "gold": [
+              "1215"
+            ],
+            "generation": "June 15, 1215",
+            "correct": true,
+            "n_generated": 8
+          },
+          {
+            "prompt_id": "hyr_titanic_yr",
+            "gold": [
+              "1889"
+            ],
+            "generation": "1889",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hcap_madagascar",
+            "gold": [
+              "Antananarivo"
+            ],
+            "generation": "Antananarivo",
+            "correct": true,
+            "n_generated": 5
+          },
+          {
+            "prompt_id": "hus_nevada",
+            "gold": [
+              "Carson City"
+            ],
+            "generation": "Carson City",
+            "correct": true,
+            "n_generated": 4
+          },
+          {
+            "prompt_id": "hus_washington",
+            "gold": [
+              "Olympia"
+            ],
+            "generation": "Olympia",
+            "correct": true,
+            "n_generated": 4
+          },
+          {
+            "prompt_id": "hmis_haiku",
+            "gold": [
+              "17",
+              "seventeen"
+            ],
+            "generation": "5",
+            "correct": false,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hlit_crime",
+            "gold": [
+              "Dostoevsky",
+              "Fyodor Dostoevsky",
+              "Dostoyevsky"
+            ],
+            "generation": "Fyodor Dostoevsky",
+            "correct": true,
+            "n_generated": 8
+          },
+          {
+            "prompt_id": "hus_colorado",
+            "gold": [
+              "Denver"
+            ],
+            "generation": "Denver",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hsym_magnesium",
+            "gold": [
+              "Mg"
+            ],
+            "generation": "Ag",
+            "correct": false,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hnum_yttrium",
+            "gold": [
+              "39"
+            ],
+            "generation": "90",
+            "correct": false,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hcur_vietnam",
+            "gold": [
+              "dong",
+              "\u0111\u1ed3ng"
+            ],
+            "generation": "Vietnamese Dong",
+            "correct": true,
+            "n_generated": 4
+          },
+          {
+            "prompt_id": "hcur_peru",
+            "gold": [
+              "sol"
+            ],
+            "generation": "Peso",
+            "correct": false,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hcap_el_salvador",
+            "gold": [
+              "San Salvador"
+            ],
+            "generation": "San Salvador",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hnum_krypton",
+            "gold": [
+              "36"
+            ],
+            "generation": "83",
+            "correct": false,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hyr_hastings",
+            "gold": [
+              "1066"
+            ],
+            "generation": "1066",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hsym_strontium",
+            "gold": [
+              "Sr"
+            ],
+            "generation": "Sr",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hnum_neon",
+            "gold": [
+              "10"
+            ],
+            "generation": "10",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hsym_ruthenium",
+            "gold": [
+              "Ru"
+            ],
+            "generation": "Ru",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hus_rhode_island",
+            "gold": [
+              "Providence"
+            ],
+            "generation": "Providence",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hsym_krypton",
+            "gold": [
+              "Kr"
+            ],
+            "generation": "Kr",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hcur_kazakhstan",
+            "gold": [
+              "tenge"
+            ],
+            "generation": "Kazakhstan Tenge.",
+            "correct": true,
+            "n_generated": 7
+          },
+          {
+            "prompt_id": "hriv_africa",
+            "gold": [
+              "Nile"
+            ],
+            "generation": "Nile River",
+            "correct": true,
+            "n_generated": 4
+          },
+          {
+            "prompt_id": "hcur_israel",
+            "gold": [
+              "shekel"
+            ],
+            "generation": "Israeli Shekel",
+            "correct": true,
+            "n_generated": 4
+          },
+          {
+            "prompt_id": "hnum_radium",
+            "gold": [
+              "88"
+            ],
+            "generation": "86",
+            "correct": false,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hus_north_carolina",
+            "gold": [
+              "Raleigh"
+            ],
+            "generation": "Raleigh",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hnum_antimony",
+            "gold": [
+              "51"
+            ],
+            "generation": "82",
+            "correct": false,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hmis_soccer_players",
+            "gold": [
+              "11",
+              "eleven"
+            ],
+            "generation": "22",
+            "correct": false,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hsci_glucose",
+            "gold": [
+              "C6H12O6"
+            ],
+            "generation": "C6H12O6",
+            "correct": true,
+            "n_generated": 7
+          },
+          {
+            "prompt_id": "hcap_lebanon",
+            "gold": [
+              "Beirut"
+            ],
+            "generation": "Beirut",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hcap_lithuania",
+            "gold": [
+              "Vilnius"
+            ],
+            "generation": "Vilnius",
+            "correct": true,
+            "n_generated": 5
+          },
+          {
+            "prompt_id": "hcur_cambodia",
+            "gold": [
+              "riel"
+            ],
+            "generation": "Cambodian Riel",
+            "correct": true,
+            "n_generated": 5
+          },
+          {
+            "prompt_id": "hus_maryland",
+            "gold": [
+              "Annapolis"
+            ],
+            "generation": "Baltimore",
+            "correct": false,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hcap_burkina_faso",
+            "gold": [
+              "Ouagadougou"
+            ],
+            "generation": "Ouagadougou",
+            "correct": true,
+            "n_generated": 7
+          },
+          {
+            "prompt_id": "hev_the_league_of_nations_wa",
+            "gold": [
+              "1920"
+            ],
+            "generation": "1920",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hcap_jamaica",
+            "gold": [
+              "Kingston"
+            ],
+            "generation": "Kingston",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hus_oklahoma",
+            "gold": [
+              "Oklahoma City"
+            ],
+            "generation": "Oklahoma City",
+            "correct": true,
+            "n_generated": 5
+          },
+          {
+            "prompt_id": "hnum_iron",
+            "gold": [
+              "26"
+            ],
+            "generation": "30",
+            "correct": false,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hcap_morocco",
+            "gold": [
+              "Rabat"
+            ],
+            "generation": "Rabat",
+            "correct": true,
+            "n_generated": 4
+          },
+          {
+            "prompt_id": "hsym_barium",
+            "gold": [
+              "Ba"
+            ],
+            "generation": "Ba",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hcap_slovenia",
+            "gold": [
+              "Ljubljana"
+            ],
+            "generation": "Ljubljana",
+            "correct": true,
+            "n_generated": 6
+          },
+          {
+            "prompt_id": "hsym_bismuth",
+            "gold": [
+              "Bi"
+            ],
+            "generation": "Bismuth's chemical symbol is Bi.",
+            "correct": true,
+            "n_generated": 10
+          },
+          {
+            "prompt_id": "hcap_belarus",
+            "gold": [
+              "Minsk"
+            ],
+            "generation": "Minsk",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hcap_georgia",
+            "gold": [
+              "Tbilisi"
+            ],
+            "generation": "Tbilisi",
+            "correct": true,
+            "n_generated": 4
+          },
+          {
+            "prompt_id": "hpeak_europe",
+            "gold": [
+              "Elbrus",
+              "Mont Blanc"
+            ],
+            "generation": "Mount Elbrus",
+            "correct": true,
+            "n_generated": 5
+          },
+          {
+            "prompt_id": "hcur_brazil",
+            "gold": [
+              "real"
+            ],
+            "generation": "Real",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hsym_fluorine",
+            "gold": [
+              "F"
+            ],
+            "generation": "Fluorine's chemical symbol is F.",
+            "correct": true,
+            "n_generated": 11
+          },
+          {
+            "prompt_id": "hcur_sweden",
+            "gold": [
+              "krona",
+              "kronor"
+            ],
+            "generation": "Swedish Krona",
+            "correct": true,
+            "n_generated": 5
+          },
+          {
+            "prompt_id": "hev_the_great_fire_of_london",
+            "gold": [
+              "1666"
+            ],
+            "generation": "1666",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hsym_argon",
+            "gold": [
+              "Ar"
+            ],
+            "generation": "Ar",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hcur_united_arab_emirates",
+            "gold": [
+              "dirham"
+            ],
+            "generation": "Emirati Dirham",
+            "correct": true,
+            "n_generated": 6
+          },
+          {
+            "prompt_id": "hcur_north_korea",
+            "gold": [
+              "won"
+            ],
+            "generation": "North Korean Won",
+            "correct": true,
+            "n_generated": 4
+          },
+          {
+            "prompt_id": "hus_alabama",
+            "gold": [
+              "Montgomery"
+            ],
+            "generation": "Montgomery",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hmis_chess_pieces",
+            "gold": [
+              "16",
+              "sixteen"
+            ],
+            "generation": "1. Pawn: 1\n2. Knight: 1\n3. Bishop: 1\n4. R",
+            "correct": false,
+            "n_generated": 24
+          },
+          {
+            "prompt_id": "hmis_amendments_bill",
+            "gold": [
+              "10",
+              "ten"
+            ],
+            "generation": "Amendments 1-10",
+            "correct": false,
+            "n_generated": 8
+          },
+          {
+            "prompt_id": "hsci_moon_mars",
+            "gold": [
+              "2",
+              "two"
+            ],
+            "generation": "2",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hnum_bismuth",
+            "gold": [
+              "83"
+            ],
+            "generation": "83",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hcur_panama",
+            "gold": [
+              "balboa"
+            ],
+            "generation": "Panama Gold",
+            "correct": false,
+            "n_generated": 5
+          },
+          {
+            "prompt_id": "hcap_uruguay",
+            "gold": [
+              "Montevideo"
+            ],
+            "generation": "Montevideo",
+            "correct": true,
+            "n_generated": 4
+          },
+          {
+            "prompt_id": "hmis_senators",
+            "gold": [
+              "2",
+              "two"
+            ],
+            "generation": "The number of senators each U.S. state has is equal to its population.",
+            "correct": false,
+            "n_generated": 17
+          },
+          {
+            "prompt_id": "hus_virginia",
+            "gold": [
+              "Richmond"
+            ],
+            "generation": "Richmond",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hpeak_africa",
+            "gold": [
+              "Kilimanjaro"
+            ],
+            "generation": "Mount Kilimanjaro",
+            "correct": true,
+            "n_generated": 6
+          },
+          {
+            "prompt_id": "hnum_phosphorus",
+            "gold": [
+              "15"
+            ],
+            "generation": "17",
+            "correct": false,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hcur_iraq",
+            "gold": [
+              "dinar"
+            ],
+            "generation": "Dinar.",
+            "correct": true,
+            "n_generated": 4
+          },
+          {
+            "prompt_id": "hus_wisconsin",
+            "gold": [
+              "Madison"
+            ],
+            "generation": "Madison",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hcur_oman",
+            "gold": [
+              "rial"
+            ],
+            "generation": "Omani rial (OMR)",
+            "correct": true,
+            "n_generated": 9
+          },
+          {
+            "prompt_id": "hnum_chlorine",
+            "gold": [
+              "17"
+            ],
+            "generation": "19",
+            "correct": false,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hcap_honduras",
+            "gold": [
+              "Tegucigalpa"
+            ],
+            "generation": "Tegucigalpa",
+            "correct": true,
+            "n_generated": 7
+          },
+          {
+            "prompt_id": "hnum_fluorine",
+            "gold": [
+              "9"
+            ],
+            "generation": "19",
+            "correct": false,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hev_mount_everest_was_first_",
+            "gold": [
+              "1953"
+            ],
+            "generation": "1922",
+            "correct": false,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hsci_heart_chambers",
+            "gold": [
+              "4",
+              "four"
+            ],
+            "generation": "Four",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hyr_printing",
+            "gold": [
+              "1455",
+              "1450s",
+              "1454",
+              "1456"
+            ],
+            "generation": "1450s",
+            "correct": true,
+            "n_generated": 4
+          },
+          {
+            "prompt_id": "hpeak_argentina",
+            "gold": [
+              "Aconcagua"
+            ],
+            "generation": "Aconcagua",
+            "correct": true,
+            "n_generated": 4
+          },
+          {
+            "prompt_id": "hnum_gold",
+            "gold": [
+              "79"
+            ],
+            "generation": "79",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hcap_libya",
+            "gold": [
+              "Tripoli"
+            ],
+            "generation": "Tripoli",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hev_the_wright_brothers_made",
+            "gold": [
+              "1903"
+            ],
+            "generation": "December 17, 1903",
+            "correct": true,
+            "n_generated": 8
+          },
+          {
+            "prompt_id": "hcap_paraguay",
+            "gold": [
+              "Asuncion",
+              "Asunci\u00f3n"
+            ],
+            "generation": "Asilo",
+            "correct": false,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hyr_dna",
+            "gold": [
+              "1953"
+            ],
+            "generation": "1953",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hpeak_antarctica",
+            "gold": [
+              "Vinson",
+              "Mount Vinson"
+            ],
+            "generation": "Mount Erebus",
+            "correct": false,
+            "n_generated": 4
+          },
+          {
+            "prompt_id": "hcap_cameroon",
+            "gold": [
+              "Yaounde",
+              "Yaound\u00e9"
+            ],
+            "generation": "Yaound\u00e9",
+            "correct": true,
+            "n_generated": 4
+          },
+          {
+            "prompt_id": "hcur_qatar",
+            "gold": [
+              "riyal"
+            ],
+            "generation": "Qatar Rial (QAR)",
+            "correct": false,
+            "n_generated": 9
+          },
+          {
+            "prompt_id": "hcap_ethiopia",
+            "gold": [
+              "Addis Ababa"
+            ],
+            "generation": "Addis Ababa",
+            "correct": true,
+            "n_generated": 5
+          },
+          {
+            "prompt_id": "hus_new_mexico",
+            "gold": [
+              "Santa Fe"
+            ],
+            "generation": "Santa Fe",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hsci_methane",
+            "gold": [
+              "CH4"
+            ],
+            "generation": "CH4",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hcap_jordan",
+            "gold": [
+              "Amman"
+            ],
+            "generation": "Amman",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hnum_indium",
+            "gold": [
+              "49"
+            ],
+            "generation": "80",
+            "correct": false,
+            "n_generated": 2
+          }
+        ]
+      }
+    },
+    "large": {
+      "label": "3B",
+      "latency": {
+        "prefill_ms": 111.27570795360953,
+        "decode_ms_per_token": 58.67270898306742,
+        "tokens_per_second": 17.043699146200897,
+        "decode_ms_per_token_all": [
+          58.67270898306742,
+          58.90533298952505,
+          59.038625040557235,
+          59.09649998648092,
+          59.11099998047575,
+          59.29875001311302,
+          59.45579201215878,
+          60.03629200858995
+        ],
+        "decode_spread": 1.0232404988478725,
+        "latency_suspect": false,
+        "n_timed_prompts": 4,
+        "n_repeats": 2,
+        "decode_steps": 32,
+        "active_params_per_token": 3212749824
+      },
+      "accuracy": {
+        "n": 106,
+        "n_correct": 103,
+        "accuracy": 0.9716981132075472,
+        "mean_generated_tokens": 3.4716981132075473,
+        "rows": [
+          {
+            "prompt_id": "hus_georgia",
+            "gold": [
+              "Atlanta"
+            ],
+            "generation": "Atlanta",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hnum_plutonium",
+            "gold": [
+              "94"
+            ],
+            "generation": "94",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hcap_sri_lanka",
+            "gold": [
+              "Sri Jayawardenepura Kotte",
+              "Colombo"
+            ],
+            "generation": "Colombo",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hcur_switzerland",
+            "gold": [
+              "franc"
+            ],
+            "generation": "Swiss Franc",
+            "correct": true,
+            "n_generated": 4
+          },
+          {
+            "prompt_id": "hev_the_titanic_sank",
+            "gold": [
+              "1912"
+            ],
+            "generation": "1912",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hnum_osmium",
+            "gold": [
+              "76"
+            ],
+            "generation": "76",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hus_maine",
+            "gold": [
+              "Augusta"
+            ],
+            "generation": "Augusta",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hsym_tellurium",
+            "gold": [
+              "Te"
+            ],
+            "generation": "Te",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hnum_tungsten",
+            "gold": [
+              "74"
+            ],
+            "generation": "74",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hcap_yemen",
+            "gold": [
+              "Sanaa",
+              "Sana'a"
+            ],
+            "generation": "Sana'a",
+            "correct": true,
+            "n_generated": 4
+          },
+          {
+            "prompt_id": "hcap_ghana",
+            "gold": [
+              "Accra"
+            ],
+            "generation": "Accra",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hcur_turkey",
+            "gold": [
+              "lira"
+            ],
+            "generation": "Turkish lira",
+            "correct": true,
+            "n_generated": 5
+          },
+          {
+            "prompt_id": "hcap_ivory_coast",
+            "gold": [
+              "Yamoussoukro"
+            ],
+            "generation": "Yamoussoukro",
+            "correct": true,
+            "n_generated": 8
+          },
+          {
+            "prompt_id": "hev_constantinople_fell_to_t",
+            "gold": [
+              "1453"
+            ],
+            "generation": "1453",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hmis_deck",
+            "gold": [
+              "52",
+              "fifty-two"
+            ],
+            "generation": "52",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hcap_dominican_republic",
+            "gold": [
+              "Santo Domingo"
+            ],
+            "generation": "Santo Domingo",
+            "correct": true,
+            "n_generated": 5
+          },
+          {
+            "prompt_id": "hnum_ruthenium",
+            "gold": [
+              "44"
+            ],
+            "generation": "44",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hnum_xenon",
+            "gold": [
+              "54"
+            ],
+            "generation": "54",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hnum_rubidium",
+            "gold": [
+              "37"
+            ],
+            "generation": "37",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hlit_ulysses",
+            "gold": [
+              "Joyce",
+              "James Joyce"
+            ],
+            "generation": "James Joyce",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hev_martin_luther_published_",
+            "gold": [
+              "1517"
+            ],
+            "generation": "1517",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hev_the_magna_carta_was_seal",
+            "gold": [
+              "1215"
+            ],
+            "generation": "1215",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hyr_titanic_yr",
+            "gold": [
+              "1889"
+            ],
+            "generation": "1889",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hcap_madagascar",
+            "gold": [
+              "Antananarivo"
+            ],
+            "generation": "Antananarivo",
+            "correct": true,
+            "n_generated": 5
+          },
+          {
+            "prompt_id": "hus_nevada",
+            "gold": [
+              "Carson City"
+            ],
+            "generation": "Carson City",
+            "correct": true,
+            "n_generated": 4
+          },
+          {
+            "prompt_id": "hus_washington",
+            "gold": [
+              "Olympia"
+            ],
+            "generation": "Olympia",
+            "correct": true,
+            "n_generated": 4
+          },
+          {
+            "prompt_id": "hmis_haiku",
+            "gold": [
+              "17",
+              "seventeen"
+            ],
+            "generation": "5",
+            "correct": false,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hlit_crime",
+            "gold": [
+              "Dostoevsky",
+              "Fyodor Dostoevsky",
+              "Dostoyevsky"
+            ],
+            "generation": "Fyodor Dostoevsky",
+            "correct": true,
+            "n_generated": 8
+          },
+          {
+            "prompt_id": "hus_colorado",
+            "gold": [
+              "Denver"
+            ],
+            "generation": "Denver",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hsym_magnesium",
+            "gold": [
+              "Mg"
+            ],
+            "generation": "Mg",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hnum_yttrium",
+            "gold": [
+              "39"
+            ],
+            "generation": "39",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hcur_vietnam",
+            "gold": [
+              "dong",
+              "\u0111\u1ed3ng"
+            ],
+            "generation": "Vietnamese dong",
+            "correct": true,
+            "n_generated": 4
+          },
+          {
+            "prompt_id": "hcur_peru",
+            "gold": [
+              "sol"
+            ],
+            "generation": "Peruvian Sol (PEN)",
+            "correct": true,
+            "n_generated": 8
+          },
+          {
+            "prompt_id": "hcap_el_salvador",
+            "gold": [
+              "San Salvador"
+            ],
+            "generation": "San Salvador",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hnum_krypton",
+            "gold": [
+              "36"
+            ],
+            "generation": "36",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hyr_hastings",
+            "gold": [
+              "1066"
+            ],
+            "generation": "1066",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hsym_strontium",
+            "gold": [
+              "Sr"
+            ],
+            "generation": "Sr",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hnum_neon",
+            "gold": [
+              "10"
+            ],
+            "generation": "10",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hsym_ruthenium",
+            "gold": [
+              "Ru"
+            ],
+            "generation": "Ru",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hus_rhode_island",
+            "gold": [
+              "Providence"
+            ],
+            "generation": "Providence",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hsym_krypton",
+            "gold": [
+              "Kr"
+            ],
+            "generation": "Kr",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hcur_kazakhstan",
+            "gold": [
+              "tenge"
+            ],
+            "generation": "Kazakhstani tenge",
+            "correct": true,
+            "n_generated": 8
+          },
+          {
+            "prompt_id": "hriv_africa",
+            "gold": [
+              "Nile"
+            ],
+            "generation": "Nile River",
+            "correct": true,
+            "n_generated": 4
+          },
+          {
+            "prompt_id": "hcur_israel",
+            "gold": [
+              "shekel"
+            ],
+            "generation": "Shekel",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hnum_radium",
+            "gold": [
+              "88"
+            ],
+            "generation": "88",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hus_north_carolina",
+            "gold": [
+              "Raleigh"
+            ],
+            "generation": "Raleigh",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hnum_antimony",
+            "gold": [
+              "51"
+            ],
+            "generation": "51",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hmis_soccer_players",
+            "gold": [
+              "11",
+              "eleven"
+            ],
+            "generation": "11",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hsci_glucose",
+            "gold": [
+              "C6H12O6"
+            ],
+            "generation": "C6H12O6",
+            "correct": true,
+            "n_generated": 7
+          },
+          {
+            "prompt_id": "hcap_lebanon",
+            "gold": [
+              "Beirut"
+            ],
+            "generation": "Beirut",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hcap_lithuania",
+            "gold": [
+              "Vilnius"
+            ],
+            "generation": "Vilnius",
+            "correct": true,
+            "n_generated": 5
+          },
+          {
+            "prompt_id": "hcur_cambodia",
+            "gold": [
+              "riel"
+            ],
+            "generation": "Riel",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hus_maryland",
+            "gold": [
+              "Annapolis"
+            ],
+            "generation": "Annapolis",
+            "correct": true,
+            "n_generated": 4
+          },
+          {
+            "prompt_id": "hcap_burkina_faso",
+            "gold": [
+              "Ouagadougou"
+            ],
+            "generation": "Ouagadougou",
+            "correct": true,
+            "n_generated": 7
+          },
+          {
+            "prompt_id": "hev_the_league_of_nations_wa",
+            "gold": [
+              "1920"
+            ],
+            "generation": "1920",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hcap_jamaica",
+            "gold": [
+              "Kingston"
+            ],
+            "generation": "Kingston",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hus_oklahoma",
+            "gold": [
+              "Oklahoma City"
+            ],
+            "generation": "Oklahoma City",
+            "correct": true,
+            "n_generated": 5
+          },
+          {
+            "prompt_id": "hnum_iron",
+            "gold": [
+              "26"
+            ],
+            "generation": "26",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hcap_morocco",
+            "gold": [
+              "Rabat"
+            ],
+            "generation": "Rabat",
+            "correct": true,
+            "n_generated": 4
+          },
+          {
+            "prompt_id": "hsym_barium",
+            "gold": [
+              "Ba"
+            ],
+            "generation": "Ba",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hcap_slovenia",
+            "gold": [
+              "Ljubljana"
+            ],
+            "generation": "Ljubljana",
+            "correct": true,
+            "n_generated": 6
+          },
+          {
+            "prompt_id": "hsym_bismuth",
+            "gold": [
+              "Bi"
+            ],
+            "generation": "Bi",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hcap_belarus",
+            "gold": [
+              "Minsk"
+            ],
+            "generation": "Minsk",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hcap_georgia",
+            "gold": [
+              "Tbilisi"
+            ],
+            "generation": "Atlanta",
+            "correct": false,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hpeak_europe",
+            "gold": [
+              "Elbrus",
+              "Mont Blanc"
+            ],
+            "generation": "Mont Blanc",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hcur_brazil",
+            "gold": [
+              "real"
+            ],
+            "generation": "Real (BRL)",
+            "correct": true,
+            "n_generated": 6
+          },
+          {
+            "prompt_id": "hsym_fluorine",
+            "gold": [
+              "F"
+            ],
+            "generation": "F",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hcur_sweden",
+            "gold": [
+              "krona",
+              "kronor"
+            ],
+            "generation": "Swedish krona",
+            "correct": true,
+            "n_generated": 5
+          },
+          {
+            "prompt_id": "hev_the_great_fire_of_london",
+            "gold": [
+              "1666"
+            ],
+            "generation": "1666",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hsym_argon",
+            "gold": [
+              "Ar"
+            ],
+            "generation": "Ar",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hcur_united_arab_emirates",
+            "gold": [
+              "dirham"
+            ],
+            "generation": "United Arab Emirates Dirham",
+            "correct": true,
+            "n_generated": 6
+          },
+          {
+            "prompt_id": "hcur_north_korea",
+            "gold": [
+              "won"
+            ],
+            "generation": "North Korean won",
+            "correct": true,
+            "n_generated": 4
+          },
+          {
+            "prompt_id": "hus_alabama",
+            "gold": [
+              "Montgomery"
+            ],
+            "generation": "Montgomery",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hmis_chess_pieces",
+            "gold": [
+              "16",
+              "sixteen"
+            ],
+            "generation": "16",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hmis_amendments_bill",
+            "gold": [
+              "10",
+              "ten"
+            ],
+            "generation": "Ten",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hsci_moon_mars",
+            "gold": [
+              "2",
+              "two"
+            ],
+            "generation": "2",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hnum_bismuth",
+            "gold": [
+              "83"
+            ],
+            "generation": "83",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hcur_panama",
+            "gold": [
+              "balboa"
+            ],
+            "generation": "US Dollar",
+            "correct": false,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hcap_uruguay",
+            "gold": [
+              "Montevideo"
+            ],
+            "generation": "Montevideo",
+            "correct": true,
+            "n_generated": 4
+          },
+          {
+            "prompt_id": "hmis_senators",
+            "gold": [
+              "2",
+              "two"
+            ],
+            "generation": "Two",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hus_virginia",
+            "gold": [
+              "Richmond"
+            ],
+            "generation": "Richmond",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hpeak_africa",
+            "gold": [
+              "Kilimanjaro"
+            ],
+            "generation": "Mount Kilimanjaro",
+            "correct": true,
+            "n_generated": 6
+          },
+          {
+            "prompt_id": "hnum_phosphorus",
+            "gold": [
+              "15"
+            ],
+            "generation": "15",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hcur_iraq",
+            "gold": [
+              "dinar"
+            ],
+            "generation": "Iraqi Dinar",
+            "correct": true,
+            "n_generated": 5
+          },
+          {
+            "prompt_id": "hus_wisconsin",
+            "gold": [
+              "Madison"
+            ],
+            "generation": "Madison",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hcur_oman",
+            "gold": [
+              "rial"
+            ],
+            "generation": "Omani Rial",
+            "correct": true,
+            "n_generated": 5
+          },
+          {
+            "prompt_id": "hnum_chlorine",
+            "gold": [
+              "17"
+            ],
+            "generation": "17",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hcap_honduras",
+            "gold": [
+              "Tegucigalpa"
+            ],
+            "generation": "Tegucigalpa",
+            "correct": true,
+            "n_generated": 7
+          },
+          {
+            "prompt_id": "hnum_fluorine",
+            "gold": [
+              "9"
+            ],
+            "generation": "9",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hev_mount_everest_was_first_",
+            "gold": [
+              "1953"
+            ],
+            "generation": "1953",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hsci_heart_chambers",
+            "gold": [
+              "4",
+              "four"
+            ],
+            "generation": "Four",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hyr_printing",
+            "gold": [
+              "1455",
+              "1450s",
+              "1454",
+              "1456"
+            ],
+            "generation": "1450s",
+            "correct": true,
+            "n_generated": 4
+          },
+          {
+            "prompt_id": "hpeak_argentina",
+            "gold": [
+              "Aconcagua"
+            ],
+            "generation": "Aconcagua",
+            "correct": true,
+            "n_generated": 4
+          },
+          {
+            "prompt_id": "hnum_gold",
+            "gold": [
+              "79"
+            ],
+            "generation": "79",
+            "correct": true,
+            "n_generated": 2
+          },
+          {
+            "prompt_id": "hcap_libya",
+            "gold": [
+              "Tripoli"
+            ],
+            "generation": "Tripoli",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hev_the_wright_brothers_made",
+            "gold": [
+              "1903"
+            ],
+            "generation": "December 17, 1903",
+            "correct": true,
+            "n_generated": 8
+          },
+          {
+            "prompt_id": "hcap_paraguay",
+            "gold": [
+              "Asuncion",
+              "Asunci\u00f3n"
+            ],
+            "generation": "Asunci\u00f3n",
+            "correct": true,
+            "n_generated": 4
+          },
+          {
+            "prompt_id": "hyr_dna",
+            "gold": [
+              "1953"
+            ],
+            "generation": "1953",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hpeak_antarctica",
+            "gold": [
+              "Vinson",
+              "Mount Vinson"
+            ],
+            "generation": "Vinson Massif",
+            "correct": true,
+            "n_generated": 5
+          },
+          {
+            "prompt_id": "hcap_cameroon",
+            "gold": [
+              "Yaounde",
+              "Yaound\u00e9"
+            ],
+            "generation": "Yaound\u00e9",
+            "correct": true,
+            "n_generated": 4
+          },
+          {
+            "prompt_id": "hcur_qatar",
+            "gold": [
+              "riyal"
+            ],
+            "generation": "Qatari riyal",
+            "correct": true,
+            "n_generated": 7
+          },
+          {
+            "prompt_id": "hcap_ethiopia",
+            "gold": [
+              "Addis Ababa"
+            ],
+            "generation": "Addis Ababa",
+            "correct": true,
+            "n_generated": 5
+          },
+          {
+            "prompt_id": "hus_new_mexico",
+            "gold": [
+              "Santa Fe"
+            ],
+            "generation": "Santa Fe",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hsci_methane",
+            "gold": [
+              "CH4"
+            ],
+            "generation": "CH4",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hcap_jordan",
+            "gold": [
+              "Amman"
+            ],
+            "generation": "Amman",
+            "correct": true,
+            "n_generated": 3
+          },
+          {
+            "prompt_id": "hnum_indium",
+            "gold": [
+              "49"
+            ],
+            "generation": "49",
+            "correct": true,
+            "n_generated": 2
+          }
+        ]
+      }
+    }
+  }
+}

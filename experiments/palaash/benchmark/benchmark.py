@@ -51,10 +51,9 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 transformers.utils.logging.set_verbosity_error()
 transformers.utils.logging.disable_progress_bar()
 
-# The pipeline package lives one level up (experiments/palaash/q1).
+# The shared utilities live one level up (experiments/palaash/common).
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from q1.config import MAX_NEW_TOKENS                      # noqa: E402
-from q1.model_utils import build_prompt_ids               # noqa: E402
+from common.model_utils import MAX_NEW_TOKENS, build_prompt_ids   # noqa: E402
 
 
 # ── What we benchmark ─────────────────────────────────────────────────────────
@@ -84,7 +83,7 @@ RAW_CSV = RESULTS_DIR / "raw_timings.csv"
 
 # ── Device identification ─────────────────────────────────────────────────────
 def pick_device() -> str:
-    """cuda > mps > cpu, matching q1.model_utils.pick_device."""
+    """cuda > mps > cpu, matching common.model_utils.pick_device."""
     if torch.cuda.is_available():
         return "cuda"
     if torch.backends.mps.is_available():

@@ -1,7 +1,8 @@
 # Aligning small ↔ large LLM hidden states
 
 Research code for studying representational alignment between a small and a
-large instruction-tuned model. Four pairs are configured (`q1/config.py`):
+large instruction-tuned model. Four pairs are configured
+(`diagnosis/config.py`):
 two same-family pairs (token-level alignment) and two cross-family pairs
 (prompt-level alignment — see below):
 
@@ -48,14 +49,14 @@ scale-discontinuous with the rest (llama-3B RMS climbs smoothly 0.018→0.525 ov
 layers 0–27, then jumps to 1.622 at layer 28). Naive half-fixes are worse than
 nothing: merely excluding `j=0` (or `j≤3`) moves the llama answer to layer 16,
 the last layer — the usual signature of a degenerate criterion. All parameters
-live in the selection block of `q1/config.py`.
+live in the selection block of `diagnosis/config.py`.
 
 ### Cross-family pairs: prompt-level (final-token) alignment
 
 Llama and Qwen use **different tokenizers**, so for the `llama2qwen` and
 `qwen2llama` pairs the same prompt yields different token sequences of
 different lengths — token-position alignment is impossible. These pairs
-(`align="prompt"` in `q1/config.py`) instead align at the **prompt level**:
+(`align="prompt"` in `diagnosis/config.py`) instead align at the **prompt level**:
 both models answer the same question, and we keep exactly **one hidden-state
 row per prompt per model — the final answer-generating token position**
 (`is_last`). The DM ridge fit is unchanged in form; it just pairs rows by
@@ -103,94 +104,114 @@ embedding Gram has ~zero variance) and is reported as NaN.
 
 ## Layout
 
+Two independent projects share one folder, plus a standalone timing benchmark:
+
 ```
-run_q1.py            pipeline entry point (--pair llama|qwen|llama2qwen|qwen2llama)
-q1/
+common/              leaf utilities all projects import
+  model_utils.py     model loading / chat formatting / generation / hidden states
+  decoding.py        sliceable layer loop, KV-cached baselines, greedy decode
+  scoring.py         answer scoring: ANY-alias and ALL-items (conjunctive)
+  stats.py           Wilson intervals, paired bootstrap, the CI-separation rule
+  templates.py       system-prompt / question-framing variety for state capture
+  fit_corpus.py      generic instruction corpus for fitting, disjoint from evals
+  prompts.py             bank `factual`      — 140 short factual questions
+  prompts_list.py        bank `list`         — 180 multi-item, conjunctive
+  prompts_hard_factual.py bank `hard_factual` — 422 obscure single facts
+  prompts_list_hard.py   bank `list_hard`    — 554 conjunctive 3-fact questions
+                         composed from the audited hard_factual pool; dev/test
+                         173 each, split over FACTS so none crosses a boundary
+diagnosis/           Question 1 — where do the two models' representations diverge?
+  run.py             pipeline entry point (--pair llama|qwen|llama2qwen|qwen2llama)
   config.py          model pairs (incl. align mode), hyperparameters, result paths
-  prompts.py         bank of 140 checkable factual questions (shared by all pairs)
-  scoring.py         normalised substring answer scoring
-  model_utils.py     model loading / generation / hidden-state extraction
   select_prompts.py  step 1 — bucket prompts into divergent vs control
   extract_states.py  step 2 — paired hidden states (token- or prompt-aligned)
-  train_dm.py        step 3 — fit the full layer×layer DM ridge-regression grid
+  train_dm.py        step 3 — fit the full layer x layer DM ridge-regression grid
   analyze.py         step 4 — verdict (printed + verdict.txt) + figures
   cka.py             step 5 — debiased linear CKA grid (map-free cross-check)
-  fit_adapter.py     step 6 — materialise + save one DM map W, b for stitching
-  stitch.py          step 7 — inject small layer i into the large model at block j
-  stitch_fast.py     step 8 — the same injection as an early exit: skip large
-                              blocks 0..j-1, KV-cached, latency + accuracy report
+  fit_adapter.py     step 6 — materialise + save the selected DM map W, b
+  results/<pair>/    outputs, one folder per pair
+stitching_small_to_large/   LATENCY: small early → adapter → large late
+  run.py             headroom / capture / fit / bench / sweep / report / compare / final / check
+  config.py data.py adapter.py stitch.py evaluate.py
+  distill.py         KL-to-teacher training through the frozen suffix blocks
+  results/<pair>/<bank>/     states, adapters, benches, sweep tables
+  README.md          method, how to read the numbers, measured results
+stitching_large_to_small/   ACCURACY: large early → adapter → small late
+  run.py             headroom / capture / fit / check / bench / sweep / final
+  config.py data.py adapter.py stitch.py evaluate.py
+  results/<pair>/<bank>/     states, adapters, checks, benches, sweeps, tables
+  README.md          method, plumbing checks, honest limits
+benchmark/           standalone model load / inference timing across GPUs
 tests/
-  smoke_synthetic.py synthetic extract→train→analyze→cka→fit_adapter smoke test (no weights)
-results/
-  llama/  qwen/            outputs for the same-family pairs
-  llama2qwen/  qwen2llama/ outputs for the cross-family pairs (same folder shape)
+  smoke_synthetic.py synthetic extract->train->analyze->cka->fit_adapter (no weights)
+  smoke_distill.py   synthetic distillation: frozen LLMs, warm start restored,
+                     saved map reproduces training logits, and the training
+                     forward == the warm-mode inference forward (no weights)
 ```
 
-Each `results/<pair>/` folder has the same shape:
+The two projects are independent: `stitching_small_to_large/` does not read anything under
+`diagnosis/results/`, and both import from `common/` rather than from each other.
+
+Each `diagnosis/results/<pair>/` folder has the same shape:
 
 | Step | Output |
 |------|--------|
 | `select` | `generations.csv`, `selection.json` — greedy-generate + score both models; bucket into **divergent** (small-wrong / large-right) and **control** (both-right) |
 | `extract` | `states/*.npz` — paired hidden states, all layers of both models: token-aligned pairs keep the last 64 positions/prompt; prompt-aligned pairs keep 1 row/prompt (the final answer-generating token) |
-| `train` | `dm/*.npz`, `dm/dm_summary.json` — (small+1)×(large+1) DM residual grid, prompt-level train/test split; best-match R² per small layer + divergence layer |
+| `train` | `dm/*.npz`, `dm/dm_summary.json` — (small+1)x(large+1) DM residual grid, prompt-level train/test split; best-match R² per small layer + divergence layer |
 | `analyze` | `figures/*.png` — divergence curve (divergent vs control) and R²(i→j) heatmaps — plus `verdict.txt`, the per-layer table and printed verdict saved alongside the figures |
 | `cka` | `cka/*.npz`, `cka/cka_summary.json`, `figures/cka_*.png`, `verdict_cka.txt` — debiased linear CKA(i,j) grids and best-match curves, same divergent-vs-control readout without any fitted map |
 | `fit_adapter` | `adapters/adapter_i{i}_j{j}.npz` (`W`, `b`, `mu_x`, `sd_x`, `mu_y`) + `.json` sidecar with provenance and held-out map quality |
-| `stitch` | `stitch/checks_i{i}_j{j}.json` — injection plumbing checks; `stitch/stitch_i{i}_j{j}.json/.csv` — small-alone / large-alone / stitched generations |
-| `stitch_fast` | `stitch/fast_checks_i{i}_j{j}.json` — early-exit equivalence checks; `stitch/fast_i{i}_j{j}.json/.csv` — per-prompt latency (prefill ms, ms/token) and gold-answer accuracy for small / large / both stitch modes |
+
+Stitching results live under each package's own `results/<pair>/<bank>/` — see
+those folders' READMEs for their layout.
 
 ## Running
 
 Set up the environment once from the repository root (see the top-level
-`README.md`), then run this pipeline from inside `experiments/palaash/`:
+`README.md`). Both projects are packages, so run them as modules from inside
+`experiments/palaash/`:
 
 ```bash
 cd experiments/palaash
-python run_q1.py                       # the five diagnosis steps, llama pair
-python run_q1.py --pair qwen           # the five diagnosis steps, qwen pair
-python run_q1.py --pair llama2qwen     # cross-family, prompt-aligned
-python run_q1.py --pair qwen2llama     # cross-family, prompt-aligned
-python run_q1.py train analyze         # re-fit + re-plot from saved states
-python run_q1.py cka --pair qwen       # CKA cross-check from saved states
-python tests/smoke_synthetic.py        # synthetic smoke test, no weights
+
+# ── diagnosis ────────────────────────────────────────────────────────────────
+python -m diagnosis.run                    # the five diagnosis steps, llama pair
+python -m diagnosis.run --pair qwen        # the five diagnosis steps, qwen pair
+python -m diagnosis.run --pair llama2qwen  # cross-family, prompt-aligned
+python -m diagnosis.run train analyze      # re-fit + re-plot from saved states
+python -m diagnosis.run cka --pair qwen    # CKA cross-check from saved states
+python -m diagnosis.fit_adapter --pair llama   # materialise the selected map
+
+# ── stitching, small → large: LATENCY ────────────────────────────────────────
+python -m stitching_small_to_large.run headroom --pair llama
+python -m stitching_small_to_large.run sweep    --pair llama --modes exit warm
+python -m stitching_small_to_large.run report   --pair llama --split dev  # no GPU
+
+# ── stitching, large → small: ACCURACY ───────────────────────────────────────
+python -m stitching_large_to_small.run headroom --pair llama  # is the bank usable?
+python -m stitching_large_to_small.run capture  --pair llama
+python -m stitching_large_to_small.run sweep    --pair llama
+
+python tests/smoke_synthetic.py            # synthetic smoke test, no weights
+python tests/smoke_distill.py              # synthetic distillation smoke test
 ```
 
-Stitching is **not** part of the default run — it acts on the diagnosis rather
-than producing it, and it only applies to token-aligned pairs. Ask for it by name:
-
-```bash
-python run_q1.py fit_adapter stitch          # save the adapter, then stitch with it
-python run_q1.py fit_adapter stitch_fast     # ... then benchmark the early-exit stitch
-python -m q1.fit_adapter --pair llama        # just fit + save W, b  (numpy only)
-python -m q1.stitch --pair llama --check     # injection plumbing checks only
-python -m q1.stitch --pair llama --prompt "What is the capital of New Zealand?"
-python -m q1.stitch --pair llama --run-selected --n-control 6
-```
-
-There are **two** stitch steps and they make different claims. `stitch` is the
-mechanism check: it runs both full models every decode step and is slower than
-either alone. `stitch_fast` is the one whose point is speed — it skips large
-blocks `0..j-1` entirely and decodes with a KV cache:
-
-```bash
-python -m q1.stitch_fast --pair llama --check          # early-exit equivalence checks
-python -m q1.stitch_fast --pair llama                  # latency + accuracy benchmark
-python -m q1.stitch_fast --pair qwen --run-selected    # every divergent prompt
-python -m q1.stitch_fast --pair llama --mode exit      # one mode instead of both
-```
-
-Both default to the (i, j) the analysis selected — `divergence_layer_small` and
-its depth-matched target from `dm_summary.json` (llama: **1B L12 → 3B L18**).
+`fit_adapter` is not in the default diagnosis run: it acts on the diagnosis
+rather than producing it, and it applies to token-aligned pairs only. It
+defaults to the (i, j) the analysis selected — `divergence_layer_small` and its
+depth-matched target from `dm_summary.json` (llama: **1B L12 → 3B L18**).
 Override with `--i` / `--j`; `j=0` and `j=n_layers_large` are rejected outright,
 since neither is an injectable residual stream.
-
-Equivalently, from the repository root: `python experiments/palaash/run_q1.py …`
-(Python adds the script's folder to the import path, so `import q1` resolves).
 
 The `select` and `extract` steps download/use the models via your Hugging Face
 cache (the Llama models are gated — request access on the model pages; the Qwen
 models are open). They share a single model load when run together. Individual
-steps also run as modules with the default pair, e.g. `python -m q1.train_dm`.
+steps also run as modules with the default pair, e.g. `python -m diagnosis.train_dm`.
+
+Note that `*.npz` is gitignored, so the large state and adapter tensors under
+either project's `results/` are not tracked. Re-generate them with
+`python -m diagnosis.run select extract` and `python -m stitching_small_to_large.run capture`.
 
 ## How to read the result
 
@@ -225,7 +246,7 @@ both-right controls.
 | 15–16 | 27 | 0.16–0.18 | 0.27–0.28 | −0.094…−0.126 |
 
 (Layer 0 is the embedding table; it has no meaningful depth-matched counterpart,
-so the onset scan starts at layer 1. See `ONSET_SCAN_START` in `q1/config.py`.)
+so the onset scan starts at layer 1. See `ONSET_SCAN_START` in `diagnosis/config.py`.)
 
 **Answer to Q1 — qualified yes.** Alignment *localises* where the small model
 goes wrong: through layers 1–8 the 1B representation is near-perfectly linearly
@@ -348,7 +369,7 @@ Three observations:
   to its maximum at layer 24). Two very different estimators (a fitted ridge
   translator vs a map-free geometry statistic) put the hallucination-specific
   divergence in the same 22–24 block. Note the CKA numbers below were computed
-  with CKA's own unrestricted best-match over j (`q1/cka.py`), which is *not*
+  with CKA's own unrestricted best-match over j (`diagnosis/cka.py`), which is *not*
   subject to the DM collapse — its argmax already increases monotonically with
   depth — so it is an independent check, not the same rule reapplied.
 * **Cross-family pairs become interpretable.** CKA needs no fitted map, so
@@ -369,292 +390,125 @@ adequate (qwen, qwen2llama: late-layer hallucination-specific divergence,
 peaking at the same depth as DM) and correctly exposes the llama-pair sample
 size as the weak point.
 
-## Stitching, part 1 (`stitch`) — the mechanism check
+## Two stitching projects, in opposite directions
 
-> **This path is a correctness demonstration, not a system.** It runs both full
-> models at every decode step, so it is slower than either model alone; that was
-> the accepted cost of making the injection obviously correct. The
-> latency-improving version is [part 2](#stitching-part-2-stitch_fast--the-early-exit-path)
-> below. Nothing here is superseded — `stitch` is still what establishes that the
-> injection index and the adapter are right, and `stitch_fast` is checked
-> against it.
+Stitching used to live in this folder as two `diagnosis` pipeline steps
+(`stitch`, `stitch_fast`); both were removed. It is now **two sibling packages
+that point in opposite directions and optimise different things**:
 
-The diagnosis says the 1B's layer 12 stops being translatable into the 3B's
-layer 18. Stitching tests that claim by *doing* it: run the 1B, map its layer-12
-residual stream through the adapter, overwrite the 3B's residual stream at the
-input to block 18, and finish the 3B forward pass.
-
-`train_dm.py` never materialises `W` — it solves each ridge system once and
-pushes the *targets* through a hat matrix, which gives R² for all target layers
-at once but discards the map. So `fit_adapter.py` re-solves the same ridge
-problem explicitly for one (i, j) and saves `Y_hat = ((X - mu_x)/sd_x) @ W + b`.
-Unlike the diagnostic it fits on **every** row of the chosen set (default:
-control, 7680 rows) because the goal is a usable map, not an estimate; a
-separate prompt-level refit reports honest held-out quality.
-
-**Injection point.** In transformers 5.x `output_hidden_states=True` is served by
-capture hooks that record the first layer's *input*, then each layer's *output*,
-with the last entry overwritten by `model.norm(...)`. So `hidden_states[j]` is
-exactly the input to block `j` for `j < n_layers` — which is what a forward
-*pre-hook* on `model.layers[j]` replaces — and index `n_layers` is post-norm.
-That is the same fact `DROP_POST_NORM_LAYER` encodes on the analysis side, here
-reached from the other direction.
-
-### Plumbing checks (all pass; `results/llama/stitch/checks_i12_j18.json`)
-
-| check | result |
-|---|---|
-| **null hook** — hook registered, returns stream unchanged | bit-identical to baseline (max abs Δlogit `0.0`) |
-| **identity injection** — inject the 3B's own `hidden_states[18]` | bit-identical to baseline (max abs Δlogit `0.0`) |
-| **off-by-one** (negative control) — inject `hidden_states[19]` at block 18 | differs (max abs Δlogit `10.84`), so the identity check is not vacuous |
-| **adapter quality** on a held-out prompt split | cosine `0.972`, rel-L2 `0.087`, R² `0.910` |
-
-The off-by-one control matters: without it, "identity injection reproduces the
-baseline" would also pass if the hook were silently doing nothing.
-
-### The attention sink breaks naive full-stream injection
-
-Overwriting **all** positions produces pure noise (`'Lri and and and and unhing…'`)
-on *every* prompt, controls included. The cause is a single position. At 3B layer
-18 the position-0 residual has norm **≈762** against **≈12–23** everywhere else —
-the attention-sink / massive-activation token — and the adapter under-predicts it
-by more than 2× (≈327). It is also outside the fit: `LAST_K=64` keeps only the
-final 64 rows per prompt while these prompts run 72–73 tokens, so BOS was never
-a fitted row. Overwriting it destroys attention globally.
-
-Preserving position 0 alone fully restores coherent output. Sweeping the
-preserved prefix over `{0, 1, 2, 4, 8, 16, 32}` gives noise at 0 and *identical*
-output for every value ≥ 1, so `PRESERVE_PREFIX = 1` is a correctness
-requirement, not a tuned hyperparameter. The `sink_position` check records the
-norm ratio on each run.
-
-### Result (llama, 1B L12 → 3B L18, 12 divergent + 6 control prompts)
-
-v1 is scoped to prefill + the first generated token, so that is what is scored:
-
-| | n | first token == 3B | first token == 1B | full text == 3B |
-|---|---:|---:|---:|---:|
-| divergent | 12 | 4 | **0** | 0 |
-| control | 6 | 6 | 6 | 1 |
-
-**The stitch path works and moves computation toward the large model.** On the
-divergent prompts — the only ones that discriminate, since 1B and 3B agree on
-controls by construction — the stitched model reproduces the 1B's own first
-token **0 out of 12 times**, and the 3B's **4 out of 12**. Text past the first
-token drifts (`'Ott…'`→`'Ottfoundland'`, `'An…'`→`'Anstanbul'`), which is what a
-lossy linear reconstruction of one layer should do.
-
-**This is not hallucination fixing and is not claimed as such.** The stitched
-output lands on neither model's answer in 8 of 12 divergent cases. What is
-established is narrower and is the actual v1 goal: the adapter persists and
-reloads, the injection point is verified against three independent checks, and a
-stitched forward pass runs end-to-end and demonstrably carries large-model
-information rather than passing the small model through. Latency/accuracy
-benchmarking is deliberately out of scope here.
-
-Known v1 limits, in rough priority order:
-
-* **Ridge shrinkage systematically under-predicts the residual norm** (mean
-  ‖pred‖ 15.8 vs ‖true‖ 23.1 on a live prompt) — a norm-matching or
-  whitened-fit variant is the obvious next change. *Still open, and now the
-  binding constraint: part 2 shows the plumbing is no longer what limits
-  quality.*
-* **`LAST_K=64` truncation** means early positions of longer prompts were never
-  fitted; extraction should cover full sequences. *Still open.*
-* **No KV cache.** Greedy decoding re-runs both models over the whole growing
-  sequence each step. Correct by construction but O(n²). *Addressed in part 2.*
-* Single (i, j) pair, token-aligned pairs only, and the adapter is fit on control
-  rows only. *Still open.*
-
-## Stitching, part 2 (`stitch_fast`) — the early-exit path
-
-Part 1 proved the injection point. It bought that proof by running *more*
-compute than the large model alone. Part 2 keeps the same map and the same
-injection index and runs only the layers the stitched path actually needs:
+| package | direction | primary goal | is it faster? |
+| --- | --- | --- | --- |
+| [`stitching_small_to_large/`](stitching_small_to_large/README.md) | small → large | **latency** — decode faster than the large model | yes, that is the point |
+| [`stitching_large_to_small/`](stitching_large_to_small/README.md) | large → small | **accuracy** — beat the small model without fine-tuning either LLM | **no** — it runs part of both models |
+| [`diagnosis/`](diagnosis/) | neither | analysis — where the two models' representations diverge | n/a |
 
 ```
-prompt -> small embed + small blocks 0..i-1 -> adapter(W, b)
-       -> large blocks j..end -> large norm -> large lm_head -> token
+small_to_large:  prompt → small blocks 0..i-1 → adapter → large blocks j..end → token
+large_to_small:  prompt → large blocks 0..j-1 → adapter → small blocks i..end → token
 ```
 
-Large blocks `0..j-1` never run and small blocks `i..end` never run. Both models
-keep a KV cache over the blocks they do run, so decoding is O(n) rather than
-part 1's O(n²). For the llama defaults that leaves 12 of 16 small blocks and 10
-of 28 large blocks on the critical path; for qwen, 24 of 24 and 1 of 36.
+Both are KV-cached on both sides, both are token-aligned pairs only (`llama`,
+`qwen`), and both capture their own states and fit their own adapters — neither
+reads anything `diagnosis/` produces. They share `common/`: the prompt banks,
+the scorer, model loading, and `common/decoding.py`, which holds the sliced
+layer loop both need (one verified copy, since it is a hand transcription of
+`LlamaModel.forward` and duplicating it would duplicate the risk).
 
-Since HF's `forward` always runs the full stack, `Stack.run` reimplements the
-layer loop over a slice (a transcription of `LlamaModel.forward` in transformers
-5.x; Qwen2 is structurally identical). That transcription is verified, not
-assumed — see the checks below.
+**Read them as separate claims.** `small_to_large` trades accuracy for speed;
+`large_to_small` trades speed for accuracy. A number from one says nothing about
+the other.
 
-### Two prefill strategies, one decode step
+### The lesson both inherit from the retired code
 
-| mode | prompt goes through | first generated token | saves |
-|---|---|---|---|
-| `exit` | the stitch (large blocks `0..j-1` run only on the sink prefix) | the stitch's | prefill **and** decode |
-| `warm` | the large model's own full stack | exactly the large model's | decode only |
+The old `stitch_fast` collapsed after the first generated token — `Wellington` →
+`"Well is"`, `Jefferson City` → `"Jeffapolis"` — while its adapter reported a
+healthy held-out R² of 0.91. The fit set was the bug, not the layer choice:
+states were captured over **prompt tokens only**, but at decode time the adapter
+is handed the model's state at positions holding *generated answer* tokens. On
+those, the same adapter scored **R² = 0.34**. Both packages now capture prompt
+**+ teacher-forced answer** positions, and both report answer-token quality
+separately from all-token quality, because the all-token number is the one that
+hid the failure.
 
-`warm` exists because prefill happens once per prompt and decode happens once
-per token, so most of the latency in a long generation is decode. It gives up
-the prefill saving to hand the suffix blocks the large model's own KV — and
-**its prefill runs the entire large model, so it saves no prefill FLOPs.** Both
-are reported side by side by default; neither is a fallback for the other.
+### Current results, including the negative one
 
-### The attention sink, in this setting
+**`small_to_large` (latency): negative, and it stays on the record.** Across a
+50-point llama grid and a 32-point qwen grid, *every* configuration was dominated
+by the small model — both slower and less accurate than just running the 1B (or
+0.5B). The small model decodes 2.4x (llama) / 4.8x (qwen) faster than the large
+one while giving up only 6-9 / 20 accuracy points, and no stitch beat that trade.
 
-Part 1 could preserve the large model's own position-0 residual (`PRESERVE_PREFIX`)
-for free, because it ran the large model's early blocks anyway. Here those
-blocks are exactly what we are skipping, so the constant needed a new
-implementation.
+**`large_to_small` (accuracy): also negative.** On a purpose-built bank with
+real headroom (`hard_factual`: llama small 73.6%, large 98.1%, 26 divergent
+prompts), all 32 grid cells failed. The best reached 57.5% — 16 points *below*
+the small model alone — while costing 1.7x its decode time plus a partial
+large-model forward, and recovering 0-11% of the divergent prompts. The stitched
+path reproduces the small model's own wrong answers and corrupts some it would
+otherwise get right; the adapter's held-out answer-token R² tops out at 0.50 and
+goes negative in 6 cells, which is not faithful enough to carry a specific fact
+through the small model's remaining blocks.
 
-The fix is cheap and exact. Attention is causal, so running *only* tokens
-`0..N-1` through large blocks `0..j-1` produces the same layer-j hidden states
-for those positions as running the whole prompt would. The fast path therefore
-does one N-token prefill through the skipped blocks — **N = 1 token against a
-50–80 token prompt** — and splices the result over the adapter's output there.
-The cost is O(N) once per prompt, not per token. In `warm` mode the question
-does not arise: position 0's KV comes from the large model's own forward pass.
+That bank exists because the older ones gave a 1B model too little to get wrong:
+the original `factual` bank leaves 8.6 points of headroom, of which 3 prompts on
+a 35-prompt split are divergent, which cannot support any conclusion either way.
+`headroom` is the command that checks this before a sweep is worth running.
 
-### Checks (all pass on both pairs; `results/<pair>/stitch/fast_checks_*.json`)
+**Both directions are negative on these pairs.** That is a real result about
+linear stitching between a 1B and a 3B, not a bug: the plumbing is verified by
+checks that gate every report (identity-injection at `rel_l2 = 3.4e-05`, an
+off-by-one control that correctly differs), so what failed is the method, not
+the harness.
 
-| check | what would break without it | llama | qwen |
-|---|---|---|---|
-| **full stack** (small, large) | the hand-rolled layer loop silently differs from HF's `forward` — everything downstream is then meaningless | rel-L2 `3.9e-05` / `2.4e-05` | `2.9e-05` / `1.3e-05` |
-| **baseline == `generate`** (small, large) | the baselines the speedup is measured against are a weaker decoder than HF's | identical text | identical text |
-| **prefix exact** | the sink splice isn't the large model's own state | bit-identical to HF's own 1-token forward | bit-identical |
-| **fast == v1 prefill** | the early exit computes something *other* than what part 1 verified | rel-L2 `1.8e-02` | `3.7e-03` |
-| **cached == lockstep** | the KV cache drifts from a from-scratch recompute | `2.8e-02` vs a `4.1e-02` floor | `5.4e-02` vs a `4.6e-02` floor |
-| **warm prefill == large** | `warm` mode isn't handing back the large model's own logits | bit-identical (`0.0`) | bit-identical |
+### …but the instrument that produced them could not have shown a positive one
 
-Two of these needed care to state honestly:
+Re-reading those campaigns turned up five defects in the *measurement*, four of
+which are independent of whether stitching works. They are fixed now, and the
+negative results above are retained unchanged as the evidence they were
+measured against.
 
-* **bf16 is not bit-reproducible across batch shapes**, so "prefix exact" cannot
-  be tested as equality against the full-sequence run: a `(1, 1, d)` GEMM tiles
-  differently from a `(1, seq, d)` one and the two disagree by rel-L2 `1.2e-04`
-  (llama) to `8.4e-03` (qwen, at layer 35). That drift belongs to the library,
-  not to this module — **HF's own forward reproduces it exactly** — so the pass
-  criterion is bit-identity against HF's own prefix-only forward, with the
-  library's drift recorded next to ours.
-* **The cache tolerance is measured, not chosen.** An *unmodified* Llama-3B
-  doing KV-cached decode drifts rel-L2 `3.9e-02` from a full recompute on this
-  hardware, for the same GEMM-shape reason. So the check measures that floor for
-  the unmodified large model in the same run and requires the stitch to stay
-  within 3× of it. The comparison is also teacher-forced: left free-running, one
-  rounding difference picks a different token and the whole divergent
-  continuation gets charged to the cache.
+| # | defect | fix |
+| --- | --- | --- |
+| 1 | The adapter was fit on the wrong objective — ridge minimises L2 over all 3072 residual dimensions, but next-token identity lives in the few that survive `norm` + `lm_head`. `R2_all = 0.999` vs `R2_answer` ∈ [−0.20, 0.375], and answer R² does not rank the cells. | `--train-method distill`: KL to the teacher's next-token distribution, backpropagated through the frozen suffix, warm-started from ridge. |
+| 2 | The fit set was 95% boilerplate: 258 answer rows against 5180 prompt rows of one repeated template, i.e. **17%** of the objective at `ANSWER_WEIGHT=4`. | Template variety, answer-majority row selection (asserted, recorded as `answer_weight_frac`), and `--fit-corpus generic` for volume. |
+| 3 | The latency claim was not computed honestly: the sweep CSV had **no end-to-end column**, so the best cell was tabulated at 1.11x decode while running **0.93x end-to-end**. | Every row carries `end_to_end_speedup_vs_large` with a named pricing source; prefill printed per row; a cross-cell prefill-anomaly flag. |
+| 4 | The benchmark could not show a win: 35-prompt splits give a ~23-point interval across an 8.6-point gap. | `list_hard`, 173 prompts per eval split (~11-point interval), +15.0 pts of headroom with **separated** intervals. |
+| 5 | The bar was set against the wrong incumbent — cells were ranked against each other, not against the small model. | The small model competes in the Pareto frontier, on end-to-end speed, with interval-separated accuracy. No recommendation is emitted otherwise. |
 
-### A convention bug this surfaced
+The clearest single symptom of defects 3–5 together: the `factual` grid's
+best-accuracy cell, `L10→L10` warm, was reported as a 1.11x speedup. Priced
+end-to-end at the large model's true 3.46-token mean answer it runs **0.92x** —
+slower than the model it was meant to beat — and its accuracy interval
+(70.6–93.7%) overlaps the small model's so heavily that the comparison was never
+resolvable. All 50 cells were dominated by the small model on both axes.
 
-`hidden_states[n_layers]` is the one entry HF overwrites with `model.norm(...)`
-— the same fact `DROP_POST_NORM_LAYER` encodes on the analysis side. The qwen
-diagnosis picks `i = 24` of 24 small layers, so the adapter was fit on the small
-model's **post-norm** state. Running blocks `0..i-1` and stopping feeds the
-adapter the raw residual stream instead, which is rel-L2 `0.79` away from what
-it was fit on. Caught by the equivalence check (max logit gap `15.6`, which
-argmax agreement alone would have waved through — hence the relative-distance
-criterion in `_agree`). `StitchRunner.small_state` applies the final norm when
-`i == n_layers_small`.
+### Re-run on the repaired instrument (llama, `list_hard`, MPS, 2026-08-18)
 
-### Latency (Apple M5, MPS, bf16, batch 1, 12 prompts, greedy)
+| path | accuracy (95% CI) | vs small (paired bootstrap) | decode | end-to-end |
+| --- | --- | --- | --- | --- |
+| 1B alone | 83.2% [77.0–88.1] | — | 2.45x | **2.46x** |
+| 3B alone | 98.3% [95.0–99.4] | +15.0 | 1.00x | 1.00x |
+| best ridge (`L10→L14` warm) | 89.6% [84.2–93.3] | +6.4 [−0.6, +13.9] | 1.28x | 1.17x |
+| best distill (`L10→L14` warm) | 89.6% [84.2–93.3] | +6.4 [−0.6, +13.3] | 1.28x | 1.16x |
+| `L8→L14` warm, ridge | 75.7% [68.8–81.5] | −7.5 [−15.6, +0.6] | 1.34x | 1.22x |
+| `L8→L14` warm, **distill** | 86.1% [80.2–90.5] | +2.9 [−4.6, +10.4] | 1.34x | 1.21x |
 
-`ms/token` is the headline: prefill and decode are different regimes, and total
-time is not comparable across paths that stop at different lengths.
+**Distillation beats ridge by +10.4 points at identical geometry and identical
+decode cost** (`L8→L14`, paired bootstrap [+5.8, +15.6], excludes zero) — same
+6.3M-parameter affine map, only the objective changed. At `L10→L14` it makes no
+difference, because ridge is already good enough there for greedy decoding to
+pick the same tokens.
 
-**llama — 1B L12 → 3B L18** (skipping 18 of 28 large blocks)
+**No configuration beats the small model on both axes**, and the reason is now
+legible rather than hidden: the best stitch is 1.17x faster than the *large*
+model but the small model is 2.46x faster, so the stitch loses the speed axis
+outright, and its +6.4-point accuracy edge does not exclude zero. That is a far
+narrower failure than the `factual` campaign's — where every cell lost on both
+axes — but it is still a failure, and `sweep` says `NO VIABLE POINT`.
 
-| path | prefill ms | ms/token | tok/s | params/token | decode vs 3B |
-|---|---:|---:|---:|---:|---:|
-| 1B alone | 44.7 | 24.18 | 41.4 | 1.24 B (38%) | 2.43× |
-| 3B alone | 114.0 | 58.75 | 17.0 | 3.21 B (100%) | 1.00× |
-| stitch-exit | 106.9 | **41.44** | 24.1 | 2.14 B (67%) | **1.42×** |
-| stitch-warm | 141.9 | **41.12** | 24.3 | 2.14 B (67%) | **1.43×** |
-
-**qwen — 0.5B L24 → 3B L35** (skipping 35 of 36 large blocks)
-
-| path | prefill ms | ms/token | tok/s | params/token | decode vs 3B |
-|---|---:|---:|---:|---:|---:|
-| 0.5B alone | 17.4 | 12.42 | 80.5 | 0.49 B (16%) | 4.56× |
-| 3B alone | 83.7 | 56.65 | 17.7 | 3.09 B (100%) | 1.00× |
-| stitch-exit | 70.1 | **17.38** | 57.5 | 0.75 B (24%) | **3.26×** |
-| stitch-warm | 98.3 | **17.58** | 56.9 | 0.75 B (24%) | **3.22×** |
-
-**The latency goal is met.** Decode is 1.42× the large model on llama and 3.26×
-on qwen, and the wall-clock ratios track the weights actually multiplied per
-token (67% and 24% of the large model's) — this is a real early exit, not a
-re-labelled full forward. `params/token` is reported alongside every timing for
-exactly that reason. The qwen speedup is much larger only because its diagnosed
-`j = 35` skips all but the final large block, which is also why its accuracy is
-the worst of the two.
-
-### Accuracy — the tradeoff, stated plainly
-
-Gold-answer match on 6 divergent + 6 control prompts, re-scored at run time:
-
-| pair | set | small | large | stitch-exit | stitch-warm |
-|---|---|---:|---:|---:|---:|
-| llama | control | 6/6 | 6/6 | **1/6** | **1/6** |
-| llama | divergent | 2/6 | 6/6 | **1/6** | **1/6** |
-| qwen | control | 6/6 | 6/6 | **1/6** | **1/6** |
-| qwen | divergent | 0/6 | 6/6 | **0/6** | **0/6** |
-
-**The accuracy goal is not met, and the gap is not small.** The success
-criterion set for this work was "better than the small model alone"; the
-stitched path is **much worse than the small model alone** on both pairs
-(llama 2/12 vs 8/12, qwen 1/12 vs 6/12). Paying 1.4–1.7× the small model's
-decode cost to lose most of its accuracy is not a good trade at the current
-adapter quality. Reported here rather than buried because it is the actual
-result.
-
-What the numbers do show is *where* it breaks. First-token agreement with the
-large model is high — 6/6 control for llama `exit`, and 12/12 overall for `warm`
-by construction — and then the answer falls apart at roughly the second token:
-
-```
-Ottawa    -> 'Ott'  + 'foundland'
-Ankara    -> 'An'   + 'stanbul'
-Brasília  -> 'Bras' + ' Salvador'
-Thimphu   -> 'Th'   + '0ThThe'
-```
-
-The stitch reliably reproduces the large model's *first* decision and then loses
-the thread, which is the signature of a lossy per-token reconstruction rather
-than of a broken decode path — and the decode path is independently verified
-above. `warm` mode buys a guaranteed-correct first token and, on these prompts,
-nothing after it, which is a fairly precise measurement of how much of the
-answer lives in one linear map of one layer.
-
-The cause is the adapter, and the adapter's own sidecar predicts this: held-out
-quality is good on *all* token positions (llama cosine `0.972`, R² `0.910`) and
-poor on exactly the positions that matter, the **answer** tokens — llama R²
-`0.343` on 30 rows, qwen R² **`−0.037`** on 22 rows. A map that fails to beat
-predicting the mean on answer tokens cannot carry an answer, so the qwen result
-(0/6 divergent) is what its own fit report implies. The three open v1 limits
-above — norm-matching instead of ridge shrinkage, `LAST_K` truncation, and
-fitting on control rows only — all bear directly on this, and none of them are
-plumbing.
-
-### Honest scope of part 2
-
-* **What is established:** the early exit computes what part 1 computed
-  (verified eight ways), skips the layers it claims to skip (verified by
-  parameter accounting *and* wall clock), and is faster than the large model.
-* **What is not:** that stitching is a useful accuracy/latency trade at this
-  adapter quality. It is not, on either pair.
-* Latency is one machine (M5 / MPS / bf16 / batch 1) and 12 prompts. The
-  `params/token` column is the hardware-independent claim; the milliseconds are
-  not. Batch-1 decode is bandwidth-bound, so on a GPU with different
-  compute/bandwidth balance the ratios will move.
-* Both baselines are timed through the *same* hand-rolled loop as the stitch, so
-  the comparison is not measuring two different decoding harnesses — and the
-  loop is not a weaker `generate`: it reproduces HF `generate` token-for-token
-  on **48/48** runs (12 benchmark prompts × 2 models × 2 pairs), including the
-  `<|eot_id|>`-vs-`</s>` stop condition. The `baseline_matches_hf_generate`
-  check re-tests this on every run.
-* The `divergent` / `control` buckets come from `selection.json`, which was
-  produced on a different library build: the llama 1B now answers 2 of its 6
-  recorded "divergent" prompts correctly. They are prompt sets here, not
-  re-derived labels, and the benchmark prints a warning when it detects the
-  drift.
+`diagnosis/fit_adapter.py` remains, and is **not** stitching code: it
+materialises the map the DM analysis selected (the diagnostic grid solves for R²
+through a hat matrix and never forms `W`), so the selected map can be inspected
+and regression-tested.
 
 ## Honest caveats
 
@@ -677,7 +531,7 @@ plumbing.
   the figures now plot `r2_last`, matching the verdict). The depth-matched
   −0.163 is a far better signal than the −0.048 the old rule gave, but it still
   rests on very little data. Before building on "layer 12 → 18", expand
-  `q1/prompts.py`: at the current 87% small-model accuracy, reaching 50+
+  `common/prompts.py`: at the current 87% small-model accuracy, reaching 50+
   divergent cases needs roughly **400–600 prompts**. This is independent of the
   broad fitting corpus an adapter would need, and it is the change most likely
   to move these numbers.
@@ -690,7 +544,7 @@ plumbing.
   layers but does not move the *fork* between the divergent and control curves,
   which is what the verdict relies on. The headline metric is evaluated on the
   held-out **final answer token** of each test prompt.
-* Absolute R² depends on the ridge strength (`RIDGE_ALPHA` in `q1/config.py`);
+* Absolute R² depends on the ridge strength (`RIDGE_ALPHA` in `diagnosis/config.py`);
   the cross-layer shape and the divergent-vs-control gap are the robust signals.
 * The cross-family pairs (`llama2qwen`, `qwen2llama`) use prompt-level
   alignment: one row per prompt, so their fits are far more underdetermined

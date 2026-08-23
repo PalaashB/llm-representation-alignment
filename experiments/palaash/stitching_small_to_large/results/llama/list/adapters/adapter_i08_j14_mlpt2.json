@@ -1,0 +1,55 @@
+{
+  "pair": "llama",
+  "bank": "list",
+  "small_layer_i": 8,
+  "large_layer_j": 14,
+  "kind": "mlp",
+  "n_taps": 2,
+  "taps": [
+    4,
+    8
+  ],
+  "dim_small": 2048,
+  "dim_in": 4096,
+  "dim_large": 3072,
+  "depth_matched_j": 14,
+  "form": "Y_hat = Xs @ W + b + gelu(Xs @ W1 + b1) @ W2 + b2, Xs = (X - mu_x) / sd_x",
+  "injection_point": "input to large decoder block 14",
+  "ridge_alpha": 0.01,
+  "answer_weight": 4.0,
+  "norm_match": true,
+  "norm_gain": 1.0191620588302612,
+  "mlp_correction_kept": true,
+  "mlp_hidden": 1024,
+  "mlp_val_frac": 0.2,
+  "n_map_params": 19930112,
+  "n_rows": 8531,
+  "n_answer_rows": 1111,
+  "n_prompts": 90,
+  "in_sample": {
+    "r2": 0.9999341381285641,
+    "cosine_mean": 0.9981194734573364,
+    "rel_l2_mean": 0.032180674374103546,
+    "n_rows": 8531
+  },
+  "held_out": {
+    "all": {
+      "r2": 0.9982702310496443,
+      "cosine_mean": 0.9523509740829468,
+      "rel_l2_mean": 0.14227993786334991,
+      "n_rows": 2048
+    },
+    "answer": {
+      "r2": 0.31275645234436866,
+      "cosine_mean": 0.7676944732666016,
+      "rel_l2_mean": 0.640087366104126,
+      "n_rows": 245
+    },
+    "prompt": {
+      "r2": 0.9992713804852458,
+      "cosine_mean": 0.9774429202079773,
+      "rel_l2_mean": 0.07463553547859192,
+      "n_rows": 1803
+    }
+  }
+}

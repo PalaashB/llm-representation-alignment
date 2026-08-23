@@ -1,0 +1,57 @@
+[
+  {
+    "check": "full_stack_small",
+    "rel_l2": 3.3851774787763134e-05,
+    "max_abs_logit_diff": 0.03125,
+    "argmax_match": true,
+    "passed": true
+  },
+  {
+    "check": "full_stack_large",
+    "rel_l2": 2.4374237909796648e-05,
+    "max_abs_logit_diff": 0.015625,
+    "argmax_match": true,
+    "passed": true
+  },
+  {
+    "check": "baseline_matches_hf_generate_small",
+    "loop": "Auckland",
+    "hf_generate": "Auckland",
+    "passed": true
+  },
+  {
+    "check": "identity_injection",
+    "layer_i": 10,
+    "rel_l2": 3.3851774787763134e-05,
+    "max_abs_logit_diff": 0.03125,
+    "argmax_match": true,
+    "passed": true
+  },
+  {
+    "check": "offbyone_control",
+    "layer_injected": 11,
+    "at_block": 10,
+    "rel_l2": 0.3731986880302429,
+    "argmax_match": false,
+    "passed": true
+  },
+  {
+    "check": "prefix_exact",
+    "n_positions": 1,
+    "rel_l2_vs_hf_prefix": 0.0,
+    "shape_drift_rel_l2": 6.0688500525429845e-05,
+    "hf_own_shape_drift_rel_l2": 6.0688500525429845e-05,
+    "passed": true
+  },
+  {
+    "check": "adapter_reload",
+    "r2_all": 0.9999362177868738,
+    "cosine_all": 0.9982123374938965,
+    "r2_answer": 0.9867928686115766,
+    "cosine_answer": 0.9953895807266235,
+    "held_out_answer_r2_from_fit": 0.25996188322812497,
+    "shapes_ok": true,
+    "finite": true,
+    "passed": true
+  }
+]
