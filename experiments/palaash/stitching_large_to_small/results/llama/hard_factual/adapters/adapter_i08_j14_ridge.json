@@ -1,0 +1,66 @@
+{
+  "pair": "llama",
+  "bank": "hard_factual",
+  "direction": "large->small",
+  "small_layer_i": 8,
+  "large_layer_j": 14,
+  "train_method": "ridge",
+  "dim_in_large": 3072,
+  "dim_out_small": 2048,
+  "depth_matched_i": 8,
+  "form": "Y_hat = ((X - mu_x) / sd_x) @ W + b",
+  "injection_point": "input to small decoder block 8",
+  "source_point": "input to large decoder block 14",
+  "ridge_alpha": 0.01,
+  "answer_weight": 4.0,
+  "norm_match": true,
+  "norm_gain": 1.0640627145767212,
+  "n_rows_captured": 89507,
+  "n_rows": 89507,
+  "n_answer_rows": 26851,
+  "n_prompt_rows_kept": 62656,
+  "n_prompt_rows_available": 62656,
+  "answer_weight_frac": 0.6315653298835705,
+  "prompt_row_policy": "auto",
+  "n_prompts": 911,
+  "seed": 0,
+  "capture": {
+    "n_prompts": 911,
+    "n_bank_prompts": 211,
+    "n_corpus_prompts": 700,
+    "fit_corpus": "generic",
+    "vary_templates": true,
+    "n_rows": 89507,
+    "n_answer_rows": 26851,
+    "teacher_answer_tokens": 16,
+    "corpus_answer_tokens": 48,
+    "teacher_logits": true,
+    "teacher_topk": 128
+  },
+  "in_sample": {
+    "r2": 0.9955629321057201,
+    "cosine_mean": 0.9486414194107056,
+    "rel_l2_mean": 0.26689523458480835,
+    "n_rows": 89507
+  },
+  "held_out": {
+    "all": {
+      "r2": 0.9956540553949557,
+      "cosine_mean": 0.9375960826873779,
+      "rel_l2_mean": 0.28545406460762024,
+      "n_rows": 22156
+    },
+    "answer": {
+      "r2": 0.6258266331227553,
+      "cosine_mean": 0.8507590293884277,
+      "rel_l2_mean": 0.5299033522605896,
+      "n_rows": 6382
+    },
+    "prompt": {
+      "r2": 0.9959710460141905,
+      "cosine_mean": 0.9727295637130737,
+      "rel_l2_mean": 0.18655234575271606,
+      "n_rows": 15774
+    }
+  }
+}

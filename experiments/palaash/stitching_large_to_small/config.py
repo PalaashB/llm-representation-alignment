@@ -159,10 +159,95 @@ SPLIT_FRACS = {"fit": 0.50, "dev": 0.25, "test": 0.25}
 # test — scored once, at the end
 
 # ── adapter fit ───────────────────────────────────────────────────────────────
+TRAIN_METHODS = ("ridge", "distill")
+TRAIN_METHOD = "ridge"
+LEGACY_TRAIN_METHOD = "legacy"
+# ^ How the map's parameters are chosen.
+#
+#   `ridge`   closed-form weighted least squares in residual space: minimise L2
+#             to the *small* model's own layer-i residual.
+#   `distill` gradient descent on the *large* model's next-token distribution,
+#             backpropagated through the frozen small-model suffix into the
+#             adapter.
+#
+#   Ridge optimises the wrong thing here, and in this direction it is not a
+#   subtle mismatch — it is self-defeating. The regression target is the state
+#   the small model would have produced by itself, and on exactly the prompts
+#   this experiment exists to fix, that state is the one that decodes to the
+#   *wrong* answer. A map that hits its target perfectly reproduces the small
+#   model's error. The sweep says so: warm beats exit in every cell, accuracy
+#   falls as more of the large model's residual is injected, and the stitched
+#   generations copy the small model's mistakes (plutonium 92, not 94).
+#
+#   `distill` targets the distribution the path is scored on, so the thing being
+#   optimised is the thing being measured. It is warm-started from the ridge
+#   solution, so it begins at exactly the ridge map's behaviour and ships ridge
+#   unchanged if no epoch improves on it.
+#
+#   `legacy` is not a fit method: it is the read-only name of the pre-2026-08-23
+#   artefacts, which were fit by ridge on a capture with 753 answer rows and no
+#   template variety. Those files keep their unscoped filenames so the negative
+#   result stays on disk exactly as it was published.
+
 RIDGE_ALPHA = 0.01
 ANSWER_WEIGHT = 4.0      # answer positions are the ones the adapter sees while decoding
 NORM_MATCH = True
 ADAPTER_TEST_FRAC = 0.25
+
+# ── row selection for the fit ─────────────────────────────────────────────────
+MIN_ANSWER_WEIGHT_FRAC = 0.5
+# ^ Answer rows must carry more than half the fit objective's total weight, and
+#   `adapter.fit` refuses to ship a map that misses this. The original capture
+#   was nowhere near: 753 answer rows against 15555 prompt rows at
+#   ANSWER_WEIGHT=4 is 753*4 / (753*4 + 15555) = 16%. Every prompt shared one
+#   chat template and one system prompt, so the other 84% of the objective was
+#   the same boilerplate repeated 211 times — which the map memorises (hence
+#   held-out R2_all = 0.9999) while the positions it actually faces at decode
+#   time are a rounding error in the loss.
+PROMPT_ROW_KEEP = "auto"
+# ^ How many prompt-position rows to keep. "auto" subsamples them (deterministic,
+#   seeded) to whatever count makes answer rows clear MIN_ANSWER_WEIGHT_FRAC;
+#   "all" keeps every row (the old behaviour); an integer keeps that many.
+#   Prompt rows are thinned, never dropped: `exit` mode hands the adapter prompt
+#   positions at inference, and they anchor the standardiser.
+
+# ── capture composition ───────────────────────────────────────────────────────
+CORPUS_ANSWER_TOKENS = 48
+# ^ Generation budget for `--fit-corpus` items, separate from the bank's.
+#   `hard_factual` answers are a name or a number and its teacher budget is 16
+#   tokens, which is right for the bank and useless as a source of answer rows
+#   in bulk: 211 fit prompts yield ~750. The corpus items are open-ended
+#   instructions whose continuations run 40-80 tokens, so they only earn their
+#   capture time at a budget long enough to let them finish a thought.
+
+# ── distillation ──────────────────────────────────────────────────────────────
+DISTILL_EPOCHS = 4
+DISTILL_BATCH_SEQS = 4      # sequences per optimiser step (whole sequences: the
+                            # suffix blocks attend, so rows are not independent)
+DISTILL_LR = 2e-6
+# ^ Small because the map is warm-started, not initialised. Adam's update is
+#   ~lr per parameter per step regardless of gradient scale, so a large lr
+#   discards the warm start within one epoch (measured in the sibling package:
+#   val loss 0.2296 -> 0.4779 at lr=1e-4, never recovered). At 2e-6 an epoch
+#   moves the weights a few percent of their magnitude, which is the regime
+#   where "can distillation improve on ridge" is the question being asked.
+DISTILL_WEIGHT_DECAY = 0.0
+DISTILL_TOPK = 128
+# ^ Teacher distributions are stored as top-K logits per position. Full vocab is
+#   128256 floats per row — 80k rows is 20 GB at fp16 — while the top 128 tokens
+#   hold essentially all the mass of a distribution the teacher would greedily
+#   decode from. KL is computed over that support, renormalised.
+DISTILL_CE_WEIGHT = 0.1     # small CE term on the teacher's argmax, alongside KL
+DISTILL_TEMPERATURE = 1.0
+DISTILL_VAL_FRAC = 0.2      # prompts held out to choose the epoch
+DISTILL_MAX_GRAD_NORM = 1.0
+DISTILL_TRAIN_MODES = ("warm", "exit")
+DISTILL_TRAIN_MODE = "warm"
+# ^ Which inference geometry the training forward reproduces. A map trained
+#   under one injection pattern and run under another is being asked a different
+#   question at inference than it was fit on, so this must match the mode the
+#   bench reports. `warm` is the default because it is the mode the measured
+#   best cell used.
 
 # ── decoding ──────────────────────────────────────────────────────────────────
 LATENCY_PROMPTS = 4
@@ -186,6 +271,13 @@ def results_dir(pair: Pair, bank: Bank) -> Path:
 
 
 def states_dir(pair: Pair, bank: Bank) -> Path:
+    """Where `capture` writes. One capture per (pair, bank), overwritten in place.
+
+    The pre-2026-08-23 capture — bank prompts only, one chat template, 753
+    answer rows — was moved aside to `states_legacy/` rather than deleted, so
+    the `legacy` adapters can still be re-scored against the rows they were
+    actually fit on.
+    """
     return results_dir(pair, bank) / "states"
 
 
@@ -193,25 +285,52 @@ def adapters_dir(pair: Pair, bank: Bank) -> Path:
     return results_dir(pair, bank) / "adapters"
 
 
-def adapter_path(pair: Pair, i: int, j: int, bank: Bank) -> Path:
-    return adapters_dir(pair, bank) / f"adapter_i{i:02d}_j{j:02d}.npz"
+def variant_tag(train_method: str | None) -> str:
+    """Filename suffix identifying how an adapter was fit.
+
+    Empty for `legacy` (and for `None`, which means the same thing), so the
+    artefacts of the published all-ridge failure keep the exact filenames they
+    were written under and no new run can overwrite one. Everything fit after
+    the capture was rebuilt carries its method in the name — including ridge,
+    because "ridge on the old 753-answer-row capture" and "ridge on the new one"
+    are different maps and the whole exercise is comparing them.
+    """
+    if train_method in (None, LEGACY_TRAIN_METHOD):
+        return ""
+    if train_method not in TRAIN_METHODS:
+        raise SystemExit(f"--train-method must be one of "
+                         f"{TRAIN_METHODS + (LEGACY_TRAIN_METHOD,)}, got {train_method!r}")
+    return f"_{train_method}"
 
 
-def checks_path(pair: Pair, bank: Bank, i: int, j: int) -> Path:
-    return results_dir(pair, bank) / "checks" / f"checks_i{i:02d}_j{j:02d}.json"
+def adapter_path(pair: Pair, i: int, j: int, bank: Bank,
+                 train_method: str | None = None) -> Path:
+    return (adapters_dir(pair, bank)
+            / f"adapter_i{i:02d}_j{j:02d}{variant_tag(train_method)}.npz")
 
 
-def bench_path(pair: Pair, i: int, j: int, split: str, mode: str, bank: Bank) -> Path:
+def checks_path(pair: Pair, bank: Bank, i: int, j: int,
+                train_method: str | None = None) -> Path:
+    return (results_dir(pair, bank) / "checks"
+            / f"checks_i{i:02d}_j{j:02d}{variant_tag(train_method)}.json")
+
+
+def bench_path(pair: Pair, i: int, j: int, split: str, mode: str, bank: Bank,
+               train_method: str | None = None) -> Path:
     return (results_dir(pair, bank) / "benches"
-            / f"bench_i{i:02d}_j{j:02d}_{split}_{mode}.json")
+            / f"bench_i{i:02d}_j{j:02d}_{split}_{mode}{variant_tag(train_method)}.json")
 
 
-def sweep_path(pair: Pair, bank: Bank, split: str, mode: str) -> Path:
-    return results_dir(pair, bank) / "sweeps" / f"sweep_{split}_{mode}.json"
+def sweep_path(pair: Pair, bank: Bank, split: str, mode: str,
+               train_method: str | None = None) -> Path:
+    return (results_dir(pair, bank) / "sweeps"
+            / f"sweep_{split}_{mode}{variant_tag(train_method)}.json")
 
 
-def table_path(pair: Pair, bank: Bank, split: str, mode: str) -> Path:
-    return results_dir(pair, bank) / "tables" / f"sweep_{split}_{mode}.csv"
+def table_path(pair: Pair, bank: Bank, split: str, mode: str,
+               train_method: str | None = None) -> Path:
+    return (results_dir(pair, bank) / "tables"
+            / f"sweep_{split}_{mode}{variant_tag(train_method)}.csv")
 
 
 def capture_layers(pair: Pair) -> tuple[list[int], list[int]]:

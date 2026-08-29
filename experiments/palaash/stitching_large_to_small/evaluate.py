@@ -32,10 +32,17 @@ from stitching_large_to_small.stitch import LargeToSmallRunner
 
 
 class Harness:
-    """Both models, loaded once, plus memoised baseline accuracy."""
+    """Both models, loaded once, plus memoised baseline accuracy.
 
-    def __init__(self, pair: Pair, bank: Bank, device: str | None = None):
+    `train_method` scopes which adapter file the stitched path loads and where
+    its bench report is written, so a ridge and a distilled map at the same
+    (i, j) can be measured in one session without either overwriting the other.
+    """
+
+    def __init__(self, pair: Pair, bank: Bank, device: str | None = None,
+                 train_method: str | None = None):
         self.pair, self.bank = pair, bank
+        self.train_method = train_method
         self.device = device or pick_device()
         self.small = load_lm(pair.small_id, pair.small_tag, self.device)
         self.large = load_lm(pair.large_id, pair.large_tag, self.device)
@@ -55,7 +62,7 @@ class Harness:
 
     def adapter(self, i: int, j: int) -> TorchAdapter:
         if (i, j) not in self._adapters:
-            arrays, meta = load_adapter(self.pair, i, j, self.bank)
+            arrays, meta = load_adapter(self.pair, i, j, self.bank, self.train_method)
             self._adapters[(i, j)] = TorchAdapter(arrays, meta, self.device)
         return self._adapters[(i, j)]
 
@@ -75,7 +82,12 @@ class Harness:
             n_tok += out["n_generated"]
             rows.append({"prompt_id": p["id"], "gold": p.get("answers") or p.get("requires"),
                          "generation": text, "correct": bool(ok),
-                         "n_generated": out["n_generated"]})
+                         "n_generated": out["n_generated"],
+                         # Kept because `warm` mode cannot change it: the small
+                         # model prefills the prompt itself, so the first
+                         # generated token is always its own. See
+                         # `first_token_ceiling` in summarise.
+                         "first_token": out["token_ids"][0] if out["token_ids"] else None})
         n = len(prompts)
         lo, hi = wilson(n_ok, n)
         return {"n": n, "n_correct": n_ok, "accuracy": n_ok / n if n else float("nan"),
@@ -125,7 +137,7 @@ class Harness:
 
         rep = summarise(self.pair, self.bank, i, j, split, mode, self.device,
                         small, large, stitch, self.adapter(i, j).meta)
-        path = bench_path(self.pair, i, j, split, mode, self.bank)
+        path = bench_path(self.pair, i, j, split, mode, self.bank, self.train_method)
         path.parent.mkdir(parents=True, exist_ok=True)
         with open(path, "w") as f:
             json.dump(rep, f, indent=2)
@@ -189,6 +201,30 @@ def subset_accuracy(path: dict, ids: set[str]) -> float:
     return (sum(r["correct"] for r in rows) / len(rows)) if rows else float("nan")
 
 
+def first_token_ceiling(small: dict, large: dict, div: list[str]) -> dict:
+    """How many divergent prompts `warm` mode could fix even in principle.
+
+    In `warm` mode the small model prefills the prompt itself, so the first
+    generated token is decoded from the last *prompt* position — which the
+    adapter never touches. That token is the small model's own on every run, no
+    matter what the adapter learns.
+
+    On a bank whose answers are a number or a name, the first token often *is*
+    the answer, so on those prompts `warm` is structurally incapable of
+    recovering the large model's answer. This counts them, because a recovery
+    rate has to be read against the rate that was reachable, not against 100%.
+    It is a property of the two baselines alone — no stitch is involved — so it
+    bounds every warm cell and every training method equally.
+    """
+    s = {r["prompt_id"]: r.get("first_token") for r in small["accuracy"]["rows"]}
+    l = {r["prompt_id"]: r.get("first_token") for r in large["accuracy"]["rows"]}
+    agree = [pid for pid in div if s.get(pid) is not None and s[pid] == l.get(pid)]
+    return {"n_divergent": len(div),
+            "n_first_token_agrees": len(agree),
+            "reachable_ids": sorted(agree),
+            "warm_reachable_frac": (len(agree) / len(div)) if div else float("nan")}
+
+
 def summarise(pair: Pair, bank: Bank, i: int, j: int, split: str, mode: str,
               device: str, small: dict, large: dict, stitch: dict,
               adapter_meta: dict) -> dict:
@@ -225,11 +261,12 @@ def summarise(pair: Pair, bank: Bank, i: int, j: int, split: str, mode: str,
         "split": split, "mode": mode, "device": device,
         "n_prompts": n,
         "adapter_kind": adapter_meta.get("kind", "linear"),
-        "adapter_train_method": adapter_meta.get("train_method", "ridge"),
+        "adapter_train_method": adapter_meta.get("train_method", "legacy_ridge"),
         "seed_provenance": {"seed": adapter_meta.get("seed"),
                             "ridge_alpha": adapter_meta.get("ridge_alpha"),
                             "answer_weight": adapter_meta.get("answer_weight"),
-                            "norm_match": adapter_meta.get("norm_match")},
+                            "norm_match": adapter_meta.get("norm_match"),
+                            "capture": adapter_meta.get("capture")},
         "accuracy_small": a_s, "accuracy_large": a_l, "accuracy_stitch": a_x,
         "accuracy_ci95_small": ci["small"], "accuracy_ci95_large": ci["large"],
         "accuracy_ci95_stitch": ci["stitch"],
@@ -252,6 +289,10 @@ def summarise(pair: Pair, bank: Bank, i: int, j: int, split: str, mode: str,
             "accuracy_small": 0.0 if div else float("nan"),
             "accuracy_large": 1.0 if div else float("nan"),
             "accuracy_stitch": subset_accuracy(stitch, dset),
+            # What `warm` could fix at all: the first generated token is the
+            # small model's own in that mode, so a divergent prompt whose first
+            # token already differs from the large model's is out of reach.
+            "first_token": first_token_ceiling(small, large, div),
         },
         "latency": {k: {"decode_ms_per_token": ms(v), "prefill_ms": v["latency"]["prefill_ms"],
                         "active_params_per_token": v["latency"]["active_params_per_token"],
@@ -261,9 +302,25 @@ def summarise(pair: Pair, bank: Bank, i: int, j: int, split: str, mode: str,
         "decode_speedup_vs_large": ms(large) / ms(stitch),
         "adapter": {"held_out_r2_all": held.get("all", {}).get("r2"),
                     "held_out_r2_answer": (held.get("answer") or {}).get("r2"),
+                    # Same-rows pair: comparable to each other, not to the
+                    # held_out figures above (see adapter.fit).
+                    "same_rows_r2_answer_ridge":
+                        ((held.get("before_distill_same_rows") or {}).get("answer") or {}).get("r2"),
+                    "same_rows_r2_answer_distill":
+                        ((held.get("after_distill") or {}).get("answer") or {}).get("r2"),
                     "norm_gain": adapter_meta.get("norm_gain"),
                     "n_rows": adapter_meta.get("n_rows"),
-                    "n_answer_rows": adapter_meta.get("n_answer_rows")},
+                    "n_answer_rows": adapter_meta.get("n_answer_rows"),
+                    # Blank on every artefact written before 2026-08-23, which
+                    # is exactly the problem: the published sweep was fit with
+                    # 16% of its objective on answer rows and nothing said so.
+                    "answer_weight_frac": adapter_meta.get("answer_weight_frac"),
+                    "distill_val_loss_ridge": adapter_meta.get("distill_val_loss_ridge"),
+                    "distill_val_loss_best": adapter_meta.get("distill_val_loss_best"),
+                    "distill_best_epoch": adapter_meta.get("distill_best_epoch"),
+                    "distill_improved_on_ridge":
+                        adapter_meta.get("distill_improved_on_ridge"),
+                    "distill_train_mode": adapter_meta.get("distill_train_mode")},
         "paths": {"small": small, "large": large, "stitch": stitch},
         "rows": rows,
     }
@@ -318,7 +375,8 @@ def verdict(rep: dict) -> tuple[str, str]:
 
 def format_table(rep: dict) -> str:
     head = (f"{rep['pair']}/{rep['bank']}  large L{rep['large_layer_j']} -> "
-            f"small L{rep['small_layer_i']}  mode={rep['mode']}  split={rep['split']}  "
+            f"small L{rep['small_layer_i']}  train={rep.get('adapter_train_method')}  "
+            f"mode={rep['mode']}  split={rep['split']}  "
             f"n={rep['n_prompts']}  device={rep['device']}")
     lines = [head, "-" * len(head),
              f"{'path':<26}{'acc (95% CI)':>22}{'divergent':>11}{'ms/tok':>9}"
@@ -355,6 +413,16 @@ def format_table(rep: dict) -> str:
               f"vs large)",
               f"adapter    held-out R2 answer="
               f"{rep['adapter']['held_out_r2_answer']:+.3f} "
-              f"all={rep['adapter']['held_out_r2_all']:+.3f}",
-              "", f"{status}: {sentence}"]
+              f"all={rep['adapter']['held_out_r2_all']:+.3f}"
+              + (f", answer_weight_frac={rep['adapter']['answer_weight_frac']:.1%}"
+                 if rep["adapter"].get("answer_weight_frac") is not None else
+                 ", answer_weight_frac=UNRECORDED (pre-2026-08-23 fit)")]
+    ft = rep["divergent"].get("first_token")
+    if ft and rep["mode"] == "warm" and ft["n_divergent"]:
+        lines.append(
+            f"ceiling    warm can reach {ft['n_first_token_agrees']}/"
+            f"{ft['n_divergent']} divergent prompts ({ft['warm_reachable_frac']:.1%}): "
+            f"on the rest the small model's own first token already differs from "
+            f"the large model's, and warm mode never changes the first token")
+    lines += ["", f"{status}: {sentence}"]
     return "\n".join(lines)

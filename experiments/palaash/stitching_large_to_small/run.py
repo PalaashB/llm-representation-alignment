@@ -1,14 +1,18 @@
 """CLI for the accuracy-oriented stitching experiment (large -> small).
 
     python -m stitching_large_to_small.run headroom --pair llama   # is the bank usable?
-    python -m stitching_large_to_small.run capture  --pair llama
-    python -m stitching_large_to_small.run fit      --pair llama --i 10 --j 18
-    python -m stitching_large_to_small.run check    --pair llama --i 10 --j 18
-    python -m stitching_large_to_small.run bench    --pair llama --i 10 --j 18
+    python -m stitching_large_to_small.run capture  --pair llama --fit-corpus generic
+    python -m stitching_large_to_small.run fit      --pair llama --i 8 --j 14 --train-method ridge
+    python -m stitching_large_to_small.run fit      --pair llama --i 8 --j 14 --train-method distill
+    python -m stitching_large_to_small.run check    --pair llama --i 8 --j 14 --train-method distill
+    python -m stitching_large_to_small.run bench    --pair llama --i 8 --j 14 --modes warm --train-method distill
+    python -m stitching_large_to_small.run compare  --pair llama --i 8 --j 14 --modes warm
     python -m stitching_large_to_small.run sweep    --pair llama
-    python -m stitching_large_to_small.run final    --pair llama --i 10 --j 18
+    python -m stitching_large_to_small.run final    --pair llama --i 8 --j 14
 
-Everything on disk is scoped by (pair, bank), so runs never overwrite each other.
+Everything on disk is scoped by (pair, bank, train method), so runs never
+overwrite each other. `--train-method legacy` reads the unscoped artefacts of
+the published all-ridge failure, which no run can write to.
 
 `check` gates the rest: `bench` and `sweep` refuse to report accuracy unless the
 plumbing checks pass, because a mis-plumbed injection still emits fluent text and
@@ -24,34 +28,57 @@ import json
 from stitching_large_to_small import adapter as adapter_mod
 from stitching_large_to_small import data
 from stitching_large_to_small.config import (
-    ANSWER_WEIGHT, BANKS, DEFAULT_BANK, DEFAULT_PAIR, MAX_CI_WIDTH_PTS,
-    MIN_DIVERGENT_PROMPTS, MIN_HEADROOM_PTS, NORM_MATCH, PAIRS, RIDGE_ALPHA,
-    adapter_path, checks_path, results_dir, sweep_path, table_path, validate_layers,
+    ANSWER_WEIGHT, BANKS, CORPUS_ANSWER_TOKENS, DEFAULT_BANK, DEFAULT_PAIR,
+    DISTILL_EPOCHS, DISTILL_LR, DISTILL_TRAIN_MODE, DISTILL_TRAIN_MODES,
+    LEGACY_TRAIN_METHOD, MAX_CI_WIDTH_PTS, MIN_DIVERGENT_PROMPTS, MIN_HEADROOM_PTS,
+    NORM_MATCH, PAIRS, RIDGE_ALPHA, TRAIN_METHOD, TRAIN_METHODS, adapter_path,
+    bench_path, checks_path, results_dir, sweep_path, table_path, validate_layers,
 )
 from stitching_large_to_small.evaluate import Harness, format_table, verdict
 from stitching_large_to_small.stitch import run_checks
-from common.stats import ci_width_pts, fmt_pct_ci, separated, wilson
+from common.fit_corpus import FIT_CORPORA
+from common.stats import (
+    bootstrap_diff, ci_width_pts, fmt_pct_ci, separated, wilson, wilson_from_rate,
+)
 
 
 def chosen(a):
     return PAIRS[a.pair], BANKS[a.bank]
 
 
+def method(a) -> str | None:
+    """The train method scoping this invocation's artefacts, or None for the
+    unscoped `legacy` files."""
+    m = getattr(a, "train_method", TRAIN_METHOD)
+    return None if m == LEGACY_TRAIN_METHOD else m
+
+
 def cmd_capture(a):
     pair, bank = chosen(a)
-    data.run(pair, bank, split=a.split, max_prompts=a.max_prompts)
+    data.run(pair, bank, split=a.split, max_prompts=a.max_prompts,
+             fit_corpus=a.fit_corpus, max_prompts_corpus=a.corpus_prompts,
+             corpus_answer_tokens=a.corpus_answer_tokens,
+             vary_templates=not a.no_template_variety,
+             store_teacher_logits=not a.no_teacher_logits,
+             small_layers=a.small_layers, large_layers=a.large_layers)
 
 
 def cmd_fit(a):
     pair, bank = chosen(a)
-    adapter_mod.fit(pair, a.i, a.j, bank, alpha=a.alpha,
-                    answer_weight=a.answer_weight, norm_match=not a.no_norm_match)
+    kw = {}
+    if a.train_method == "distill":
+        kw = {"epochs": a.distill_epochs, "lr": a.distill_lr,
+              "train_mode": a.distill_train_mode, "max_seqs": a.distill_max_seqs}
+    adapter_mod.fit(pair, a.i, a.j, bank, train_method=a.train_method,
+                    alpha=a.alpha, answer_weight=a.answer_weight,
+                    norm_match=not a.no_norm_match, **kw)
 
 
-def _run_and_store_checks(h, pair, bank, i, j) -> list[dict]:
+def _run_and_store_checks(h, pair, bank, i, j, train_method=None) -> list[dict]:
     checks = run_checks(h.small, h.large, i, j)
-    checks.append(adapter_mod.reload_quality(pair, i, j, bank))
-    out = checks_path(pair, bank, i, j)
+    checks.append(adapter_mod.reload_quality(pair, i, j, bank, train_method,
+                                             lm_small=h.small))
+    out = checks_path(pair, bank, i, j, train_method)
     out.parent.mkdir(parents=True, exist_ok=True)
     with open(out, "w") as f:
         json.dump(checks, f, indent=2)
@@ -72,8 +99,8 @@ def _print_checks(checks: list[dict]) -> bool:
 def cmd_check(a):
     pair, bank = chosen(a)
     validate_layers(pair, a.i, a.j)
-    h = Harness(pair, bank)
-    if not _print_checks(_run_and_store_checks(h, pair, bank, a.i, a.j)):
+    h = Harness(pair, bank, train_method=method(a))
+    if not _print_checks(_run_and_store_checks(h, pair, bank, a.i, a.j, method(a))):
         raise SystemExit(1)
 
 
@@ -152,10 +179,10 @@ def cmd_headroom(a):
 def cmd_bench(a):
     pair, bank = chosen(a)
     validate_layers(pair, a.i, a.j)
-    h = Harness(pair, bank)
+    h = Harness(pair, bank, train_method=method(a))
     if not a.skip_checks:
         print("[checks] plumbing must pass before accuracy is reported")
-        if not _print_checks(_run_and_store_checks(h, pair, bank, a.i, a.j)):
+        if not _print_checks(_run_and_store_checks(h, pair, bank, a.i, a.j, method(a))):
             raise SystemExit("checks FAILED — refusing to report accuracy. "
                              "Fix the injection, or pass --skip-checks to see the "
                              "numbers anyway (they are not trustworthy).")
@@ -171,23 +198,30 @@ def cmd_final(a):
 
 def cmd_sweep(a):
     pair, bank = chosen(a)
+    tm = method(a)
     grid_i = a.grid_i or list(pair.grid_i)
     grid_j = a.grid_j or list(pair.grid_j)
     combos = [(i, j) for i in grid_i for j in grid_j]
     print(f"[sweep] {pair.name}/{bank.name}: {len(combos)} points  "
-          f"i={grid_i}  j={grid_j}  modes={a.modes}\n")
+          f"i={grid_i}  j={grid_j}  modes={a.modes}  train={a.train_method}\n")
 
     for i, j in combos:
-        if a.refit or not adapter_path(pair, i, j, bank).exists():
-            adapter_mod.fit(pair, i, j, bank, alpha=a.alpha,
+        if a.refit or not adapter_path(pair, i, j, bank, tm).exists():
+            if tm is None:
+                raise SystemExit(
+                    f"adapter for L{j}->L{i} is missing and --train-method "
+                    f"{LEGACY_TRAIN_METHOD} cannot fit one: those filenames belong "
+                    f"to the published run and are read-only. Use --train-method "
+                    f"ridge or distill.")
+            adapter_mod.fit(pair, i, j, bank, train_method=tm, alpha=a.alpha,
                             answer_weight=a.answer_weight,
                             norm_match=not a.no_norm_match)
 
-    h = Harness(pair, bank)
+    h = Harness(pair, bank, train_method=tm)
     if not a.skip_checks:
         i0, j0 = combos[0]
         print("[checks] plumbing must pass before accuracy is reported")
-        if not _print_checks(_run_and_store_checks(h, pair, bank, i0, j0)):
+        if not _print_checks(_run_and_store_checks(h, pair, bank, i0, j0, tm)):
             raise SystemExit("checks FAILED — refusing to sweep.")
         print()
 
@@ -205,7 +239,7 @@ def cmd_sweep(a):
     for mode in a.modes:
         sub = [r for r in rows if r["mode"] == mode]
         if sub:
-            _report(pair, bank, a.split, mode, sub)
+            _report(pair, bank, a.split, mode, sub, tm)
 
 
 def sweep_row(rep: dict, status: str) -> dict:
@@ -295,8 +329,9 @@ def select(rows: list[dict]) -> dict:
             "n_dominated_by_small": sum(r["dominated_by_small"] for r in rows)}
 
 
-def _report(pair, bank, split, mode, rows):
-    jp, tp = sweep_path(pair, bank, split, mode), table_path(pair, bank, split, mode)
+def _report(pair, bank, split, mode, rows, train_method=None):
+    jp = sweep_path(pair, bank, split, mode, train_method)
+    tp = table_path(pair, bank, split, mode, train_method)
     for p in (jp, tp):
         p.parent.mkdir(parents=True, exist_ok=True)
     pick = select(rows)
@@ -334,6 +369,104 @@ def _report(pair, bank, split, mode, rows):
     print(f"Wrote {jp}\n      {tp}")
 
 
+def cmd_compare(a):
+    """Head-to-head table over train methods at fixed (i, j, mode, split).
+
+    Reads bench reports off disk — no GPU, no models — so the comparison the
+    whole exercise turns on can be rebuilt and re-read without spending an hour
+    to regenerate numbers that are already measured.
+
+    The paired bootstrap is here rather than the two-Wilson rule because this
+    question is paired: every path is scored on the same prompts in the same
+    order, so resampling prompts and recomputing both accuracies keeps the
+    correlation that makes ridge-vs-distill a much finer comparison than
+    stitch-vs-small. The interval-separation rule still governs the claim
+    against the small model — that is the experiment's bar and it does not move.
+    """
+    pair, bank = chosen(a)
+    methods = a.train_methods or [LEGACY_TRAIN_METHOD, *TRAIN_METHODS]
+    for mode in a.modes:
+        reps = {}
+        for m in methods:
+            tm = None if m == LEGACY_TRAIN_METHOD else m
+            p = bench_path(pair, a.i, a.j, a.split, mode, bank, tm)
+            if p.exists():
+                with open(p) as f:
+                    reps[m] = json.load(f)
+        if not reps:
+            print(f"no bench reports for L{a.j}->L{a.i} {mode}/{a.split} "
+                  f"(looked for {methods})")
+            continue
+        any_rep = next(iter(reps.values()))
+        n = any_rep["n_prompts"]
+        order = sorted(r["prompt_id"]
+                       for r in any_rep["paths"]["small"]["accuracy"]["rows"])
+        # Each report carries its OWN 1B baseline, and they need not agree: the
+        # bf16 kernels on this accelerator are not bit-deterministic across
+        # processes, so runs weeks apart differ by a prompt or two. Pairing a
+        # new stitch against an old run's baseline would fold that drift into
+        # the comparison, so every row bootstraps against the baseline measured
+        # in its own bench, and disagreements are printed rather than hidden.
+        small_of = lambda rep: [
+            {r["prompt_id"]: r["correct"]
+             for r in rep["paths"]["small"]["accuracy"]["rows"]}[p] for p in order]
+        baselines = {m: rep["accuracy_small"] for m, rep in reps.items()}
+
+        # Reports written before intervals existed have no `accuracy_ci95_*`,
+        # so the interval is re-derived from the rate — exact, since the rate
+        # really did come from these n prompts.
+        ci = lambda r, k: (r.get(f"accuracy_ci95_{k}")
+                           or list(wilson_from_rate(r[f"accuracy_{k}"], n)))
+        head = (f"{pair.name}/{bank.name}  large L{a.j} -> small L{a.i}  "
+                f"mode={mode}  split={a.split}  n={n}")
+        print("\n" + head + "\n" + "-" * len(head))
+        print(f"{'path':<24}{'acc (95% CI)':>22}{'vs 1B (bootstrap)':>26}"
+              f"{'divergent':>11}{'R2 answer':>11}{'awf':>7}")
+        for m, rep in reps.items():
+            print(f"{'1B alone (' + m + ' run)':<24}"
+                  f"{fmt_pct_ci(rep['accuracy_small'], ci(rep, 'small')):>22}"
+                  f"{'—':>26}{'—':>11}{'—':>11}{'—':>7}")
+        print(f"{'3B alone':<24}"
+              f"{fmt_pct_ci(any_rep['accuracy_large'], ci(any_rep, 'large')):>22}"
+              f"{'—':>26}{'—':>11}{'—':>11}{'—':>7}")
+        for m, rep in reps.items():
+            x = {r["prompt_id"]: r["correct"]
+                 for r in rep["paths"]["stitch"]["accuracy"]["rows"]}
+            bs = bootstrap_diff([x[p] for p in order], small_of(rep))
+            ad = rep["adapter"]
+            # For a distilled map the honest R2 column is the same-rows one,
+            # because the shipped map saw the holdout rows during the ridge
+            # warm start. The `held_out` figure is the ridge refit's.
+            r2 = (ad.get("same_rows_r2_answer_distill") if m == "distill"
+                  else ad.get("held_out_r2_answer"))
+            awf = ad.get("answer_weight_frac")
+            gap = "%+.1f [%+.1f,%+.1f]" % (bs["diff"] * 100, bs["lo"] * 100,
+                                           bs["hi"] * 100)
+            print(f"{'stitch ' + m:<24}"
+                  f"{fmt_pct_ci(rep['accuracy_stitch'], ci(rep, 'stitch')):>22}"
+                  f"{gap:>26}"
+                  f"{rep['divergent']['accuracy_stitch'] * 100:>10.1f}%"
+                  f"{(r2 if r2 is not None else float('nan')):>11.3f}"
+                  f"{(f'{awf:.0%}' if awf is not None else '—'):>7}")
+        if len(set(baselines.values())) > 1:
+            spread = ", ".join(f"{m} {v:.1%}" for m, v in baselines.items())
+            print(f"\nNOTE: the 1B baseline is not identical across these runs "
+                  f"({spread}). bf16 kernels are not bit-deterministic across "
+                  f"processes, so a prompt or two moves between sessions. Each "
+                  f"row above is bootstrapped against its own run's baseline; "
+                  f"differences of ~1 prompt (0.9 pts) are that drift, not signal.")
+        ft = any_rep["divergent"].get("first_token")
+        if ft and mode == "warm" and ft["n_divergent"]:
+            print(f"\nwarm-mode ceiling: only {ft['n_first_token_agrees']}/"
+                  f"{ft['n_divergent']} divergent prompts are reachable at all — on the "
+                  f"other {ft['n_divergent'] - ft['n_first_token_agrees']} the small "
+                  f"model's own first token already differs from the large model's, and "
+                  f"warm mode never changes the first token.")
+        for m, rep in reps.items():
+            status, sentence = verdict(rep)
+            print(f"\n{m}: {status}: {sentence}")
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -347,11 +480,34 @@ def main():
         p.add_argument("--i", type=int, required=True, help="small block to resume at")
         p.add_argument("--j", type=int, required=True, help="large block to exit before")
 
+    def train_method_opt(p, allow_legacy=True):
+        choices = list(TRAIN_METHODS) + ([LEGACY_TRAIN_METHOD] if allow_legacy else [])
+        p.add_argument("--train-method", choices=choices, default=TRAIN_METHOD,
+                       help="ridge: least squares onto the small model's own "
+                            "layer-i residual. distill: KL to the large model's "
+                            "next-token distribution through the frozen small "
+                            "suffix, warm-started from ridge."
+                            + (f" {LEGACY_TRAIN_METHOD}: read the published "
+                               f"pre-2026-08-23 artefacts (read-only)."
+                               if allow_legacy else ""))
+
     def fit_opts(p):
         p.add_argument("--alpha", type=float, default=RIDGE_ALPHA)
         p.add_argument("--answer-weight", type=float, default=ANSWER_WEIGHT)
         p.add_argument("--no-norm-match", action="store_true",
                        help=f"disable radial rescaling (default norm_match={NORM_MATCH})")
+
+    def distill_opts(p):
+        p.add_argument("--distill-epochs", type=int, default=DISTILL_EPOCHS,
+                       help="0 fits nothing and ships the ridge warm start "
+                            "unchanged — the sanity arm")
+        p.add_argument("--distill-lr", type=float, default=DISTILL_LR)
+        p.add_argument("--distill-train-mode", choices=DISTILL_TRAIN_MODES,
+                       default=DISTILL_TRAIN_MODE,
+                       help="which inference geometry the training forward "
+                            "reproduces; must match the mode you bench")
+        p.add_argument("--distill-max-seqs", type=int, default=None,
+                       help="cap training sequences (smoke runs only)")
 
     def modes(p):
         p.add_argument("--modes", nargs="+", choices=("exit", "warm"), default=["exit"],
@@ -371,27 +527,52 @@ def main():
     common(p)
     p.add_argument("--split", default="fit", choices=("fit", "dev", "test", "all"))
     p.add_argument("--max-prompts", type=int, default=None)
+    p.add_argument("--fit-corpus", choices=sorted(FIT_CORPORA), default=None,
+                   help="mix in generic open-ended items so answer rows can "
+                        "reach the tens of thousands the bank alone cannot")
+    p.add_argument("--corpus-prompts", type=int, default=None,
+                   help="how many corpus items to use (default: all)")
+    p.add_argument("--corpus-answer-tokens", type=int, default=CORPUS_ANSWER_TOKENS,
+                   help="generation budget for corpus items, separate from the "
+                        "bank's short-answer budget")
+    p.add_argument("--no-template-variety", action="store_true",
+                   help="capture every item under one system prompt and framing "
+                        "(the pre-2026-08-23 behaviour)")
+    p.add_argument("--no-teacher-logits", action="store_true",
+                   help="skip the large model's top-K next-token distributions; "
+                        "--train-method distill then has nothing to fit")
+    p.add_argument("--small-layers", type=int, nargs="+", default=None)
+    p.add_argument("--large-layers", type=int, nargs="+", default=None)
     p.set_defaults(func=cmd_capture)
 
     p = sub.add_parser("fit", help="fit one large->small adapter")
-    common(p); layers(p); fit_opts(p)
+    common(p); layers(p); fit_opts(p); distill_opts(p)
+    train_method_opt(p, allow_legacy=False)
     p.set_defaults(func=cmd_fit)
 
     p = sub.add_parser("check", help="plumbing checks for one (i, j)")
-    common(p); layers(p)
+    common(p); layers(p); train_method_opt(p)
     p.set_defaults(func=cmd_check)
 
     p = sub.add_parser("bench", help="small vs large vs stitched")
-    common(p); layers(p); modes(p)
+    common(p); layers(p); modes(p); train_method_opt(p)
     p.add_argument("--split", default="dev", choices=("fit", "dev", "test", "all"))
     p.set_defaults(func=cmd_bench)
 
     p = sub.add_parser("final", help="bench on the untouched test split")
-    common(p); layers(p); modes(p)
+    common(p); layers(p); modes(p); train_method_opt(p)
     p.set_defaults(func=cmd_final)
 
+    p = sub.add_parser("compare", help="ridge vs distill at one cell, from disk")
+    common(p); layers(p)
+    p.add_argument("--modes", nargs="+", choices=("exit", "warm"), default=["warm"])
+    p.add_argument("--split", default="dev", choices=("fit", "dev", "test", "all"))
+    p.add_argument("--train-methods", nargs="+", default=None,
+                   choices=list(TRAIN_METHODS) + [LEGACY_TRAIN_METHOD])
+    p.set_defaults(func=cmd_compare)
+
     p = sub.add_parser("sweep", help="grid over (i, j)")
-    common(p); fit_opts(p); modes(p)
+    common(p); fit_opts(p); modes(p); train_method_opt(p)
     p.add_argument("--split", default="dev", choices=("fit", "dev", "test", "all"))
     p.add_argument("--grid-i", type=int, nargs="+", default=None)
     p.add_argument("--grid-j", type=int, nargs="+", default=None)

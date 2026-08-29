@@ -1,0 +1,64 @@
+[
+  {
+    "check": "full_stack_small",
+    "rel_l2": 4.3659751099767163e-05,
+    "max_abs_logit_diff": 0.03125,
+    "argmax_match": true,
+    "passed": true
+  },
+  {
+    "check": "full_stack_large",
+    "rel_l2": 2.6576215532259084e-05,
+    "max_abs_logit_diff": 0.015625,
+    "argmax_match": true,
+    "passed": true
+  },
+  {
+    "check": "baseline_matches_hf_generate_small",
+    "loop": "Auckland",
+    "hf_generate": "Auckland",
+    "passed": true
+  },
+  {
+    "check": "identity_injection",
+    "layer_i": 8,
+    "rel_l2": 4.3659751099767163e-05,
+    "max_abs_logit_diff": 0.03125,
+    "argmax_match": true,
+    "passed": true
+  },
+  {
+    "check": "offbyone_control",
+    "layer_injected": 9,
+    "at_block": 8,
+    "rel_l2": 0.43464577198028564,
+    "argmax_match": false,
+    "passed": true
+  },
+  {
+    "check": "prefix_exact",
+    "n_positions": 1,
+    "rel_l2_vs_hf_prefix": 0.0,
+    "shape_drift_rel_l2": 5.094895459478721e-05,
+    "hf_own_shape_drift_rel_l2": 5.094895459478721e-05,
+    "passed": true
+  },
+  {
+    "check": "adapter_reload",
+    "train_method": "distill",
+    "r2_all": 0.9955414818865488,
+    "cosine_all": 0.9418935775756836,
+    "r2_answer": 0.7071518081044452,
+    "cosine_answer": 0.8828831315040588,
+    "held_out_answer_r2_from_fit": 0.6258266331227553,
+    "answer_weight_frac": 0.6315653298835705,
+    "shapes_ok": true,
+    "finite": true,
+    "reproduces_training_logits": true,
+    "passed": true,
+    "probe_argmax_saved": 128006,
+    "probe_argmax_reloaded": 128006,
+    "probe_logit_max_abs_diff": 0.1875,
+    "probe_logit_tolerance": 0.4453125
+  }
+]
